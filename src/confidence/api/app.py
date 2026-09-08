@@ -39,6 +39,21 @@ def create_app() -> FastAPI:
 
     app.include_router(router)
 
+    # Serve UI
+    from pathlib import Path
+
+    from fastapi.responses import RedirectResponse
+    from fastapi.staticfiles import StaticFiles
+
+    ui_dir = Path(__file__).parent.parent / "ui"
+    ui_dir.mkdir(parents=True, exist_ok=True)
+
+    app.mount("/ui", StaticFiles(directory=str(ui_dir), html=True), name="ui")
+
+    @app.get("/", include_in_schema=False)
+    async def root_redirect() -> RedirectResponse:
+        return RedirectResponse(url="/ui/")
+
     return app
 
 

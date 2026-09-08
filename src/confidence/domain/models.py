@@ -95,12 +95,7 @@ class HarmIndicators(BaseModel):
 
     def has_any(self) -> bool:
         """Return True if any harm indicator is present."""
-        return (
-            self.rapid_loss_chasing
-            or self.escalating_stakes
-            or self.session_duration_extreme
-            or self.loss_recovery_pattern
-        )
+        return self.rapid_loss_chasing or self.escalating_stakes or self.session_duration_extreme or self.loss_recovery_pattern
 
 
 class SafetyContext(BaseModel):

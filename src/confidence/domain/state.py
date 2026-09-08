@@ -45,10 +45,7 @@ class StateEstimator:
         # 2. LEGITIMATE_RECONSIDERATION
         # Defined as abandoning after viewing odds or making multiple selection changes
         # without placing the bet, perhaps changing stake significantly back and forth
-        if (
-            context.interaction.recent_backtracks > 1
-            and context.interaction.dwell_time_seconds < 10.0
-        ):
+        if context.interaction.recent_backtracks > 1 and context.interaction.dwell_time_seconds < 10.0:
             return StateEstimate(
                 state=UncertaintyState.LEGITIMATE_RECONSIDERATION,
                 confidence=0.8,
@@ -108,10 +105,7 @@ class StateEstimator:
             )
 
         # 5. DISTRACTION
-        if (
-            context.interaction.session_age_seconds > 300.0
-            and context.interaction.dwell_time_seconds == 0.0
-        ):
+        if context.interaction.session_age_seconds > 300.0 and context.interaction.dwell_time_seconds == 0.0:
             return StateEstimate(
                 state=UncertaintyState.DISTRACTION,
                 confidence=0.7,
@@ -120,10 +114,7 @@ class StateEstimator:
             )
 
         # 6. NO_UNCERTAINTY
-        if (
-            context.interaction.dwell_time_seconds < 2.0
-            and context.interaction.confirmation_attempts <= 1
-        ):
+        if context.interaction.dwell_time_seconds < 2.0 and context.interaction.confirmation_attempts <= 1:
             return StateEstimate(
                 state=UncertaintyState.NO_UNCERTAINTY,
                 confidence=0.95,

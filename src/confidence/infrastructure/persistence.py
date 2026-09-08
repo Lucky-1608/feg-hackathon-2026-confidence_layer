@@ -13,9 +13,7 @@ class DatabasePersistenceProvider(PersistenceProvider):
     """Saves decisions and audit records asynchronously to the database."""
 
     def __init__(self, engine: AsyncEngine) -> None:
-        self.session_factory = async_sessionmaker(
-            bind=engine, class_=AsyncSession, expire_on_commit=False
-        )
+        self.session_factory = async_sessionmaker(bind=engine, class_=AsyncSession, expire_on_commit=False)
 
     async def persist_decision(self, decision: Decision, context: DecisionContext) -> None:
         """Persist a decision and its audit log to the database.

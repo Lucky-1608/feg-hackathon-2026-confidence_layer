@@ -32,13 +32,34 @@ class DummySafetyProvider(SafetyProvider):
     async def get_safety_context(self, session_id: UUID, actor_id: str) -> SafetyContext:
         from datetime import datetime
 
-        return SafetyContext(data_freshness=datetime.now(UTC))
+        if actor_id == "actor-safety-down":
+            raise Exception("Simulated Safety Service Failure")
+
+        from confidence.domain.models import HarmIndicators
+
+        harm = HarmIndicators(rapid_loss_chasing=(actor_id == "actor-harm"))
+        is_excluded = actor_id == "actor-self-excluded"
+
+        return SafetyContext(is_self_excluded=is_excluded, harm_indicators=harm, data_freshness=datetime.now(UTC))
 
 
 class DummySlipProvider(SlipProvider):
     async def get_slip_context(self, slip_id: str) -> SlipContext:
+        if slip_id == "slip-down":
+            raise Exception("Simulated Slip Service Failure")
+
         from datetime import datetime
         from decimal import Decimal
+
+        odds_hist = []
+        if slip_id != "slip-missing-odds":
+            odds_hist = [
+                OddsSnapshot(
+                    odds=Decimal("2.30"),
+                    timestamp=datetime.now(UTC),
+                    source="test",
+                )
+            ]
 
         return SlipContext(
             slip_id=slip_id,
@@ -50,13 +71,7 @@ class DummySlipProvider(SlipProvider):
                     event_name="Demo Match",
                     market_name="Match Winner",
                     odds=Decimal("2.5"),
-                    odds_history=[
-                        OddsSnapshot(
-                            odds=Decimal("2.30"),
-                            timestamp=datetime.now(UTC),
-                            source="test",
-                        )
-                    ],
+                    odds_history=odds_hist,
                 )
             ],
             stake=Decimal("10.0"),
@@ -78,10 +93,6 @@ class DummyMarketProvider(MarketProvider):
         )
 
 
-
-
-
-
 @lru_cache
 def get_engine() -> AsyncEngine:
     config = load_config()
@@ -91,6 +102,7 @@ def get_engine() -> AsyncEngine:
         max_overflow=config.database.max_overflow,
         echo=False,
     )
+
 
 def get_persistence_provider() -> PersistenceProvider:
     return DatabasePersistenceProvider(get_engine())

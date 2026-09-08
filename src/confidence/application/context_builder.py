@@ -51,9 +51,7 @@ class ContextBuilder:
 
         # 2. Get authoritative safety context
         try:
-            safety = await self.safety_provider.get_safety_context(
-                request.session_id, request.anonymous_actor_id
-            )
+            safety = await self.safety_provider.get_safety_context(request.session_id, request.anonymous_actor_id)
         except Exception:
             # If provider fails, fail closed by providing stale safety context
             # This triggers S5 safety block (SAFETY_DEPENDENCY_UNAVAILABLE -> SYSTEM_FAILURE)
@@ -72,9 +70,7 @@ class ContextBuilder:
 
             from confidence.domain.models import SlipContext
 
-            slip = SlipContext(
-                slip_id=request.slip_id, selections=[], created_at=datetime.now(UTC)
-            )
+            slip = SlipContext(slip_id=request.slip_id, selections=[], created_at=datetime.now(UTC))
 
         # 4. Get authoritative market context
         markets = []

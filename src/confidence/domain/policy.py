@@ -56,9 +56,7 @@ class PolicySelector:
             return preferred_action
 
         # 3. Informational actions (less intrusive)
-        informational = [
-            a.action_id for a in eligible_actions if a.category == ActionCategory.INFORMATIONAL
-        ]
+        informational = [a.action_id for a in eligible_actions if a.category == ActionCategory.INFORMATIONAL]
         if informational:
             # Pick first available to be deterministic
             return sorted(informational)[0]

@@ -168,17 +168,11 @@ class SafetyContract:
         or None if it passes.
         """
         # If safety blocked, must be NO_INTERVENTION
-        if (
-            safety_result.status != SafetyStatus.SAFE
-            and selected_action != ActionId.NO_INTERVENTION
-        ):
+        if safety_result.status != SafetyStatus.SAFE and selected_action != ActionId.NO_INTERVENTION:
             return NoInterventionReason.SAFETY_BLOCKED
 
         # S3: Harmful state → no conversion-oriented intervention
-        if (
-            state_estimate.state == UncertaintyState.POTENTIAL_HARM
-            and selected_action != ActionId.NO_INTERVENTION
-        ):
+        if state_estimate.state == UncertaintyState.POTENTIAL_HARM and selected_action != ActionId.NO_INTERVENTION:
             return NoInterventionReason.SAFETY_BLOCKED
 
         return None

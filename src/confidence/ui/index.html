@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confidence Layer - Phase 3 Prototype</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .glow-safe { box-shadow: 0 0 15px rgba(34, 197, 94, 0.3); }
+        .glow-blocked { box-shadow: 0 0 15px rgba(239, 68, 68, 0.3); }
+        .glow-action { box-shadow: 0 0 15px rgba(59, 130, 246, 0.3); }
+    </style>
+</head>
+<body class="bg-slate-900 text-slate-200 h-screen flex flex-col font-sans">
+    
+    <header class="bg-slate-800 border-b border-slate-700 p-4 flex justify-between items-center">
+        <div>
+            <h1 class="text-xl font-bold text-white tracking-wide">Confidence Layer</h1>
+            <p class="text-xs text-slate-400">Phase 3 Demonstration Prototype (Synthetic Data)</p>
+        </div>
+        <div class="flex gap-4">
+            <div class="text-right">
+                <span class="text-xs text-slate-400 block">Session ID</span>
+                <span class="text-sm font-mono text-slate-300" id="header-session-id"></span>
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-1 overflow-hidden flex">
+        
+        <!-- LEFT PANEL: The Mock Betslip -->
+        <section class="w-1/3 border-r border-slate-700 bg-slate-800/50 p-6 flex flex-col gap-6 overflow-y-auto">
+            <h2 class="text-lg font-semibold text-white mb-2 flex items-center gap-2">
+                <svg class="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path></svg>
+                Betslip
+            </h2>
+            
+            <div class="bg-white rounded-lg p-4 text-slate-900 shadow-lg relative">
+                <div class="flex justify-between items-start mb-4">
+                    <div>
+                        <span class="font-bold block">Match Winner</span>
+                        <span class="text-sm text-slate-600">Demo Match</span>
+                    </div>
+                    <div class="text-right">
+                        <span class="text-sm text-slate-500 line-through block hidden" id="old-odds-display">2.30</span>
+                        <span class="font-bold text-lg text-blue-600" id="current-odds-display">2.50</span>
+                    </div>
+                </div>
+                
+                <div class="border-t border-slate-200 pt-4 mb-4">
+                    <label class="text-xs text-slate-500 uppercase font-semibold mb-1 block">Stake</label>
+                    <div class="flex items-center border border-slate-300 rounded overflow-hidden">
+                        <span class="px-3 bg-slate-100 text-slate-500 border-r border-slate-300">$</span>
+                        <input type="number" id="stake-input" value="10.00" class="w-full p-2 outline-none font-mono" onchange="markInteracted()">
+                    </div>
+                </div>
+
+                <!-- Injection overlay for intervention -->
+                <div id="intervention-overlay" class="hidden mt-4 bg-blue-50 border border-blue-200 rounded-md p-3">
+                    <div class="flex gap-2">
+                        <svg class="w-5 h-5 text-blue-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        <p class="text-sm text-blue-800" id="intervention-text"></p>
+                    </div>
+                </div>
+
+                <button id="btn-place-bet" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded transition-colors mt-6">
+                    Place Bet
+                </button>
+            </div>
+            
+            <div class="mt-4 border-t border-slate-700 pt-4">
+                <h3 class="text-sm font-semibold text-slate-300 mb-3">Client Telemetry (Mutable)</h3>
+                <div class="grid grid-cols-2 gap-3 text-sm">
+                    <div class="bg-slate-900 p-2 rounded border border-slate-700">
+                        <span class="text-slate-500 text-xs block">Dwell Time</span>
+                        <span class="font-mono text-amber-400" id="dwell-display">0.0s</span>
+                    </div>
+                    <div class="bg-slate-900 p-2 rounded border border-slate-700">
+                        <span class="text-slate-500 text-xs block">Backtracks</span>
+                        <span class="font-mono text-amber-400" id="backtracks-display">0</span>
+                    </div>
+                    <div class="bg-slate-900 p-2 rounded border border-slate-700">
+                        <span class="text-slate-500 text-xs block">Stake Changes</span>
+                        <span class="font-mono text-amber-400" id="stake-changes-display">0</span>
+                    </div>
+                    <div class="bg-slate-900 p-2 rounded border border-slate-700">
+                        <span class="text-slate-500 text-xs block">Odds Changed?</span>
+                        <span class="font-mono text-amber-400" id="odds-changed-display">False</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-auto">
+                <button onclick="resetTelemetry()" class="text-xs text-slate-400 hover:text-white underline">Reset Telemetry</button>
+            </div>
+        </section>
+
+        <!-- MIDDLE PANEL: Scenario Controls -->
+        <section class="w-1/4 border-r border-slate-700 p-6 flex flex-col gap-6 overflow-y-auto bg-slate-900">
+            <h2 class="text-lg font-semibold text-white mb-2 flex items-center gap-2">
+                <svg class="w-5 h-5 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"></path></svg>
+                Scenario Controls
+            </h2>
+            <p class="text-xs text-slate-400 mb-2">Simulate real-world conditions for the decision engine.</p>
+            
+            <div class="space-y-4">
+                
+                <div class="bg-slate-800 p-3 rounded border border-slate-700">
+                    <h3 class="text-sm font-bold text-blue-400 mb-2">Client Signals</h3>
+                    <button onclick="triggerOddsChange()" class="w-full text-left px-3 py-2 text-sm bg-slate-700 hover:bg-slate-600 rounded mb-2 transition-colors">
+                        📉 Trigger Odds Change
+                    </button>
+                    <button onclick="triggerBacktrack()" class="w-full text-left px-3 py-2 text-sm bg-slate-700 hover:bg-slate-600 rounded transition-colors">
+                        🔄 User changed mind (Backtrack)
+                    </button>
+                </div>
+
+                <div class="bg-slate-800 p-3 rounded border border-slate-700">
+                    <h3 class="text-sm font-bold text-red-400 mb-2">Safety State (Authoritative)</h3>
+                    <select id="actor-override" class="w-full bg-slate-900 border border-slate-600 rounded p-2 text-sm outline-none">
+                        <option value="actor-normal">🟢 Normal User</option>
+                        <option value="actor-harm">🔴 Harmful Play (Loss Chasing)</option>
+                        <option value="actor-self-excluded">🔴 Self-Excluded</option>
+                        <option value="actor-safety-down">⚠️ Safety Service Down</option>
+                    </select>
+                </div>
+
+                <div class="bg-slate-800 p-3 rounded border border-slate-700">
+                    <h3 class="text-sm font-bold text-purple-400 mb-2">Market State (Authoritative)</h3>
+                    <select id="slip-override" class="w-full bg-slate-900 border border-slate-600 rounded p-2 text-sm outline-none">
+                        <option value="slip-normal">🟢 Normal Slip</option>
+                        <option value="slip-missing-odds">⚠️ Missing Odds History</option>
+                        <option value="slip-down">⚠️ Market Service Down</option>
+                    </select>
+                </div>
+
+                <button onclick="evaluateDecision()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 px-4 rounded shadow-lg shadow-emerald-900/50 transition-colors mt-4 flex items-center justify-center gap-2">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                    Evaluate Decision
+                </button>
+            </div>
+        </section>
+
+        <!-- RIGHT PANEL: Decision Pipeline Visualization -->
+        <section class="flex-1 p-6 flex flex-col gap-4 overflow-y-auto bg-slate-950 relative">
+            <h2 class="text-lg font-semibold text-white mb-2 flex items-center gap-2">
+                <svg class="w-5 h-5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+                Decision Pipeline
+            </h2>
+            
+            <div id="loading-overlay" class="hidden absolute inset-0 bg-slate-950/80 flex items-center justify-center z-10">
+                <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-emerald-500"></div>
+            </div>
+
+            <!-- Visual Pipeline -->
+            <div class="flex flex-col gap-3 flex-1">
+                
+                <div id="pipe-safety" class="bg-slate-800 p-4 rounded border border-slate-700 transition-all opacity-50">
+                    <div class="flex justify-between items-center mb-1">
+                        <span class="font-mono text-sm text-slate-400">1. Safety Authority</span>
+                        <span id="res-safety-status" class="text-sm font-bold">-</span>
+                    </div>
+                </div>
+
+                <div class="flex justify-center -my-3 z-0"><div class="h-6 w-px bg-slate-700"></div></div>
+
+                <div id="pipe-state" class="bg-slate-800 p-4 rounded border border-slate-700 transition-all opacity-50">
+                    <div class="flex justify-between items-center mb-1">
+                        <span class="font-mono text-sm text-slate-400">2. State Authority</span>
+                        <span id="res-state" class="text-sm font-bold text-white">-</span>
+                    </div>
+                    <div class="text-xs text-slate-500 mt-2">Confidence: <span id="res-confidence" class="text-slate-300">-</span></div>
+                </div>
+
+                <div class="flex justify-center -my-3 z-0"><div class="h-6 w-px bg-slate-700"></div></div>
+
+                <div id="pipe-policy" class="bg-slate-800 p-4 rounded border border-slate-700 transition-all opacity-50">
+                    <div class="flex justify-between items-center mb-1">
+                        <span class="font-mono text-sm text-slate-400">3. Policy Selector & Final Check</span>
+                        <span id="res-action" class="text-sm font-bold text-white">-</span>
+                    </div>
+                    <div class="text-xs text-slate-500 mt-2">Reason: <span id="res-reason" class="text-slate-300">-</span></div>
+                </div>
+
+            </div>
+
+            <!-- Audit Log JSON -->
+            <div class="mt-6 border-t border-slate-800 pt-4">
+                <h3 class="text-sm font-semibold text-slate-400 mb-2">Audit Record (JSON)</h3>
+                <div class="bg-slate-900 border border-slate-800 rounded p-3 overflow-x-auto">
+                    <pre id="audit-json" class="text-[11px] text-emerald-400 font-mono whitespace-pre-wrap">Awaiting decision...</pre>
+                </div>
+            </div>
+
+        </section>
+    </main>
+
+    <script src="/ui/app.js"></script>
+</body>
+</html>

@@ -51,9 +51,7 @@ class ActionRegistry:
     """
 
     def __init__(self, actions: dict[ActionId, ActionDefinition] | None = None) -> None:
-        self._actions: dict[ActionId, ActionDefinition] = (
-            actions if actions is not None else dict(_DEFAULT_ACTIONS)
-        )
+        self._actions: dict[ActionId, ActionDefinition] = actions if actions is not None else dict(_DEFAULT_ACTIONS)
         # NO_INTERVENTION must always be present.
         if ActionId.NO_INTERVENTION not in self._actions:
             raise ValueError("NO_INTERVENTION must be registered in the action registry")

@@ -76,13 +76,9 @@ class DecisionEngine:
                 timeout=self.timeout_ms / 1000.0,
             )
         except TimeoutError:
-            return self._build_failure_decision(
-                request, NoInterventionReason.TIMEOUT, "Execution exceeded timeout"
-            )
+            return self._build_failure_decision(request, NoInterventionReason.TIMEOUT, "Execution exceeded timeout")
         except Exception as e:
-            return self._build_failure_decision(
-                request, NoInterventionReason.SYSTEM_FAILURE, f"Unexpected error: {e}"
-            )
+            return self._build_failure_decision(request, NoInterventionReason.SYSTEM_FAILURE, f"Unexpected error: {e}")
 
     async def _execute_pipeline(self, request: DecisionRequest) -> DecisionResult:
         """The core orchestration logic."""
@@ -118,32 +114,22 @@ class DecisionEngine:
             available_data_keys.add("event_name")
             available_data_keys.add("market_definition")
 
-        eligible_actions = self.action_registry.get_eligible_for_state(
-            state_estimate.state, available_data_keys
-        )
+        eligible_actions = self.action_registry.get_eligible_for_state(state_estimate.state, available_data_keys)
 
         # 6. Check if primary action for state is missing authoritative data
         no_intervention_reason = None
-        preferred_action_id = self.policy_selector.state_to_preferred_action.get(
-            state_estimate.state
-        )
+        preferred_action_id = self.policy_selector.state_to_preferred_action.get(state_estimate.state)
         if preferred_action_id:
             preferred_def = self.action_registry.get(preferred_action_id)
-            if preferred_def and not all(
-                req in available_data_keys for req in preferred_def.required_data
-            ):
+            if preferred_def and not all(req in available_data_keys for req in preferred_def.required_data):
                 selected_action = ActionId.NO_INTERVENTION
                 no_intervention_reason = NoInterventionReason.MISSING_AUTHORITATIVE_DATA
                 # Skip policy selection
                 eligible_actions = []
             else:
-                selected_action = self.policy_selector.select_action(
-                    context, state_estimate, eligible_actions
-                )
+                selected_action = self.policy_selector.select_action(context, state_estimate, eligible_actions)
         else:
-            selected_action = self.policy_selector.select_action(
-                context, state_estimate, eligible_actions
-            )
+            selected_action = self.policy_selector.select_action(context, state_estimate, eligible_actions)
 
         # Determine NO_INTERVENTION reason if applicable
         if no_intervention_reason is None:
@@ -154,16 +140,10 @@ class DecisionEngine:
                 selected_action = ActionId.NO_INTERVENTION
                 no_intervention_reason = recon_reason
             elif safety_result.status != SafetyStatus.SAFE:
-                no_intervention_reason = (
-                    self.safety_contract.safety_block_to_no_intervention_reason(
-                        safety_result.block_reasons
-                    )
-                )
+                no_intervention_reason = self.safety_contract.safety_block_to_no_intervention_reason(safety_result.block_reasons)
 
         # 7. Final Safety Check
-        final_block_reason = self.safety_contract.final_safety_check(
-            selected_action, safety_result, state_estimate
-        )
+        final_block_reason = self.safety_contract.final_safety_check(selected_action, safety_result, state_estimate)
         if final_block_reason:
             selected_action = ActionId.NO_INTERVENTION
             no_intervention_reason = final_block_reason
@@ -171,9 +151,7 @@ class DecisionEngine:
         # Missing data check for informational actions
         if selected_action != ActionId.NO_INTERVENTION:
             action_def = self.action_registry.get(selected_action)
-            if not action_def or not all(
-                req in available_data_keys for req in action_def.required_data
-            ):
+            if not action_def or not all(req in available_data_keys for req in action_def.required_data):
                 selected_action = ActionId.NO_INTERVENTION
                 no_intervention_reason = NoInterventionReason.MISSING_AUTHORITATIVE_DATA
 
@@ -220,9 +198,7 @@ class DecisionEngine:
         # 11. Return result
         return DecisionResult(decision=decision, response_text=response_text)
 
-    def _build_failure_decision(
-        self, request: DecisionRequest, reason: NoInterventionReason, detail: str
-    ) -> DecisionResult:
+    def _build_failure_decision(self, request: DecisionRequest, reason: NoInterventionReason, detail: str) -> DecisionResult:
         """Create a fail-closed decision for unexpected errors."""
         now = datetime.now(UTC)
         from confidence.domain.enums import UncertaintyState
