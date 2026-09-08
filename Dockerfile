@@ -38,7 +38,6 @@ COPY --from=builder /opt/venv /opt/venv
 # Copy application source and project definition
 COPY pyproject.toml .
 COPY src/ ./src/
-COPY demo/ ./demo/
 COPY alembic/ ./alembic/
 COPY alembic.ini .
 
