@@ -24,15 +24,15 @@
     "semantic_hash": "dcee6ea186000faf16b1130a4cc33565"
   },
   "src/confidence/api/app.py": {
-    "mtime": 1788497964.9702384,
-    "seen": 1788498000.6106899,
-    "ast_hash": "c870a2e5fc6803f9e7b0f6a9465c6dfe",
+    "mtime": 1788498629.3994026,
+    "seen": 1788499431.8573472,
+    "ast_hash": "9d8cf9872fff818e165282be39e05856",
     "semantic_hash": ""
   },
   "src/confidence/api/dependencies.py": {
-    "mtime": 1788498027.1024995,
-    "seen": 1788498143.9180045,
-    "ast_hash": "eb14c7067659979ef7afdf9eaaabb647",
+    "mtime": 1788498816.3773837,
+    "seen": 1788499431.8573494,
+    "ast_hash": "21f6b14fe4fee9e77eef8803f148b25e",
     "semantic_hash": ""
   },
   "src/confidence/api/models.py": {
@@ -42,10 +42,10 @@
     "semantic_hash": "83b8c3a3449c0dc8d0f450910042d0ff"
   },
   "src/confidence/api/routes.py": {
-    "mtime": 1788455096.3004057,
-    "seen": 1788496932.5141332,
-    "ast_hash": "16e72c304a99d3d832471e67f2cbc810",
-    "semantic_hash": "16e72c304a99d3d832471e67f2cbc810"
+    "mtime": 1788498816.3773837,
+    "seen": 1788499431.8573527,
+    "ast_hash": "79de952d4ece317590813a18fdaeb79c",
+    "semantic_hash": ""
   },
   "src/confidence/application/context_builder.py": {
     "mtime": 1788498013.0174394,
@@ -60,10 +60,10 @@
     "semantic_hash": ""
   },
   "src/confidence/config.py": {
-    "mtime": 1788454951.903757,
-    "seen": 1788496932.5141354,
-    "ast_hash": "19001b78b279074857038b21ee4987d9",
-    "semantic_hash": "19001b78b279074857038b21ee4987d9"
+    "mtime": 1788498842.5125227,
+    "seen": 1788499431.8573627,
+    "ast_hash": "679c6c225af47956bcf03cf64ad7b0f8",
+    "semantic_hash": ""
   },
   "src/confidence/db/__init__.py": {
     "mtime": 1788449560.0456283,
@@ -396,9 +396,9 @@
     "semantic_hash": ""
   },
   "src/confidence/infrastructure/event_bus.py": {
-    "mtime": 1788498279.8426516,
-    "seen": 1788498328.824835,
-    "ast_hash": "1693254771d21a96a62893203bd3cd7f",
+    "mtime": 1788498901.0048347,
+    "seen": 1788499431.8573923,
+    "ast_hash": "b79598a3113eb53771bf869f49231f1c",
     "semantic_hash": ""
   },
   "test_ui_api.py": {
@@ -429,6 +429,30 @@
     "mtime": 1788498387.530176,
     "seen": 1788498542.4110875,
     "ast_hash": "2434cd4cab5aebd826e25731670071d3",
+    "semantic_hash": ""
+  },
+  "fix_step6.py": {
+    "mtime": 1788498842.4856465,
+    "seen": 1788499431.8573396,
+    "ast_hash": "5312b7e300cee57ca7100f23c0076bb7",
+    "semantic_hash": ""
+  },
+  "src/confidence/application/event_processor.py": {
+    "mtime": 1788498842.5125227,
+    "seen": 1788499431.8573606,
+    "ast_hash": "dc1ecbbe126d5376e6368ec0ed558fa2",
+    "semantic_hash": ""
+  },
+  "src/confidence/workers/__init__.py": {
+    "mtime": 1788498560.3980467,
+    "seen": 1788499431.8574038,
+    "ast_hash": "2d578886a6d08422acf79a4bc758150a",
+    "semantic_hash": ""
+  },
+  "src/confidence/workers/event_consumer.py": {
+    "mtime": 1788498629.4124026,
+    "seen": 1788499431.8574054,
+    "ast_hash": "f807c210d591d4ca08fdafc3b3aae9d2",
     "semantic_hash": ""
   }
 }

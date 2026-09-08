@@ -13,6 +13,7 @@ from pydantic import BaseModel
 
 from confidence.domain.models import DecisionContext, InteractionContext, Session
 from confidence.domain.ports import MarketProvider, SafetyProvider, SlipProvider
+from confidence.infrastructure.resilience import ResilienceConfig, execute_with_resilience
 
 
 class DecisionRequest(BaseModel):
@@ -51,7 +52,12 @@ class ContextBuilder:
 
         # 2. Get authoritative safety context
         try:
-            safety = await self.safety_provider.get_safety_context(request.session_id, request.anonymous_actor_id)
+            safety = await execute_with_resilience(
+                self.safety_provider.get_safety_context,
+                ResilienceConfig(timeout_seconds=0.5, retries=1),
+                request.session_id,
+                request.anonymous_actor_id,
+            )
         except Exception:
             # If provider fails, fail closed by providing stale safety context
             # This triggers S5 safety block (SAFETY_DEPENDENCY_UNAVAILABLE -> SYSTEM_FAILURE)
@@ -64,7 +70,9 @@ class ContextBuilder:
         # 3. Get authoritative slip context
         # If this fails, we can't provide factual actions, but NO_INTERVENTION might still be OK
         try:
-            slip = await self.slip_provider.get_slip_context(request.slip_id)
+            slip = await execute_with_resilience(
+                self.slip_provider.get_slip_context, ResilienceConfig(timeout_seconds=0.5, retries=1), request.slip_id
+            )
         except Exception:
             # Fallback empty slip, will cause eligibility to drop factual actions
 
@@ -76,7 +84,9 @@ class ContextBuilder:
         markets = []
         for selection in slip.selections:
             try:
-                market = await self.market_provider.get_market_context(selection.market_id)
+                market = await execute_with_resilience(
+                    self.market_provider.get_market_context, ResilienceConfig(timeout_seconds=0.5, retries=1), selection.market_id
+                )
                 markets.append(market)
             except Exception:
                 pass  # Missing market data will drop eligibility for market explanations

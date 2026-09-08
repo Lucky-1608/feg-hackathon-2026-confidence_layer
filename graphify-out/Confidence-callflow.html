@@ -60,7 +60,7 @@ hr { border: none; border-top: 1px solid var(--border); margin: 40px 0; }
 <div class="container">
 
 <h1>Confidence — Complete Call Flow &amp; Architecture Documentation</h1>
-<p class="subtitle">Generated from graphify knowledge graph: 810 nodes, 1300 edges, 81 communities. Commit: 60e13bf</p>
+<p class="subtitle">Generated from graphify knowledge graph: 816 nodes, 1304 edges, 96 communities. Commit: c62a347</p>
 
 <div class="nav">
     <a href="#overview">Architecture Overview</a>
@@ -72,12 +72,12 @@ hr { border: none; border-top: 1px solid var(--border); margin: 40px 0; }
     <a href="#serve-api">Serving API</a>
     <a href="#tests-fixtures">Tests &amp; Fixtures</a>
     <a href="#env-py">env.py</a>
+    <a href="#init">.__init__</a>
     <a href="#rules-graphify-md">rules/graphify.md</a>
     <a href="#agents-skills-graphify-references-extraction-spe">.agents/skills/graphify/references/extraction-spec.md</a>
     <a href="#workflows-graphify-md">workflows/graphify.md</a>
     <a href="#database-module-init">Database Module Init</a>
     <a href="#decisionrequest">DecisionRequest</a>
-    <a href="#protocol">Protocol</a>
     <a href="#other">Other</a>
 </div>
 
@@ -88,7 +88,7 @@ hr { border: none; border-top: 1px solid var(--border); margin: 40px 0; }
 
 %%{init: {"theme": "dark", "themeVariables": {"fontSize": "15.0px", "fontFamily": "Segoe UI, system-ui, sans-serif", "primaryColor": "#1e293b", "primaryTextColor": "#e2e8f0", "primaryBorderColor": "#38bdf8", "secondaryColor": "#0f172a", "tertiaryColor": "#334155", "lineColor": "#64748b", "textColor": "#e2e8f0"}, "flowchart": {"htmlLabels": true, "curve": "basis", "nodeSpacing": 48, "rankSpacing": 64, "padding": 14, "diagramPadding": 10, "useMaxWidth": true}}}%%
 flowchart LR
-    BUILD_GRAPH_321CBB04("Graph Build<br/><small>283 nodes</small>")
+    BUILD_GRAPH_321CBB04("Graph Build<br/><small>322 nodes</small>")
     class BUILD_GRAPH_321CBB04 module;
     ANALYSIS_CLUSTERING_C79796DA("Analysis &amp; Clustering<br/><small>12 nodes</small>")
     class ANALYSIS_CLUSTERING_C79796DA module;
@@ -98,12 +98,14 @@ flowchart LR
     class CLI_SKILLS_9964CBB8 module;
     INGEST_CACHE_UPDATE_FF457338("Ingestion &amp; Updates<br/><small>22 nodes</small>")
     class INGEST_CACHE_UPDATE_FF457338 module;
-    SERVE_API_35EC8E86("Serving API<br/><small>43 nodes</small>")
+    SERVE_API_35EC8E86("Serving API<br/><small>49 nodes</small>")
     class SERVE_API_35EC8E86 module;
-    TESTS_FIXTURES_B84B1DCC("Tests &amp; Fixtures<br/><small>332 nodes</small>")
+    TESTS_FIXTURES_B84B1DCC("Tests &amp; Fixtures<br/><small>285 nodes</small>")
     class TESTS_FIXTURES_B84B1DCC module;
     ENV_PY_CD49553B("env.py<br/><small>6 nodes</small>")
     class ENV_PY_CD49553B module;
+    INIT_FD62812F(".__init__<br/><small>6 nodes</small>")
+    class INIT_FD62812F module;
     RULES_GRAPHIFY_MD_3459230E("rules/graphify.md<br/><small>2 nodes</small>")
     class RULES_GRAPHIFY_MD_3459230E module;
     AGENTS_SKILLS_GRAPHIFY_REFERENCES_EXTRACTION_SPE_5A0CE8E5(".agents/skills/graphify/references/extraction-spec.md<br/><small>2 nodes</small>")
@@ -114,16 +116,16 @@ flowchart LR
     class DATABASE_MODULE_INIT_1FA10838 module;
     DECISIONREQUEST_DB36DD9B("DecisionRequest<br/><small>1 nodes</small>")
     class DECISIONREQUEST_DB36DD9B module;
-    PROTOCOL_6E9B4AF6("Protocol<br/><small>1 nodes</small>")
-    class PROTOCOL_6E9B4AF6 module;
-    OTHER_D0941E68("Other<br/><small>21 nodes</small>")
+    OTHER_D0941E68("Other<br/><small>24 nodes</small>")
     class OTHER_D0941E68 module;
-    BUILD_GRAPH_321CBB04 -->|contains x43| TESTS_FIXTURES_B84B1DCC
-    TESTS_FIXTURES_B84B1DCC -->|uses x33| BUILD_GRAPH_321CBB04
-    SERVE_API_35EC8E86 -->|calls x18| BUILD_GRAPH_321CBB04
-    BUILD_GRAPH_321CBB04 -->|imports x9| SERVE_API_35EC8E86
-    SERVE_API_35EC8E86 -->|calls x8| TESTS_FIXTURES_B84B1DCC
-    TESTS_FIXTURES_B84B1DCC -->|uses| SERVE_API_35EC8E86
+    BUILD_GRAPH_321CBB04 -->|contains x45| TESTS_FIXTURES_B84B1DCC
+    TESTS_FIXTURES_B84B1DCC -->|uses x44| BUILD_GRAPH_321CBB04
+    SERVE_API_35EC8E86 -->|calls x20| BUILD_GRAPH_321CBB04
+    BUILD_GRAPH_321CBB04 -->|contains x9| SERVE_API_35EC8E86
+    SERVE_API_35EC8E86 -->|calls x4| TESTS_FIXTURES_B84B1DCC
+    TESTS_FIXTURES_B84B1DCC -->|uses x4| SERVE_API_35EC8E86
+    INIT_FD62812F -->|references x2| BUILD_GRAPH_321CBB04
+    TESTS_FIXTURES_B84B1DCC -->|method| INIT_FD62812F
     classDef entry fill:#422006,stroke:#fbbf24,color:#fde68a,stroke-width:1px;
     classDef api fill:#450a0a,stroke:#f87171,color:#fee2e2,stroke-width:1px;
     classDef async fill:#2e1065,stroke:#a78bfa,color:#ede9fe,stroke-width:1px;
@@ -140,7 +142,7 @@ flowchart LR
     <h4>Architecture Layers</h4>
     <table style="width:100%;font-size:0.85rem;">
       <tr><th>Layer</th><th>Nodes</th><th>Communities</th></tr>
-      <tr><td>Graph Build</td><td>283</td><td><code>2, 52, 21, 4, 1, 6, 70, 27, 23, 49, 53, 55, 10, 37, 69, 26, 12, 38, 40, 13, 48, 14</code></td></tr><tr><td>Analysis &amp; Clustering</td><td>12</td><td><code>28, 30</code></td></tr><tr><td>Outputs &amp; Docs</td><td>18</td><td><code>24, 25</code></td></tr><tr><td>CLI &amp; Skill Installers</td><td>64</td><td><code>17, 18, 32, 35, 45, 46, 47</code></td></tr><tr><td>Ingestion &amp; Updates</td><td>22</td><td><code>31, 33, 34, 36, 39, 41</code></td></tr><tr><td>Serving API</td><td>43</td><td><code>20, 54, 56</code></td></tr><tr><td>Tests &amp; Fixtures</td><td>332</td><td><code>3, 5, 0, 8, 9, 22, 7, 51, 11, 16, 67</code></td></tr><tr><td>env.py</td><td>6</td><td><code>29</code></td></tr><tr><td>rules/graphify.md</td><td>2</td><td><code>42</code></td></tr><tr><td>.agents/skills/graphify/references/extraction-spec.md</td><td>2</td><td><code>43</code></td></tr><tr><td>workflows/graphify.md</td><td>2</td><td><code>44</code></td></tr><tr><td>Database Module Init</td><td>1</td><td><code>15</code></td></tr><tr><td>DecisionRequest</td><td>1</td><td><code>19</code></td></tr><tr><td>Protocol</td><td>1</td><td><code>50</code></td></tr><tr><td>Other</td><td>21</td><td><code>57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 68, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80</code></td></tr>
+      <tr><td>Graph Build</td><td>322</td><td><code>52, 2, 49, 21, 1, 27, 70, 57, 81, 23, 6, 53, 55, 10, 69, 4, 84, 26, 86, 37, 87, 12, 38, 40, 88, 89, 90, 13, 48, 14</code></td></tr><tr><td>Analysis &amp; Clustering</td><td>12</td><td><code>28, 30</code></td></tr><tr><td>Outputs &amp; Docs</td><td>18</td><td><code>24, 25</code></td></tr><tr><td>CLI &amp; Skill Installers</td><td>64</td><td><code>17, 18, 32, 35, 45, 46, 47</code></td></tr><tr><td>Ingestion &amp; Updates</td><td>22</td><td><code>31, 33, 34, 36, 39, 41</code></td></tr><tr><td>Serving API</td><td>49</td><td><code>20, 54, 56</code></td></tr><tr><td>Tests &amp; Fixtures</td><td>285</td><td><code>5, 0, 9, 22, 8, 3, 7, 51, 11, 82, 83, 91, 92, 16, 67</code></td></tr><tr><td>env.py</td><td>6</td><td><code>29</code></td></tr><tr><td>.__init__</td><td>6</td><td><code>85</code></td></tr><tr><td>rules/graphify.md</td><td>2</td><td><code>42</code></td></tr><tr><td>.agents/skills/graphify/references/extraction-spec.md</td><td>2</td><td><code>43</code></td></tr><tr><td>workflows/graphify.md</td><td>2</td><td><code>44</code></td></tr><tr><td>Database Module Init</td><td>1</td><td><code>15</code></td></tr><tr><td>DecisionRequest</td><td>1</td><td><code>19</code></td></tr><tr><td>Other</td><td>24</td><td><code>50, 58, 59, 60, 61, 62, 63, 64, 65, 66, 68, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 93, 94, 95</code></td></tr>
     </table>
   </div>
   <div class="card">
@@ -152,8 +154,8 @@ flowchart LR
   <div class="card">
     <h4>Graph Report Highlights</h4>
     <ul>
-      <li>810 nodes · 1300 edges · 81 communities (41 shown, 35 thin omitted)</li>
-      <li>Extraction: 91% EXTRACTED · 9% INFERRED · 0% AMBIGUOUS · INFERRED: 111 edges (avg confidence: 0.91)</li>
+      <li>816 nodes · 1304 edges · 96 communities (49 shown, 40 thin omitted)</li>
+      <li>Extraction: 91% EXTRACTED · 9% INFERRED · 0% AMBIGUOUS · INFERRED: 112 edges (avg confidence: 0.91)</li>
       <li>Token cost: 0 input · 0 output</li>
       <li>1. `StateEstimate` - 28 edges</li>
       <li>2. `DecisionRequest` - 28 edges</li>
@@ -164,12 +166,12 @@ flowchart LR
 <hr>
 <!-- ====== 2. Graph Build ====== -->
 <h2 id="build-graph">2. Graph Build</h2>
-<p>Graph Build groups implementation around confidence, domain, infrastructure, event, mostly in confidence/infrastructure/session_state.py, confidence/infrastructure/event_bus.py, confidence/domain/ports.py. This section covers 283 nodes and 434 internal edges; the diagram shows only representative relationships to stay readable.</p>
+<p>Graph Build groups implementation around confidence, domain, infrastructure, event, mostly in confidence/infrastructure/session_state.py, confidence/domain/ports.py, confidence/infrastructure/event_bus.py. This section covers 322 nodes and 492 internal edges; the diagram shows only representative relationships to stay readable.</p>
 
 <div class="mermaid">
 %%{init: {"theme": "dark", "themeVariables": {"fontSize": "15.0px", "fontFamily": "Segoe UI, system-ui, sans-serif", "primaryColor": "#1e293b", "primaryTextColor": "#e2e8f0", "primaryBorderColor": "#38bdf8", "secondaryColor": "#0f172a", "tertiaryColor": "#334155", "lineColor": "#64748b", "textColor": "#e2e8f0"}, "flowchart": {"htmlLabels": true, "curve": "basis", "nodeSpacing": 48, "rankSpacing": 64, "padding": 14, "diagramPadding": 10, "useMaxWidth": true}}}%%
 flowchart LR
-    %% Section: Graph Build (283 nodes, 434 edges)
+    %% Section: Graph Build (322 nodes, 492 edges)
     subgraph build_graph_confidence_domain_actions_py_a945fc1c["confidence/domain/actions.py"]
         src_confidence_domain_actions_actionregistry_e9d072d3("ActionRegistry<br/><small>confidence/domain/actions.py</small>")
         src_confidence_domain_actions_actionregistry_all_3c02e3e8("all_action_ids()<br/><small>confidence/domain/actions.py</small>")
@@ -189,11 +191,9 @@ flowchart LR
         src_confidence_application_context_builder_conte_7573a761("ContextBuilder<br/><small>confidence/application/context_builder.py</small>")
         src_confidence_application_context_builder_conte_05c4a9c5("__init__()<br/><small>confidence/application/context_builder.py</small>")
     end
-    subgraph build_graph_confidence_domain_policy_py_624de14c["confidence/domain/policy.py"]
-        src_confidence_domain_policy_ae7b4395("policy.py")
-        src_confidence_domain_policy_policyselector_974deb47("PolicySelector<br/><small>confidence/domain/policy.py</small>")
-    end
+    src_confidence_application_engine_82b355c7("engine.py")
     src_confidence_domain_init_1391904c("__init__.py")
+    src_confidence_domain_policy_ae7b4395("policy.py")
     src_confidence_domain_safety_safetycontract_951bcd52("SafetyContract<br/><small>confidence/domain/safety.py</small>")
     src_confidence_infrastructure_session_state_redi_970fb527("RedisSessionStore<br/><small>confidence/infrastructure/session_state.py</small>")
     src_confidence_domain_actions_actionregistry_e9d072d3 -->|method| src_confidence_domain_actions_actionregistry_all_3c02e3e8
@@ -206,8 +206,9 @@ flowchart LR
     src_confidence_domain_response_responsegenerator_0b57c016 -->|method| src_confidence_domain_response_responsegenerator_79ca515b
     src_confidence_domain_response_responsegenerator_0b57c016 -->|method| src_confidence_domain_response_responsegenerator_56ef311b
     src_confidence_application_context_builder_conte_7573a761 -->|method| src_confidence_application_context_builder_conte_05c4a9c5
+    src_confidence_application_engine_82b355c7 -->|imports| src_confidence_application_context_builder_conte_7573a761
     src_confidence_domain_response_responsegenerator_0b57c016 -->|uses| src_confidence_domain_actions_actionregistry_e9d072d3
-    %% Omitted for readability: 265 nodes, 0 edges
+    %% Omitted for readability: 304 nodes, 0 edges
     class src_confidence_domain_actions_actionregistry_e9d072d3 klass;
     class src_confidence_domain_actions_actionregistry_all_3c02e3e8 function;
     class src_confidence_domain_actions_actionregistry_ini_ceb8d913 function;
@@ -221,9 +222,9 @@ flowchart LR
     class src_confidence_domain_response_responsegenerator_56ef311b function;
     class src_confidence_application_context_builder_conte_7573a761 klass;
     class src_confidence_application_context_builder_conte_05c4a9c5 function;
-    class src_confidence_domain_policy_ae7b4395 module;
-    class src_confidence_domain_policy_policyselector_974deb47 klass;
+    class src_confidence_application_engine_82b355c7 module;
     class src_confidence_domain_init_1391904c module;
+    class src_confidence_domain_policy_ae7b4395 module;
     class src_confidence_domain_safety_safetycontract_951bcd52 klass;
     class src_confidence_infrastructure_session_state_redi_970fb527 async;
     classDef entry fill:#422006,stroke:#fbbf24,color:#fde68a,stroke-width:1px;
@@ -249,190 +250,134 @@ flowchart LR
 </tr>
 <tr>
   <td>1</td>
-  <td><code>ContextBuilder</code><br><small style="color:var(--muted)">confidence/application/context_builder.py</small></td>
-  <td><span class="tag tag-class">Class</span></td>
-  <td><code>DecisionEngine</code><br><small style="color:var(--muted)">confidence/application/engine.py</small><br><code>engine()</code><br><small style="color:var(--muted)">tests/test_engine.py</small><br><code>engine.py</code><br><small style="color:var(--muted)">confidence/application/engine.py</small></td>
-  <td><code>__init__()</code><br><small style="color:var(--muted)">confidence/application/context_builder.py</small><br><code>build()</code><br><small style="color:var(--muted)">confidence/application/context_builder.py</small><br><code>MarketProvider</code><br><small style="color:var(--muted)">confidence/domain/ports.py</small><br>+2 more</td>
-  <td>ContextBuilder node in confidence/application/context_builder.py.</td>
+  <td><code>RedisIdempotencyStore</code><br><small style="color:var(--muted)">confidence/infrastructure/session_state.py</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td><code>test_idempotency_store()</code><br><small style="color:var(--muted)">tests/test_session_state.py</small></td>
+  <td><code>__init__()</code><br><small style="color:var(--muted)">confidence/infrastructure/session_state.py</small><br><code>_key()</code><br><small style="color:var(--muted)">confidence/infrastructure/session_state.py</small><br><code>acquire()</code><br><small style="color:var(--muted)">confidence/infrastructure/session_state.py</small><br>+2 more</td>
+  <td>RedisIdempotencyStore node in confidence/infrastructure/session_state.py.</td>
 </tr>
 <tr>
   <td>2</td>
-  <td><code>MarketProvider</code><br><small style="color:var(--muted)">confidence/domain/ports.py</small></td>
-  <td><span class="tag tag-class">Class</span></td>
-  <td><code>context_builder.py</code><br><small style="color:var(--muted)">confidence/application/context_builder.py</small><br><code>ContextBuilder</code><br><small style="color:var(--muted)">confidence/application/context_builder.py</small></td>
-  <td><code>get_market_context()</code><br><small style="color:var(--muted)">confidence/domain/ports.py</small></td>
-  <td>MarketProvider node in confidence/domain/ports.py.</td>
+  <td><code>RedisSessionStore</code><br><small style="color:var(--muted)">confidence/infrastructure/session_state.py</small></td>
+  <td><span class="tag tag-async">Async</span></td>
+  <td><code>store save get()</code><br><small style="color:var(--muted)">tests/test_session_state.py</small><br><code>store update interaction()</code><br><small style="color:var(--muted)">tests/test_session_state.py</small></td>
+  <td><code>__init__()</code><br><small style="color:var(--muted)">confidence/infrastructure/session_state.py</small><br><code>_interaction_key()</code><br><small style="color:var(--muted)">confidence/infrastructure/session_state.py</small><br><code>_session_key()</code><br><small style="color:var(--muted)">confidence/infrastructure/session_state.py</small><br>+4 more</td>
+  <td>RedisSessionStore node in confidence/infrastructure/session_state.py.</td>
 </tr>
 <tr>
   <td>3</td>
-  <td><code>SafetyProvider</code><br><small style="color:var(--muted)">confidence/domain/ports.py</small></td>
-  <td><span class="tag tag-class">Class</span></td>
-  <td><code>context_builder.py</code><br><small style="color:var(--muted)">confidence/application/context_builder.py</small><br><code>ContextBuilder</code><br><small style="color:var(--muted)">confidence/application/context_builder.py</small></td>
-  <td><code>get_safety_context()</code><br><small style="color:var(--muted)">confidence/domain/ports.py</small></td>
-  <td>SafetyProvider node in confidence/domain/ports.py.</td>
+  <td><code>.acquire()</code><br><small style="color:var(--muted)">confidence/infrastructure/session_state.py</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>RedisIdempotencyStore</code><br><small style="color:var(--muted)">confidence/infrastructure/session_state.py</small></td>
+  <td><code>_key()</code><br><small style="color:var(--muted)">confidence/infrastructure/session_state.py</small></td>
+  <td>.acquire() node in confidence/infrastructure/session_state.py.</td>
 </tr>
 <tr>
   <td>4</td>
-  <td><code>SessionProvider</code><br><small style="color:var(--muted)">confidence/domain/ports.py</small></td>
-  <td><span class="tag tag-class">Class</span></td>
-  <td>External entry / no inbound edge</td>
-  <td><code>get_session()</code><br><small style="color:var(--muted)">confidence/domain/ports.py</small></td>
-  <td>SessionProvider node in confidence/domain/ports.py.</td>
+  <td><code>.get_response()</code><br><small style="color:var(--muted)">confidence/infrastructure/session_state.py</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>RedisIdempotencyStore</code><br><small style="color:var(--muted)">confidence/infrastructure/session_state.py</small></td>
+  <td><code>_key()</code><br><small style="color:var(--muted)">confidence/infrastructure/session_state.py</small></td>
+  <td>.get_response() node in confidence/infrastructure/session_state.py.</td>
 </tr>
 <tr>
   <td>5</td>
-  <td><code>SlipProvider</code><br><small style="color:var(--muted)">confidence/domain/ports.py</small></td>
-  <td><span class="tag tag-class">Class</span></td>
-  <td><code>context_builder.py</code><br><small style="color:var(--muted)">confidence/application/context_builder.py</small><br><code>ContextBuilder</code><br><small style="color:var(--muted)">confidence/application/context_builder.py</small></td>
-  <td><code>get_slip_context()</code><br><small style="color:var(--muted)">confidence/domain/ports.py</small></td>
-  <td>SlipProvider node in confidence/domain/ports.py.</td>
+  <td><code>.__init__()</code><br><small style="color:var(--muted)">confidence/infrastructure/session_state.py</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>RedisIdempotencyStore</code><br><small style="color:var(--muted)">confidence/infrastructure/session_state.py</small></td>
+  <td>No direct outbound edge</td>
+  <td>.__init__() node in confidence/infrastructure/session_state.py.</td>
 </tr>
 <tr>
   <td>6</td>
-  <td><code>.build()</code><br><small style="color:var(--muted)">confidence/application/context_builder.py</small></td>
+  <td><code>._key()</code><br><small style="color:var(--muted)">confidence/infrastructure/session_state.py</small></td>
   <td><span class="tag tag-func">Function</span></td>
-  <td><code>ContextBuilder</code><br><small style="color:var(--muted)">confidence/application/context_builder.py</small></td>
-  <td><code>DecisionContext</code></td>
-  <td>.build() node in confidence/application/context_builder.py.</td>
+  <td><code>acquire()</code><br><small style="color:var(--muted)">confidence/infrastructure/session_state.py</small><br><code>get_response()</code><br><small style="color:var(--muted)">confidence/infrastructure/session_state.py</small><br><code>RedisIdempotencyStore</code><br><small style="color:var(--muted)">confidence/infrastructure/session_state.py</small><br>+1 more</td>
+  <td>No direct outbound edge</td>
+  <td>._key() node in confidence/infrastructure/session_state.py.</td>
 </tr>
 <tr>
   <td>7</td>
-  <td><code>.__init__()</code><br><small style="color:var(--muted)">confidence/application/context_builder.py</small></td>
+  <td><code>.save_response()</code><br><small style="color:var(--muted)">confidence/infrastructure/session_state.py</small></td>
   <td><span class="tag tag-func">Function</span></td>
-  <td><code>ContextBuilder</code><br><small style="color:var(--muted)">confidence/application/context_builder.py</small></td>
-  <td>No direct outbound edge</td>
-  <td>.__init__() node in confidence/application/context_builder.py.</td>
+  <td><code>RedisIdempotencyStore</code><br><small style="color:var(--muted)">confidence/infrastructure/session_state.py</small></td>
+  <td><code>_key()</code><br><small style="color:var(--muted)">confidence/infrastructure/session_state.py</small></td>
+  <td>.save_response() node in confidence/infrastructure/session_state.py.</td>
 </tr>
 <tr>
   <td>8</td>
-  <td><code>.__init__()</code><br><small style="color:var(--muted)">confidence/application/engine.py</small></td>
+  <td><code>.get_interaction()</code><br><small style="color:var(--muted)">confidence/infrastructure/session_state.py</small></td>
   <td><span class="tag tag-func">Function</span></td>
-  <td><code>DecisionEngine</code><br><small style="color:var(--muted)">confidence/application/engine.py</small></td>
-  <td>No direct outbound edge</td>
-  <td>.__init__() node in confidence/application/engine.py.</td>
+  <td><code>RedisSessionStore</code><br><small style="color:var(--muted)">confidence/infrastructure/session_state.py</small></td>
+  <td><code>_interaction_key()</code><br><small style="color:var(--muted)">confidence/infrastructure/session_state.py</small></td>
+  <td>.get_interaction() node in confidence/infrastructure/session_state.py.</td>
 </tr>
 <tr>
   <td>9</td>
-  <td><code>.get_market_context()</code><br><small style="color:var(--muted)">confidence/domain/ports.py</small></td>
+  <td><code>.get_session()</code><br><small style="color:var(--muted)">confidence/infrastructure/session_state.py</small></td>
   <td><span class="tag tag-func">Function</span></td>
-  <td><code>MarketProvider</code><br><small style="color:var(--muted)">confidence/domain/ports.py</small></td>
-  <td>No direct outbound edge</td>
-  <td>.get_market_context() node in confidence/domain/ports.py.</td>
+  <td><code>RedisSessionStore</code><br><small style="color:var(--muted)">confidence/infrastructure/session_state.py</small></td>
+  <td><code>_session_key()</code><br><small style="color:var(--muted)">confidence/infrastructure/session_state.py</small></td>
+  <td>.get_session() node in confidence/infrastructure/session_state.py.</td>
 </tr>
 <tr>
   <td>10</td>
-  <td><code>.get_safety_context()</code><br><small style="color:var(--muted)">confidence/domain/ports.py</small></td>
+  <td><code>.__init__()</code><br><small style="color:var(--muted)">confidence/infrastructure/session_state.py</small></td>
   <td><span class="tag tag-func">Function</span></td>
-  <td><code>SafetyProvider</code><br><small style="color:var(--muted)">confidence/domain/ports.py</small></td>
+  <td><code>RedisSessionStore</code><br><small style="color:var(--muted)">confidence/infrastructure/session_state.py</small></td>
   <td>No direct outbound edge</td>
-  <td>.get_safety_context() node in confidence/domain/ports.py.</td>
+  <td>.__init__() node in confidence/infrastructure/session_state.py.</td>
 </tr>
 <tr>
   <td>11</td>
-  <td><code>.get_session()</code><br><small style="color:var(--muted)">confidence/domain/ports.py</small></td>
+  <td><code>._interaction_key()</code><br><small style="color:var(--muted)">confidence/infrastructure/session_state.py</small></td>
   <td><span class="tag tag-func">Function</span></td>
-  <td><code>SessionProvider</code><br><small style="color:var(--muted)">confidence/domain/ports.py</small></td>
+  <td><code>get_interaction()</code><br><small style="color:var(--muted)">confidence/infrastructure/session_state.py</small><br><code>RedisSessionStore</code><br><small style="color:var(--muted)">confidence/infrastructure/session_state.py</small><br><code>update_interaction()</code><br><small style="color:var(--muted)">confidence/infrastructure/session_state.py</small></td>
   <td>No direct outbound edge</td>
-  <td>.get_session() node in confidence/domain/ports.py.</td>
+  <td>._interaction_key() node in confidence/infrastructure/session_state.py.</td>
 </tr>
 <tr>
   <td>12</td>
-  <td><code>.get_slip_context()</code><br><small style="color:var(--muted)">confidence/domain/ports.py</small></td>
+  <td><code>.save_session()</code><br><small style="color:var(--muted)">confidence/infrastructure/session_state.py</small></td>
   <td><span class="tag tag-func">Function</span></td>
-  <td><code>SlipProvider</code><br><small style="color:var(--muted)">confidence/domain/ports.py</small></td>
-  <td>No direct outbound edge</td>
-  <td>.get_slip_context() node in confidence/domain/ports.py.</td>
+  <td><code>RedisSessionStore</code><br><small style="color:var(--muted)">confidence/infrastructure/session_state.py</small></td>
+  <td><code>_session_key()</code><br><small style="color:var(--muted)">confidence/infrastructure/session_state.py</small></td>
+  <td>.save_session() node in confidence/infrastructure/session_state.py.</td>
 </tr>
 <tr>
   <td>13</td>
-  <td><code>Protocol</code><br><small style="color:var(--muted)"></small></td>
-  <td><span class="tag tag-class">Class</span></td>
-  <td>External entry / no inbound edge</td>
+  <td><code>._session_key()</code><br><small style="color:var(--muted)">confidence/infrastructure/session_state.py</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>get_session()</code><br><small style="color:var(--muted)">confidence/infrastructure/session_state.py</small><br><code>RedisSessionStore</code><br><small style="color:var(--muted)">confidence/infrastructure/session_state.py</small><br><code>save_session()</code><br><small style="color:var(--muted)">confidence/infrastructure/session_state.py</small></td>
   <td>No direct outbound edge</td>
-  <td>Protocol node in project.</td>
+  <td>._session_key() node in confidence/infrastructure/session_state.py.</td>
 </tr>
 <tr>
   <td>14</td>
-  <td><code>context_builder.py</code><br><small style="color:var(--muted)">confidence/application/context_builder.py</small></td>
-  <td><span class="tag tag-class">Module</span></td>
-  <td><code>engine.py</code><br><small style="color:var(--muted)">confidence/application/engine.py</small><br><code>test_engine.py</code><br><small style="color:var(--muted)">tests/test_engine.py</small></td>
-  <td><code>MarketProvider</code><br><small style="color:var(--muted)">confidence/domain/ports.py</small><br><code>ports.py</code><br><small style="color:var(--muted)">confidence/domain/ports.py</small><br><code>SafetyProvider</code><br><small style="color:var(--muted)">confidence/domain/ports.py</small><br>+2 more</td>
-  <td>Module file in confidence/application/context_builder.py.</td>
+  <td><code>.update_interaction()</code><br><small style="color:var(--muted)">confidence/infrastructure/session_state.py</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>RedisSessionStore</code><br><small style="color:var(--muted)">confidence/infrastructure/session_state.py</small></td>
+  <td><code>_interaction_key()</code><br><small style="color:var(--muted)">confidence/infrastructure/session_state.py</small><br><code>InteractionContext</code></td>
+  <td>.update_interaction() node in confidence/infrastructure/session_state.py.</td>
 </tr>
 <tr>
   <td>15</td>
-  <td><code>DecisionContext</code><br><small style="color:var(--muted)"></small></td>
+  <td><code>Any</code><br><small style="color:var(--muted)"></small></td>
   <td><span class="tag tag-class">Class</span></td>
-  <td><code>build()</code><br><small style="color:var(--muted)">confidence/application/context_builder.py</small></td>
+  <td>External entry / no inbound edge</td>
   <td>No direct outbound edge</td>
-  <td>DecisionContext node in project.</td>
+  <td>Any node in project.</td>
 </tr>
 <tr>
   <td>16</td>
-  <td><code>ActionRegistry</code><br><small style="color:var(--muted)"></small></td>
+  <td><code>InteractionContext</code><br><small style="color:var(--muted)"></small></td>
   <td><span class="tag tag-class">Class</span></td>
-  <td>External entry / no inbound edge</td>
+  <td><code>update_interaction()</code><br><small style="color:var(--muted)">confidence/infrastructure/session_state.py</small></td>
   <td>No direct outbound edge</td>
-  <td>ActionRegistry node in project.</td>
+  <td>InteractionContext node in project.</td>
 </tr>
 <tr>
   <td>17</td>
-  <td><code>PolicySelector</code><br><small style="color:var(--muted)"></small></td>
-  <td><span class="tag tag-class">Class</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>PolicySelector node in project.</td>
-</tr>
-<tr>
-  <td>18</td>
-  <td><code>ResponseGenerator</code><br><small style="color:var(--muted)"></small></td>
-  <td><span class="tag tag-class">Class</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>ResponseGenerator node in project.</td>
-</tr>
-<tr>
-  <td>19</td>
-  <td><code>SafetyContract</code><br><small style="color:var(--muted)"></small></td>
-  <td><span class="tag tag-class">Class</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>SafetyContract node in project.</td>
-</tr>
-<tr>
-  <td>20</td>
-  <td><code>StateEstimator</code><br><small style="color:var(--muted)"></small></td>
-  <td><span class="tag tag-class">Class</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>StateEstimator node in project.</td>
-</tr>
-<tr>
-  <td>21</td>
-  <td><code>ports.py</code><br><small style="color:var(--muted)">confidence/domain/ports.py</small></td>
-  <td><span class="tag tag-class">Module</span></td>
-  <td><code>context_builder.py</code><br><small style="color:var(--muted)">confidence/application/context_builder.py</small><br><code>engine.py</code><br><small style="color:var(--muted)">confidence/application/engine.py</small><br><code>persistence.py</code><br><small style="color:var(--muted)">confidence/infrastructure/persistence.py</small></td>
-  <td><code>UUID</code></td>
-  <td>Module file in confidence/domain/ports.py.</td>
-</tr>
-<tr>
-  <td>22</td>
-  <td><code>MarketContext</code><br><small style="color:var(--muted)"></small></td>
-  <td><span class="tag tag-class">Class</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>MarketContext node in project.</td>
-</tr>
-<tr>
-  <td>23</td>
-  <td><code>SafetyContext</code><br><small style="color:var(--muted)"></small></td>
-  <td><span class="tag tag-class">Class</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>SafetyContext node in project.</td>
-</tr>
-<tr>
-  <td>24</td>
   <td><code>Session</code><br><small style="color:var(--muted)"></small></td>
   <td><span class="tag tag-class">Class</span></td>
   <td>External entry / no inbound edge</td>
@@ -440,52 +385,108 @@ flowchart LR
   <td>Session node in project.</td>
 </tr>
 <tr>
-  <td>25</td>
-  <td><code>SlipContext</code><br><small style="color:var(--muted)"></small></td>
+  <td>18</td>
+  <td><code>session_state.py</code><br><small style="color:var(--muted)">confidence/infrastructure/session_state.py</small></td>
+  <td><span class="tag tag-class">Module</span></td>
+  <td>External entry / no inbound edge</td>
+  <td><code>log.py</code><br><small style="color:var(--muted)">src/confidence/log.py</small><br><code>UUID</code></td>
+  <td>Module file in confidence/infrastructure/session_state.py.</td>
+</tr>
+<tr>
+  <td>19</td>
+  <td><code>Redis</code><br><small style="color:var(--muted)"></small></td>
   <td><span class="tag tag-class">Class</span></td>
   <td>External entry / no inbound edge</td>
   <td>No direct outbound edge</td>
-  <td>SlipContext node in project.</td>
+  <td>Redis node in project.</td>
 </tr>
 <tr>
-  <td>26</td>
+  <td>20</td>
   <td><code>UUID</code><br><small style="color:var(--muted)"></small></td>
   <td><span class="tag tag-class">Class</span></td>
-  <td><code>ports.py</code><br><small style="color:var(--muted)">confidence/domain/ports.py</small></td>
+  <td><code>session_state.py</code><br><small style="color:var(--muted)">confidence/infrastructure/session_state.py</small></td>
   <td>No direct outbound edge</td>
   <td>UUID node in project.</td>
 </tr>
 <tr>
-  <td>27</td>
-  <td><code>Context Builder. Constructs the DecisionContext from the incoming request and…</code><br><small style="color:var(--muted)">confidence/application/context_builder.py</small></td>
+  <td>21</td>
+  <td><code>Session State &amp; Idempotency in Redis. Manages distributed state for sessions…</code><br><small style="color:var(--muted)">confidence/infrastructure/session_state.py</small></td>
   <td><span class="tag tag-func">Concept</span></td>
   <td>External entry / no inbound edge</td>
   <td>No direct outbound edge</td>
-  <td>Design note for Context Builder. Constructs the DecisionContext from the incoming request and….</td>
+  <td>Design note for Session State &amp; Idempotency in Redis. Manages distributed state for sessions….</td>
+</tr>
+<tr>
+  <td>22</td>
+  <td><code>Attempt to acquire idempotency lock. Returns True if acquired (first attempt).</code><br><small style="color:var(--muted)">confidence/infrastructure/session_state.py</small></td>
+  <td><span class="tag tag-func">Concept</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>Design note for Attempt to acquire idempotency lock. Returns True if acquired (first attempt)..</td>
+</tr>
+<tr>
+  <td>23</td>
+  <td><code>Save the successful response for a given idempotency key.</code><br><small style="color:var(--muted)">confidence/infrastructure/session_state.py</small></td>
+  <td><span class="tag tag-func">Concept</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>Design note for Save the successful response for a given idempotency key..</td>
+</tr>
+<tr>
+  <td>24</td>
+  <td><code>Retrieve a saved response.</code><br><small style="color:var(--muted)">confidence/infrastructure/session_state.py</small></td>
+  <td><span class="tag tag-func">Concept</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>Design note for Retrieve a saved response..</td>
+</tr>
+<tr>
+  <td>25</td>
+  <td><code>Stores active sessions and interaction context.</code><br><small style="color:var(--muted)">confidence/infrastructure/session_state.py</small></td>
+  <td><span class="tag tag-func">Concept</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>Design note for Stores active sessions and interaction context..</td>
+</tr>
+<tr>
+  <td>26</td>
+  <td><code>Save basic session metadata.</code><br><small style="color:var(--muted)">confidence/infrastructure/session_state.py</small></td>
+  <td><span class="tag tag-func">Concept</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>Design note for Save basic session metadata..</td>
+</tr>
+<tr>
+  <td>27</td>
+  <td><code>Retrieve session metadata.</code><br><small style="color:var(--muted)">confidence/infrastructure/session_state.py</small></td>
+  <td><span class="tag tag-func">Concept</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>Design note for Retrieve session metadata..</td>
 </tr>
 <tr>
   <td>28</td>
-  <td><code>Builds a complete, trustworthy DecisionContext.</code><br><small style="color:var(--muted)">confidence/application/context_builder.py</small></td>
+  <td><code>Safely update interaction context using optimistic locking.</code><br><small style="color:var(--muted)">confidence/infrastructure/session_state.py</small></td>
   <td><span class="tag tag-func">Concept</span></td>
   <td>External entry / no inbound edge</td>
   <td>No direct outbound edge</td>
-  <td>Design note for Builds a complete, trustworthy DecisionContext..</td>
+  <td>Design note for Safely update interaction context using optimistic locking..</td>
 </tr>
 <tr>
   <td>29</td>
-  <td><code>Construct the context safely.</code><br><small style="color:var(--muted)">confidence/application/context_builder.py</small></td>
+  <td><code>Retrieve current interaction context.</code><br><small style="color:var(--muted)">confidence/infrastructure/session_state.py</small></td>
   <td><span class="tag tag-func">Concept</span></td>
   <td>External entry / no inbound edge</td>
   <td>No direct outbound edge</td>
-  <td>Design note for Construct the context safely..</td>
+  <td>Design note for Retrieve current interaction context..</td>
 </tr>
 <tr>
   <td>30</td>
-  <td><code>Domain Ports (Protocols). The domain owns its interfaces (hexagonal…</code><br><small style="color:var(--muted)">confidence/domain/ports.py</small></td>
+  <td><code>Idempotency store using Redis SET NX.</code><br><small style="color:var(--muted)">confidence/infrastructure/session_state.py</small></td>
   <td><span class="tag tag-func">Concept</span></td>
   <td>External entry / no inbound edge</td>
   <td>No direct outbound edge</td>
-  <td>Design note for Domain Ports (Protocols). The domain owns its interfaces (hexagonal….</td>
+  <td>Design note for Idempotency store using Redis SET NX..</td>
 </tr>
 </table>
 
@@ -495,18 +496,18 @@ flowchart LR
     <table style="width:100%;font-size:0.85rem;">
       <tr><th>File</th><th>Coverage</th></tr>
       <tr><td><code>confidence/infrastructure/session_state.py</code></td><td>25 nodes</td></tr>
+<tr><td><code>confidence/domain/ports.py</code></td><td>22 nodes</td></tr>
 <tr><td><code>confidence/infrastructure/event_bus.py</code></td><td>22 nodes</td></tr>
 <tr><td><code>src/confidence/config.py</code></td><td>18 nodes</td></tr>
 <tr><td><code>confidence/domain/actions.py</code></td><td>18 nodes</td></tr>
-<tr><td><code>confidence/domain/ports.py</code></td><td>18 nodes</td></tr>
+<tr><td><code>confidence/application/engine.py</code></td><td>15 nodes</td></tr>
+<tr><td><code>confidence/infrastructure/dlq.py</code></td><td>15 nodes</td></tr>
 <tr><td><code>confidence/domain/enums.py</code></td><td>14 nodes</td></tr>
-<tr><td><code>confidence/domain/safety.py</code></td><td>14 nodes</td></tr>
-<tr><td><code>confidence/db/connection.py</code></td><td>10 nodes</td></tr>
     </table>
   </div>
   <div class="card">
     <h4>Design Notes</h4>
-    <p>This section comes from graphify community clustering. Relationship summary: explains x100, references x68, contains x62, method x55. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
+    <p>This section comes from graphify community clustering. Relationship summary: explains x116, references x72, contains x66, method x63. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
   </div>
 </div>
 <hr>
@@ -1565,22 +1566,22 @@ flowchart LR
 
 <!-- ====== 7. Serving API ====== -->
 <h2 id="serve-api">7. Serving API</h2>
-<p>Serving API groups implementation around confidence, api, dependenciespy, get, mostly in confidence/api/dependencies.py, confidence/api/models.py, confidence/domain/enums.py. This section covers 43 nodes and 52 internal edges; the diagram shows only representative relationships to stay readable.</p>
+<p>Serving API groups implementation around confidence, api, dependenciespy, get, mostly in confidence/api/dependencies.py, confidence/api/models.py, confidence/domain/enums.py. This section covers 49 nodes and 59 internal edges; the diagram shows only representative relationships to stay readable.</p>
 
 <div class="mermaid">
 %%{init: {"theme": "dark", "themeVariables": {"fontSize": "15.0px", "fontFamily": "Segoe UI, system-ui, sans-serif", "primaryColor": "#1e293b", "primaryTextColor": "#e2e8f0", "primaryBorderColor": "#38bdf8", "secondaryColor": "#0f172a", "tertiaryColor": "#334155", "lineColor": "#64748b", "textColor": "#e2e8f0"}, "flowchart": {"htmlLabels": true, "curve": "basis", "nodeSpacing": 48, "rankSpacing": 64, "padding": 14, "diagramPadding": 10, "useMaxWidth": true}}}%%
 flowchart LR
-    %% Section: Serving API (43 nodes, 52 edges)
+    %% Section: Serving API (49 nodes, 59 edges)
     subgraph serve_api_confidence_api_dependencies_py_dff3e1d6["confidence/api/dependencies.py"]
+        src_confidence_api_dependencies_get_context_buil_62015cb9("get_context_builder()<br/><small>confidence/api/dependencies.py</small>")
         src_confidence_api_dependencies_get_decision_eng_6889a4e7("get_decision_engine()<br/><small>confidence/api/dependencies.py</small>")
         src_confidence_api_dependencies_get_action_regis_3b69e4e3("get_action_registry()<br/><small>confidence/api/dependencies.py</small>")
-        src_confidence_api_dependencies_get_context_buil_62015cb9("get_context_builder()<br/><small>confidence/api/dependencies.py</small>")
         src_confidence_api_dependencies_get_policy_selec_6e888e35("get_policy_selector()<br/><small>confidence/api/dependencies.py</small>")
         src_confidence_api_dependencies_get_response_gen_60b5a335("get_response_generator()<br/><small>confidence/api/dependencies.py</small>")
-        src_confidence_api_dependencies_get_safety_contr_7b85030c("get_safety_contract()<br/><small>confidence/api/dependencies.py</small>")
+        src_confidence_api_dependencies_dummyslipprovide_16bc3509("DummySlipProvider<br/><small>confidence/api/dependencies.py</small>")
         src_confidence_api_dependencies_get_persistence_9a2c16ce("get_persistence_provider()<br/><small>confidence/api/dependencies.py</small>")
         src_confidence_api_dependencies_get_engine_41b16615("get_engine()<br/><small>confidence/api/dependencies.py</small>")
-        src_confidence_api_dependencies_get_state_estima_1f7524c2("get_state_estimator()<br/><small>confidence/api/dependencies.py</small>")
+        src_confidence_api_dependencies_get_safety_contr_7b85030c("get_safety_contract()<br/><small>confidence/api/dependencies.py</small>")
     end
     subgraph serve_api_External_generated_a71e9f44["External / generated"]
         actionregistry_f4eb3cdc("ActionRegistry")
@@ -1589,41 +1590,41 @@ flowchart LR
         policyselector_0c947c12("PolicySelector")
         responsegenerator_bae1786d("ResponseGenerator")
         safetycontract_f82558e9("SafetyContract")
-        stateestimator_08f2173d("StateEstimator")
     end
     subgraph serve_api_confidence_domain_enums_py_22aaf1e1["confidence/domain/enums.py"]
         src_confidence_domain_enums_safetystatus_3a708afc("SafetyStatus<br/><small>confidence/domain/enums.py</small>")
         src_confidence_domain_enums_safetystatus_require_7f0950e2("requires_fail_closed()<br/><small>confidence/domain/enums.py</small>")
     end
+    src_confidence_api_routes_create_decision_b3abedea("create_decision()<br/><small>confidence/api/routes.py</small>")
     src_confidence_domain_enums_safetystatus_3a708afc -->|method| src_confidence_domain_enums_safetystatus_require_7f0950e2
     src_confidence_api_dependencies_get_action_regis_3b69e4e3 -->|calls| actionregistry_f4eb3cdc
     src_confidence_api_dependencies_get_context_buil_62015cb9 -->|calls| contextbuilder_19c7ba56
+    src_confidence_api_dependencies_get_context_buil_62015cb9 -->|calls| src_confidence_api_dependencies_dummyslipprovide_16bc3509
     src_confidence_api_dependencies_get_decision_eng_6889a4e7 -->|calls| src_confidence_api_dependencies_py_decisionengin_ec0b1ea4
     src_confidence_api_dependencies_get_decision_eng_6889a4e7 -->|calls| src_confidence_api_dependencies_get_persistence_9a2c16ce
     src_confidence_api_dependencies_get_persistence_9a2c16ce -->|calls| src_confidence_api_dependencies_get_engine_41b16615
     src_confidence_api_dependencies_get_policy_selec_6e888e35 -->|calls| policyselector_0c947c12
     src_confidence_api_dependencies_get_response_gen_60b5a335 -->|calls| responsegenerator_bae1786d
     src_confidence_api_dependencies_get_safety_contr_7b85030c -->|calls| safetycontract_f82558e9
-    src_confidence_api_dependencies_get_state_estima_1f7524c2 -->|calls| stateestimator_08f2173d
-    %% Omitted for readability: 25 nodes, 0 edges
+    %% Omitted for readability: 31 nodes, 0 edges
+    class src_confidence_api_dependencies_get_context_buil_62015cb9 function;
     class src_confidence_api_dependencies_get_decision_eng_6889a4e7 function;
     class src_confidence_api_dependencies_get_action_regis_3b69e4e3 function;
-    class src_confidence_api_dependencies_get_context_buil_62015cb9 function;
     class src_confidence_api_dependencies_get_policy_selec_6e888e35 function;
     class src_confidence_api_dependencies_get_response_gen_60b5a335 function;
-    class src_confidence_api_dependencies_get_safety_contr_7b85030c function;
+    class src_confidence_api_dependencies_dummyslipprovide_16bc3509 klass;
     class src_confidence_api_dependencies_get_persistence_9a2c16ce function;
     class src_confidence_api_dependencies_get_engine_41b16615 function;
-    class src_confidence_api_dependencies_get_state_estima_1f7524c2 function;
+    class src_confidence_api_dependencies_get_safety_contr_7b85030c function;
     class actionregistry_f4eb3cdc klass;
     class contextbuilder_19c7ba56 klass;
     class src_confidence_api_dependencies_py_decisionengin_ec0b1ea4 klass;
     class policyselector_0c947c12 klass;
     class responsegenerator_bae1786d klass;
     class safetycontract_f82558e9 klass;
-    class stateestimator_08f2173d klass;
     class src_confidence_domain_enums_safetystatus_3a708afc klass;
     class src_confidence_domain_enums_safetystatus_require_7f0950e2 function;
+    class src_confidence_api_routes_create_decision_b3abedea function;
     classDef entry fill:#422006,stroke:#fbbf24,color:#fde68a,stroke-width:1px;
     classDef api fill:#450a0a,stroke:#f87171,color:#fee2e2,stroke-width:1px;
     classDef async fill:#2e1065,stroke:#a78bfa,color:#ede9fe,stroke-width:1px;
@@ -1647,6 +1648,14 @@ flowchart LR
 </tr>
 <tr>
   <td>1</td>
+  <td><code>DummySlipProvider</code><br><small style="color:var(--muted)">confidence/api/dependencies.py</small></td>
+  <td><span class="tag tag-class">Class</span></td>
+  <td><code>engine()</code><br><small style="color:var(--muted)">tests/test_engine.py</small><br><code>get_context_builder()</code><br><small style="color:var(--muted)">confidence/api/dependencies.py</small><br><code>TestEndToEndScenarios</code><br><small style="color:var(--muted)">tests/test_engine.py</small><br>+1 more</td>
+  <td><code>get_slip_context()</code><br><small style="color:var(--muted)">confidence/api/dependencies.py</small></td>
+  <td>DummySlipProvider node in confidence/api/dependencies.py.</td>
+</tr>
+<tr>
+  <td>2</td>
   <td><code>get_action_registry()</code><br><small style="color:var(--muted)">confidence/api/dependencies.py</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td>External entry / no inbound edge</td>
@@ -1654,7 +1663,7 @@ flowchart LR
   <td>get_action_registry() node in confidence/api/dependencies.py.</td>
 </tr>
 <tr>
-  <td>2</td>
+  <td>3</td>
   <td><code>get_context_builder()</code><br><small style="color:var(--muted)">confidence/api/dependencies.py</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td>External entry / no inbound edge</td>
@@ -1662,15 +1671,15 @@ flowchart LR
   <td>get_context_builder() node in confidence/api/dependencies.py.</td>
 </tr>
 <tr>
-  <td>3</td>
+  <td>4</td>
   <td><code>get_decision_engine()</code><br><small style="color:var(--muted)">confidence/api/dependencies.py</small></td>
   <td><span class="tag tag-func">Function</span></td>
-  <td><code>routes.py</code><br><small style="color:var(--muted)">confidence/api/routes.py</small></td>
+  <td>External entry / no inbound edge</td>
   <td><code>DecisionEngine</code><br><code>get_persistence_provider()</code><br><small style="color:var(--muted)">confidence/api/dependencies.py</small><br><code>load_config()</code><br><small style="color:var(--muted)">src/confidence/config.py</small></td>
   <td>get_decision_engine() node in confidence/api/dependencies.py.</td>
 </tr>
 <tr>
-  <td>4</td>
+  <td>5</td>
   <td><code>get_engine()</code><br><small style="color:var(--muted)">confidence/api/dependencies.py</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td><code>get_persistence_provider()</code><br><small style="color:var(--muted)">confidence/api/dependencies.py</small></td>
@@ -1678,7 +1687,7 @@ flowchart LR
   <td>get_engine() node in confidence/api/dependencies.py.</td>
 </tr>
 <tr>
-  <td>5</td>
+  <td>6</td>
   <td><code>get_persistence_provider()</code><br><small style="color:var(--muted)">confidence/api/dependencies.py</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td><code>get_decision_engine()</code><br><small style="color:var(--muted)">confidence/api/dependencies.py</small></td>
@@ -1686,7 +1695,7 @@ flowchart LR
   <td>get_persistence_provider() node in confidence/api/dependencies.py.</td>
 </tr>
 <tr>
-  <td>6</td>
+  <td>7</td>
   <td><code>get_policy_selector()</code><br><small style="color:var(--muted)">confidence/api/dependencies.py</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td>External entry / no inbound edge</td>
@@ -1694,7 +1703,7 @@ flowchart LR
   <td>get_policy_selector() node in confidence/api/dependencies.py.</td>
 </tr>
 <tr>
-  <td>7</td>
+  <td>8</td>
   <td><code>get_response_generator()</code><br><small style="color:var(--muted)">confidence/api/dependencies.py</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td>External entry / no inbound edge</td>
@@ -1702,7 +1711,7 @@ flowchart LR
   <td>get_response_generator() node in confidence/api/dependencies.py.</td>
 </tr>
 <tr>
-  <td>8</td>
+  <td>9</td>
   <td><code>get_safety_contract()</code><br><small style="color:var(--muted)">confidence/api/dependencies.py</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td>External entry / no inbound edge</td>
@@ -1710,7 +1719,7 @@ flowchart LR
   <td>get_safety_contract() node in confidence/api/dependencies.py.</td>
 </tr>
 <tr>
-  <td>9</td>
+  <td>10</td>
   <td><code>get_state_estimator()</code><br><small style="color:var(--muted)">confidence/api/dependencies.py</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td>External entry / no inbound edge</td>
@@ -1718,7 +1727,7 @@ flowchart LR
   <td>get_state_estimator() node in confidence/api/dependencies.py.</td>
 </tr>
 <tr>
-  <td>10</td>
+  <td>11</td>
   <td><code>ActionRegistry</code><br><small style="color:var(--muted)"></small></td>
   <td><span class="tag tag-class">Class</span></td>
   <td><code>get_action_registry()</code><br><small style="color:var(--muted)">confidence/api/dependencies.py</small></td>
@@ -1726,7 +1735,7 @@ flowchart LR
   <td>ActionRegistry node in project.</td>
 </tr>
 <tr>
-  <td>11</td>
+  <td>12</td>
   <td><code>AsyncEngine</code><br><small style="color:var(--muted)"></small></td>
   <td><span class="tag tag-async">Async</span></td>
   <td>External entry / no inbound edge</td>
@@ -1734,7 +1743,7 @@ flowchart LR
   <td>AsyncEngine node in project.</td>
 </tr>
 <tr>
-  <td>12</td>
+  <td>13</td>
   <td><code>ContextBuilder</code><br><small style="color:var(--muted)"></small></td>
   <td><span class="tag tag-class">Class</span></td>
   <td><code>get_context_builder()</code><br><small style="color:var(--muted)">confidence/api/dependencies.py</small></td>
@@ -1742,7 +1751,7 @@ flowchart LR
   <td>ContextBuilder node in project.</td>
 </tr>
 <tr>
-  <td>13</td>
+  <td>14</td>
   <td><code>PersistenceProvider</code><br><small style="color:var(--muted)"></small></td>
   <td><span class="tag tag-class">Class</span></td>
   <td>External entry / no inbound edge</td>
@@ -1750,7 +1759,7 @@ flowchart LR
   <td>PersistenceProvider node in project.</td>
 </tr>
 <tr>
-  <td>14</td>
+  <td>15</td>
   <td><code>PolicySelector</code><br><small style="color:var(--muted)"></small></td>
   <td><span class="tag tag-class">Class</span></td>
   <td><code>get_policy_selector()</code><br><small style="color:var(--muted)">confidence/api/dependencies.py</small></td>
@@ -1758,7 +1767,7 @@ flowchart LR
   <td>PolicySelector node in project.</td>
 </tr>
 <tr>
-  <td>15</td>
+  <td>16</td>
   <td><code>ResponseGenerator</code><br><small style="color:var(--muted)"></small></td>
   <td><span class="tag tag-class">Class</span></td>
   <td><code>get_response_generator()</code><br><small style="color:var(--muted)">confidence/api/dependencies.py</small></td>
@@ -1766,7 +1775,7 @@ flowchart LR
   <td>ResponseGenerator node in project.</td>
 </tr>
 <tr>
-  <td>16</td>
+  <td>17</td>
   <td><code>SafetyContract</code><br><small style="color:var(--muted)"></small></td>
   <td><span class="tag tag-class">Class</span></td>
   <td><code>get_safety_contract()</code><br><small style="color:var(--muted)">confidence/api/dependencies.py</small></td>
@@ -1774,7 +1783,15 @@ flowchart LR
   <td>SafetyContract node in project.</td>
 </tr>
 <tr>
-  <td>17</td>
+  <td>18</td>
+  <td><code>SlipProvider</code><br><small style="color:var(--muted)"></small></td>
+  <td><span class="tag tag-class">Class</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>SlipProvider node in project.</td>
+</tr>
+<tr>
+  <td>19</td>
   <td><code>dependencies.py</code><br><small style="color:var(--muted)">confidence/api/dependencies.py</small></td>
   <td><span class="tag tag-class">Module</span></td>
   <td>External entry / no inbound edge</td>
@@ -1782,7 +1799,7 @@ flowchart LR
   <td>Module file in confidence/api/dependencies.py.</td>
 </tr>
 <tr>
-  <td>18</td>
+  <td>20</td>
   <td><code>DecisionEngine</code><br><small style="color:var(--muted)"></small></td>
   <td><span class="tag tag-class">Class</span></td>
   <td><code>get_decision_engine()</code><br><small style="color:var(--muted)">confidence/api/dependencies.py</small></td>
@@ -1790,7 +1807,7 @@ flowchart LR
   <td>DecisionEngine node in project.</td>
 </tr>
 <tr>
-  <td>19</td>
+  <td>21</td>
   <td><code>StateEstimator</code><br><small style="color:var(--muted)"></small></td>
   <td><span class="tag tag-class">Class</span></td>
   <td><code>get_state_estimator()</code><br><small style="color:var(--muted)">confidence/api/dependencies.py</small></td>
@@ -1798,7 +1815,7 @@ flowchart LR
   <td>StateEstimator node in project.</td>
 </tr>
 <tr>
-  <td>20</td>
+  <td>22</td>
   <td><code>Dependency injection for the API. Wires together domain authorities, provider…</code><br><small style="color:var(--muted)">confidence/api/dependencies.py</small></td>
   <td><span class="tag tag-func">Concept</span></td>
   <td>External entry / no inbound edge</td>
@@ -1806,7 +1823,7 @@ flowchart LR
   <td>Design note for Dependency injection for the API. Wires together domain authorities, provider….</td>
 </tr>
 <tr>
-  <td>21</td>
+  <td>23</td>
   <td><code>Get or create the async database engine.</code><br><small style="color:var(--muted)">confidence/api/dependencies.py</small></td>
   <td><span class="tag tag-func">Concept</span></td>
   <td>External entry / no inbound edge</td>
@@ -1814,7 +1831,15 @@ flowchart LR
   <td>Design note for Get or create the async database engine..</td>
 </tr>
 <tr>
-  <td>22</td>
+  <td>24</td>
+  <td><code>Synthetic slip provider for demo scenarios.</code><br><small style="color:var(--muted)">confidence/api/dependencies.py</small></td>
+  <td><span class="tag tag-func">Concept</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>Design note for Synthetic slip provider for demo scenarios..</td>
+</tr>
+<tr>
+  <td>25</td>
   <td><code>CreateDecisionRequest</code><br><small style="color:var(--muted)">confidence/api/models.py</small></td>
   <td><span class="tag tag-class">Class</span></td>
   <td>External entry / no inbound edge</td>
@@ -1822,7 +1847,7 @@ flowchart LR
   <td>CreateDecisionRequest node in confidence/api/models.py.</td>
 </tr>
 <tr>
-  <td>23</td>
+  <td>26</td>
   <td><code>DecisionResponse</code><br><small style="color:var(--muted)">confidence/api/models.py</small></td>
   <td><span class="tag tag-class">Class</span></td>
   <td>External entry / no inbound edge</td>
@@ -1830,7 +1855,7 @@ flowchart LR
   <td>DecisionResponse node in confidence/api/models.py.</td>
 </tr>
 <tr>
-  <td>24</td>
+  <td>27</td>
   <td><code>InteractionDataPayload</code><br><small style="color:var(--muted)">confidence/api/models.py</small></td>
   <td><span class="tag tag-class">Class</span></td>
   <td>External entry / no inbound edge</td>
@@ -1838,7 +1863,7 @@ flowchart LR
   <td>InteractionDataPayload node in confidence/api/models.py.</td>
 </tr>
 <tr>
-  <td>25</td>
+  <td>28</td>
   <td><code>SafetyStatus</code><br><small style="color:var(--muted)">confidence/domain/enums.py</small></td>
   <td><span class="tag tag-class">Class</span></td>
   <td><code>__init__.py</code><br><small style="color:var(--muted)">confidence/domain/__init__.py</small><br><code>Decision</code><br><small style="color:var(--muted)">confidence/domain/models.py</small><br><code>DecisionResponse</code><br><small style="color:var(--muted)">confidence/api/models.py</small><br>+5 more</td>
@@ -1846,7 +1871,7 @@ flowchart LR
   <td>SafetyStatus node in confidence/domain/enums.py.</td>
 </tr>
 <tr>
-  <td>26</td>
+  <td>29</td>
   <td><code>.requires_fail_closed()</code><br><small style="color:var(--muted)">confidence/domain/enums.py</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td><code>SafetyStatus</code><br><small style="color:var(--muted)">confidence/domain/enums.py</small></td>
@@ -1854,36 +1879,12 @@ flowchart LR
   <td>.requires_fail_closed() node in confidence/domain/enums.py.</td>
 </tr>
 <tr>
-  <td>27</td>
+  <td>30</td>
   <td><code>api/models.py</code><br><small style="color:var(--muted)">confidence/api/models.py</small></td>
   <td><span class="tag tag-endpoint">API</span></td>
   <td>External entry / no inbound edge</td>
   <td><code>ActionId</code><br><small style="color:var(--muted)">confidence/domain/enums.py</small><br><code>enums.py</code><br><small style="color:var(--muted)">confidence/domain/enums.py</small><br><code>SafetyStatus</code><br><small style="color:var(--muted)">confidence/domain/enums.py</small><br>+1 more</td>
   <td>Module file in confidence/api/models.py.</td>
-</tr>
-<tr>
-  <td>28</td>
-  <td><code>BaseModel</code><br><small style="color:var(--muted)"></small></td>
-  <td><span class="tag tag-class">Class</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>BaseModel node in project.</td>
-</tr>
-<tr>
-  <td>29</td>
-  <td><code>API Data Models. Defines the external API request and response schemas. These…</code><br><small style="color:var(--muted)">confidence/api/models.py</small></td>
-  <td><span class="tag tag-func">Concept</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>Design note for API Data Models. Defines the external API request and response schemas. These….</td>
-</tr>
-<tr>
-  <td>30</td>
-  <td><code>Interaction payload from the client.</code><br><small style="color:var(--muted)">confidence/api/models.py</small></td>
-  <td><span class="tag tag-func">Concept</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>Design note for Interaction payload from the client..</td>
 </tr>
 </table>
 
@@ -1892,7 +1893,7 @@ flowchart LR
     <h4>Key Files</h4>
     <table style="width:100%;font-size:0.85rem;">
       <tr><th>File</th><th>Coverage</th></tr>
-      <tr><td><code>confidence/api/dependencies.py</code></td><td>12 nodes</td></tr>
+      <tr><td><code>confidence/api/dependencies.py</code></td><td>14 nodes</td></tr>
 <tr><td><code>confidence/api/models.py</code></td><td>8 nodes</td></tr>
 <tr><td><code>confidence/domain/enums.py</code></td><td>4 nodes</td></tr>
 <tr><td><code>confidence/api/routes.py</code></td><td>3 nodes</td></tr>
@@ -1900,19 +1901,19 @@ flowchart LR
   </div>
   <div class="card">
     <h4>Design Notes</h4>
-    <p>This section comes from graphify community clustering. Relationship summary: references x15, contains x12, calls x10, explains x9. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
+    <p>This section comes from graphify community clustering. Relationship summary: references x17, contains x13, calls x12, explains x10. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
   </div>
 </div>
 <hr>
 
 <!-- ====== 8. Tests & Fixtures ====== -->
 <h2 id="tests-fixtures">8. Tests &amp; Fixtures</h2>
-<p>Tests &amp; Fixtures groups implementation around test, tests, confidence, safety, mostly in tests/test_safety_contract.py, tests/test_engine.py, tests/test_domain.py. This section covers 332 nodes and 595 internal edges; the diagram shows only representative relationships to stay readable.</p>
+<p>Tests &amp; Fixtures groups implementation around test, tests, safety, confidence, mostly in tests/test_safety_contract.py, tests/test_engine.py, tests/test_domain.py. This section covers 285 nodes and 512 internal edges; the diagram shows only representative relationships to stay readable.</p>
 
 <div class="mermaid">
 %%{init: {"theme": "dark", "themeVariables": {"fontSize": "15.0px", "fontFamily": "Segoe UI, system-ui, sans-serif", "primaryColor": "#1e293b", "primaryTextColor": "#e2e8f0", "primaryBorderColor": "#38bdf8", "secondaryColor": "#0f172a", "tertiaryColor": "#334155", "lineColor": "#64748b", "textColor": "#e2e8f0"}, "flowchart": {"htmlLabels": true, "curve": "basis", "nodeSpacing": 48, "rankSpacing": 64, "padding": 14, "diagramPadding": 10, "useMaxWidth": true}}}%%
 flowchart LR
-    %% Section: Tests &amp; Fixtures (332 nodes, 595 edges)
+    %% Section: Tests &amp; Fixtures (285 nodes, 512 edges)
     subgraph tests_fixtures_tests_test_safety_contract_py_bceaff9e["tests/test_safety_contract.py"]
         tests_test_safety_contract_testlegitimatereconsi_b8474b57("TestLegitimateReconsideration<br/><small>tests/test_safety_contract.py</small>")
         tests_test_safety_contract_testlegitimatereconsi_31e1855d("test_legitimate_reconsideration_detected()<br/><small>tests/test_safety_contract.py</small>")
@@ -1945,7 +1946,7 @@ flowchart LR
     tests_test_safety_contract_testmultipleblockreas_a6655c1b -->|method| tests_test_safety_contract_testmultipleblockreas_4cc2a9d8
     tests_test_safety_contract_tests1selfexclusion_b659112a -->|method| tests_test_safety_contract_tests1selfexclusion_t_e5cbb99d
     tests_test_safety_contract_tests1selfexclusion_b659112a -->|method| tests_test_safety_contract_tests1selfexclusion_t_e99a78cc
-    %% Omitted for readability: 314 nodes, 0 edges
+    %% Omitted for readability: 267 nodes, 0 edges
     class tests_test_safety_contract_testlegitimatereconsi_b8474b57 test;
     class tests_test_safety_contract_testlegitimatereconsi_31e1855d test;
     class tests_test_safety_contract_testlegitimatereconsi_12d5b684 test;
@@ -1987,242 +1988,242 @@ flowchart LR
 </tr>
 <tr>
   <td>1</td>
-  <td><code>DummySafetyProvider</code><br><small style="color:var(--muted)">confidence/api/dependencies.py</small></td>
+  <td><code>HarmIndicators</code><br><small style="color:var(--muted)">confidence/domain/models.py</small></td>
   <td><span class="tag tag-class">Class</span></td>
-  <td><code>engine()</code><br><small style="color:var(--muted)">tests/test_engine.py</small><br><code>get_context_builder()</code><br><small style="color:var(--muted)">confidence/api/dependencies.py</small><br><code>TestAdversarialAndFailures</code><br><small style="color:var(--muted)">tests/test_engine.py</small><br>+2 more</td>
-  <td><code>get_safety_context()</code><br><small style="color:var(--muted)">confidence/api/dependencies.py</small></td>
-  <td>DummySafetyProvider node in confidence/api/dependencies.py.</td>
+  <td><code>excluded safety context()</code><br><small style="color:var(--muted)">tests/conftest.py</small><br><code>freshness safety context()</code><br><small style="color:var(--muted)">tests/conftest.py</small><br><code>get_safety_context()</code><br><small style="color:var(--muted)">confidence/api/dependencies.py</small><br>+9 more</td>
+  <td><code>has_any()</code><br><small style="color:var(--muted)">confidence/domain/models.py</small></td>
+  <td>HarmIndicators node in confidence/domain/models.py.</td>
 </tr>
 <tr>
   <td>2</td>
-  <td><code>DummySlipProvider</code><br><small style="color:var(--muted)">confidence/api/dependencies.py</small></td>
+  <td><code>InteractionContext</code><br><small style="color:var(--muted)">confidence/domain/models.py</small></td>
   <td><span class="tag tag-class">Class</span></td>
-  <td><code>engine()</code><br><small style="color:var(--muted)">tests/test_engine.py</small><br><code>get_context_builder()</code><br><small style="color:var(--muted)">confidence/api/dependencies.py</small><br><code>TestEndToEndScenarios</code><br><small style="color:var(--muted)">tests/test_engine.py</small><br>+1 more</td>
-  <td><code>get_slip_context()</code><br><small style="color:var(--muted)">confidence/api/dependencies.py</small></td>
-  <td>DummySlipProvider node in confidence/api/dependencies.py.</td>
+  <td><code>base_request()</code><br><small style="color:var(--muted)">tests/test_engine.py</small><br><code>create_decision()</code><br><small style="color:var(--muted)">confidence/api/routes.py</small><br><code>sample_interaction()</code><br><small style="color:var(--muted)">tests/conftest.py</small><br>+1 more</td>
+  <td>No direct outbound edge</td>
+  <td>InteractionContext node in confidence/domain/models.py.</td>
 </tr>
 <tr>
   <td>3</td>
-  <td><code>DecisionRequest</code><br><small style="color:var(--muted)">confidence/application/context_builder.py</small></td>
+  <td><code>MarketContext</code><br><small style="color:var(--muted)">confidence/domain/models.py</small></td>
   <td><span class="tag tag-class">Class</span></td>
-  <td><code>base_request()</code><br><small style="color:var(--muted)">tests/test_engine.py</small><br><code>create_decision()</code><br><small style="color:var(--muted)">confidence/api/routes.py</small><br><code>DecisionEngine</code><br><small style="color:var(--muted)">confidence/application/engine.py</small><br>+4 more</td>
+  <td><code>sample_market()</code><br><small style="color:var(--muted)">tests/conftest.py</small></td>
   <td>No direct outbound edge</td>
-  <td>DecisionRequest node in confidence/application/context_builder.py.</td>
+  <td>MarketContext node in confidence/domain/models.py.</td>
 </tr>
 <tr>
   <td>4</td>
-  <td><code>DecisionEngine</code><br><small style="color:var(--muted)">confidence/application/engine.py</small></td>
+  <td><code>OddsSnapshot</code><br><small style="color:var(--muted)">confidence/domain/models.py</small></td>
   <td><span class="tag tag-class">Class</span></td>
-  <td><code>engine()</code><br><small style="color:var(--muted)">tests/test_engine.py</small><br><code>TestAdversarialAndFailures</code><br><small style="color:var(--muted)">tests/test_engine.py</small><br><code>TestEndToEndScenarios</code><br><small style="color:var(--muted)">tests/test_engine.py</small><br>+1 more</td>
-  <td><code>__init__()</code><br><small style="color:var(--muted)">confidence/application/engine.py</small><br><code>_build_failure_decision()</code><br><small style="color:var(--muted)">confidence/application/engine.py</small><br><code>_compute_available_data_keys()</code><br><small style="color:var(--muted)">confidence/application/engine.py</small><br>+6 more</td>
-  <td>DecisionEngine node in confidence/application/engine.py.</td>
+  <td><code>get_slip_context()</code><br><small style="color:var(--muted)">confidence/api/dependencies.py</small><br><code>sample_market()</code><br><small style="color:var(--muted)">tests/conftest.py</small><br><code>sample_slip()</code><br><small style="color:var(--muted)">tests/conftest.py</small><br>+2 more</td>
+  <td>No direct outbound edge</td>
+  <td>OddsSnapshot node in confidence/domain/models.py.</td>
 </tr>
 <tr>
   <td>5</td>
-  <td><code>DecisionResult</code><br><small style="color:var(--muted)">confidence/application/engine.py</small></td>
+  <td><code>Outcome</code><br><small style="color:var(--muted)">confidence/domain/models.py</small></td>
   <td><span class="tag tag-class">Class</span></td>
-  <td><code>_build_failure_decision()</code><br><small style="color:var(--muted)">confidence/application/engine.py</small><br><code>_execute_pipeline()</code><br><small style="color:var(--muted)">confidence/application/engine.py</small></td>
-  <td><code>__init__()</code><br><small style="color:var(--muted)">confidence/application/engine.py</small></td>
-  <td>DecisionResult node in confidence/application/engine.py.</td>
+  <td><code>test_valid_outcome()</code><br><small style="color:var(--muted)">tests/test_domain.py</small></td>
+  <td><code>OutcomeType</code><br><small style="color:var(--muted)">confidence/domain/enums.py</small></td>
+  <td>Outcome node in confidence/domain/models.py.</td>
 </tr>
 <tr>
   <td>6</td>
-  <td><code>PersistenceProvider</code><br><small style="color:var(--muted)">confidence/domain/ports.py</small></td>
+  <td><code>SafetyContext</code><br><small style="color:var(--muted)">confidence/domain/models.py</small></td>
   <td><span class="tag tag-class">Class</span></td>
-  <td><code>DecisionEngine</code><br><small style="color:var(--muted)">confidence/application/engine.py</small><br><code>engine.py</code><br><small style="color:var(--muted)">confidence/application/engine.py</small><br><code>persistence.py</code><br><small style="color:var(--muted)">confidence/infrastructure/persistence.py</small></td>
-  <td><code>persist_decision()</code><br><small style="color:var(--muted)">confidence/domain/ports.py</small></td>
-  <td>PersistenceProvider node in confidence/domain/ports.py.</td>
+  <td><code>excluded safety context()</code><br><small style="color:var(--muted)">tests/conftest.py</small><br><code>freshness safety context()</code><br><small style="color:var(--muted)">tests/conftest.py</small><br><code>harm_safety_context()</code><br><small style="color:var(--muted)">tests/conftest.py</small><br>+4 more</td>
+  <td>No direct outbound edge</td>
+  <td>SafetyContext node in confidence/domain/models.py.</td>
 </tr>
 <tr>
   <td>7</td>
-  <td><code>DummyPersistenceProvider</code><br><small style="color:var(--muted)">tests/test_engine.py</small></td>
-  <td><span class="tag tag-func">Test</span></td>
-  <td><code>engine()</code><br><small style="color:var(--muted)">tests/test_engine.py</small></td>
-  <td><code>persist_decision()</code><br><small style="color:var(--muted)">tests/test_engine.py</small></td>
-  <td>DummyPersistenceProvider node in tests/test_engine.py.</td>
+  <td><code>Selection</code><br><small style="color:var(--muted)">confidence/domain/models.py</small></td>
+  <td><span class="tag tag-class">Class</span></td>
+  <td><code>get_slip_context()</code><br><small style="color:var(--muted)">confidence/api/dependencies.py</small><br><code>sample_slip()</code><br><small style="color:var(--muted)">tests/conftest.py</small><br><code>test_selection_with_odds_history()</code><br><small style="color:var(--muted)">tests/test_domain.py</small><br>+1 more</td>
+  <td>No direct outbound edge</td>
+  <td>Selection node in confidence/domain/models.py.</td>
 </tr>
 <tr>
   <td>8</td>
-  <td><code>TestAdversarialAndFailures</code><br><small style="color:var(--muted)">tests/test_engine.py</small></td>
-  <td><span class="tag tag-func">Test</span></td>
-  <td>External entry / no inbound edge</td>
-  <td><code>DecisionEngine</code><br><small style="color:var(--muted)">confidence/application/engine.py</small><br><code>DecisionRequest</code><br><small style="color:var(--muted)">confidence/application/context_builder.py</small><br><code>DummySafetyProvider</code><br><small style="color:var(--muted)">confidence/api/dependencies.py</small><br>+3 more</td>
-  <td>Verifies imports, entry points, or version behavior.</td>
+  <td><code>Session</code><br><small style="color:var(--muted)">confidence/domain/models.py</small></td>
+  <td><span class="tag tag-class">Class</span></td>
+  <td><code>session()</code><br><small style="color:var(--muted)">tests/conftest.py</small></td>
+  <td>No direct outbound edge</td>
+  <td>Session node in confidence/domain/models.py.</td>
 </tr>
 <tr>
   <td>9</td>
-  <td><code>TestEndToEndScenarios</code><br><small style="color:var(--muted)">tests/test_engine.py</small></td>
-  <td><span class="tag tag-func">Test</span></td>
-  <td>External entry / no inbound edge</td>
-  <td><code>DecisionEngine</code><br><small style="color:var(--muted)">confidence/application/engine.py</small><br><code>DecisionRequest</code><br><small style="color:var(--muted)">confidence/application/context_builder.py</small><br><code>DummySafetyProvider</code><br><small style="color:var(--muted)">confidence/api/dependencies.py</small><br>+9 more</td>
-  <td>Verifies imports, entry points, or version behavior.</td>
+  <td><code>SlipContext</code><br><small style="color:var(--muted)">confidence/domain/models.py</small></td>
+  <td><span class="tag tag-class">Class</span></td>
+  <td><code>sample_slip()</code><br><small style="color:var(--muted)">tests/conftest.py</small></td>
+  <td>No direct outbound edge</td>
+  <td>SlipContext node in confidence/domain/models.py.</td>
 </tr>
 <tr>
   <td>10</td>
-  <td><code>TestPropertyInvariants</code><br><small style="color:var(--muted)">tests/test_engine.py</small></td>
+  <td><code>TestHarmIndicators</code><br><small style="color:var(--muted)">tests/test_domain.py</small></td>
   <td><span class="tag tag-func">Test</span></td>
   <td>External entry / no inbound edge</td>
-  <td><code>DecisionEngine</code><br><small style="color:var(--muted)">confidence/application/engine.py</small><br><code>DecisionRequest</code><br><small style="color:var(--muted)">confidence/application/context_builder.py</small><br><code>DummySafetyProvider</code><br><small style="color:var(--muted)">confidence/api/dependencies.py</small><br>+5 more</td>
+  <td><code>test_default_no_harm()</code><br><small style="color:var(--muted)">tests/test_domain.py</small><br><code>test_multiple_indicators()</code><br><small style="color:var(--muted)">tests/test_domain.py</small><br><code>test_single_indicator()</code><br><small style="color:var(--muted)">tests/test_domain.py</small></td>
   <td>Verifies imports, entry points, or version behavior.</td>
 </tr>
 <tr>
   <td>11</td>
-  <td><code>._build_failure_decision()</code><br><small style="color:var(--muted)">confidence/application/engine.py</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td><code>decide()</code><br><small style="color:var(--muted)">confidence/application/engine.py</small><br><code>DecisionEngine</code><br><small style="color:var(--muted)">confidence/application/engine.py</small></td>
-  <td><code>Decision</code><br><code>DecisionResult</code><br><small style="color:var(--muted)">confidence/application/engine.py</small></td>
-  <td>._build_failure_decision() node in confidence/application/engine.py.</td>
+  <td><code>TestSelection</code><br><small style="color:var(--muted)">tests/test_domain.py</small></td>
+  <td><span class="tag tag-func">Test</span></td>
+  <td>External entry / no inbound edge</td>
+  <td><code>test_selection_with_odds_history()</code><br><small style="color:var(--muted)">tests/test_domain.py</small><br><code>test_valid_selection()</code><br><small style="color:var(--muted)">tests/test_domain.py</small></td>
+  <td>Verifies imports, entry points, or version behavior.</td>
 </tr>
 <tr>
   <td>12</td>
-  <td><code>._compute_available_data_keys()</code><br><small style="color:var(--muted)">confidence/application/engine.py</small></td>
+  <td><code>.get_slip_context()</code><br><small style="color:var(--muted)">confidence/api/dependencies.py</small></td>
   <td><span class="tag tag-func">Function</span></td>
-  <td><code>_execute_pipeline()</code><br><small style="color:var(--muted)">confidence/application/engine.py</small><br><code>DecisionEngine</code><br><small style="color:var(--muted)">confidence/application/engine.py</small></td>
-  <td>No direct outbound edge</td>
-  <td>._compute_available_data_keys() node in confidence/application/engine.py.</td>
+  <td><code>DummySlipProvider</code><br><small style="color:var(--muted)">confidence/api/dependencies.py</small></td>
+  <td><code>OddsSnapshot</code><br><small style="color:var(--muted)">confidence/domain/models.py</small><br><code>Selection</code><br><small style="color:var(--muted)">confidence/domain/models.py</small><br><code>SlipContext</code></td>
+  <td>.get_slip_context() node in confidence/api/dependencies.py.</td>
 </tr>
 <tr>
   <td>13</td>
-  <td><code>.decide()</code><br><small style="color:var(--muted)">confidence/application/engine.py</small></td>
+  <td><code>.has_any()</code><br><small style="color:var(--muted)">confidence/domain/models.py</small></td>
   <td><span class="tag tag-func">Function</span></td>
-  <td><code>DecisionEngine</code><br><small style="color:var(--muted)">confidence/application/engine.py</small></td>
-  <td><code>_build_failure_decision()</code><br><small style="color:var(--muted)">confidence/application/engine.py</small><br><code>_execute_pipeline()</code><br><small style="color:var(--muted)">confidence/application/engine.py</small><br><code>_schedule_persistence()</code><br><small style="color:var(--muted)">confidence/application/engine.py</small></td>
-  <td>.decide() node in confidence/application/engine.py.</td>
+  <td><code>HarmIndicators</code><br><small style="color:var(--muted)">confidence/domain/models.py</small></td>
+  <td>No direct outbound edge</td>
+  <td>.has_any() node in confidence/domain/models.py.</td>
 </tr>
 <tr>
   <td>14</td>
-  <td><code>._execute_pipeline()</code><br><small style="color:var(--muted)">confidence/application/engine.py</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td><code>decide()</code><br><small style="color:var(--muted)">confidence/application/engine.py</small><br><code>DecisionEngine</code><br><small style="color:var(--muted)">confidence/application/engine.py</small></td>
-  <td><code>_compute_available_data_keys()</code><br><small style="color:var(--muted)">confidence/application/engine.py</small><br><code>Decision</code><br><code>DecisionResult</code><br><small style="color:var(--muted)">confidence/application/engine.py</small></td>
-  <td>._execute_pipeline() node in confidence/application/engine.py.</td>
+  <td><code>action_registry()</code><br><small style="color:var(--muted)">tests/conftest.py</small></td>
+  <td><span class="tag tag-func">Test</span></td>
+  <td>External entry / no inbound edge</td>
+  <td><code>ActionRegistry</code><br><small style="color:var(--muted)">confidence/domain/actions.py</small></td>
+  <td>action_registry() node in tests/conftest.py.</td>
 </tr>
 <tr>
   <td>15</td>
-  <td><code>._schedule_persistence()</code><br><small style="color:var(--muted)">confidence/application/engine.py</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td><code>decide()</code><br><small style="color:var(--muted)">confidence/application/engine.py</small><br><code>DecisionEngine</code><br><small style="color:var(--muted)">confidence/application/engine.py</small></td>
-  <td>No direct outbound edge</td>
-  <td>._schedule_persistence() node in confidence/application/engine.py.</td>
+  <td><code>harm_safety_context()</code><br><small style="color:var(--muted)">tests/conftest.py</small></td>
+  <td><span class="tag tag-func">Test</span></td>
+  <td>External entry / no inbound edge</td>
+  <td><code>HarmIndicators</code><br><small style="color:var(--muted)">confidence/domain/models.py</small><br><code>SafetyContext</code><br><small style="color:var(--muted)">confidence/domain/models.py</small></td>
+  <td>harm_safety_context() node in tests/conftest.py.</td>
 </tr>
 <tr>
   <td>16</td>
-  <td><code>.__init__()</code><br><small style="color:var(--muted)">confidence/application/engine.py</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td><code>DecisionResult</code><br><small style="color:var(--muted)">confidence/application/engine.py</small></td>
-  <td>No direct outbound edge</td>
-  <td>.__init__() node in confidence/application/engine.py.</td>
+  <td><code>no_freshness_safety_context()</code><br><small style="color:var(--muted)">tests/conftest.py</small></td>
+  <td><span class="tag tag-func">Test</span></td>
+  <td>External entry / no inbound edge</td>
+  <td><code>HarmIndicators</code><br><small style="color:var(--muted)">confidence/domain/models.py</small><br><code>SafetyContext</code><br><small style="color:var(--muted)">confidence/domain/models.py</small></td>
+  <td>no_freshness_safety_context() node in tests/conftest.py.</td>
 </tr>
 <tr>
   <td>17</td>
-  <td><code>.persist_decision()</code><br><small style="color:var(--muted)">confidence/domain/ports.py</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td><code>PersistenceProvider</code><br><small style="color:var(--muted)">confidence/domain/ports.py</small></td>
-  <td>No direct outbound edge</td>
-  <td>.persist_decision() node in confidence/domain/ports.py.</td>
+  <td><code>now()</code><br><small style="color:var(--muted)">tests/conftest.py</small></td>
+  <td><span class="tag tag-func">Test</span></td>
+  <td>External entry / no inbound edge</td>
+  <td><code>datetime</code></td>
+  <td>now() node in tests/conftest.py.</td>
 </tr>
 <tr>
   <td>18</td>
-  <td><code>test()</code><br><small style="color:var(--muted)">test_ui_api.py</small></td>
+  <td><code>protective_restriction_context()</code><br><small style="color:var(--muted)">tests/conftest.py</small></td>
   <td><span class="tag tag-func">Test</span></td>
   <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>Verifies imports, entry points, or version behavior.</td>
+  <td><code>HarmIndicators</code><br><small style="color:var(--muted)">confidence/domain/models.py</small><br><code>SafetyContext</code><br><small style="color:var(--muted)">confidence/domain/models.py</small></td>
+  <td>protective_restriction_context() node in tests/conftest.py.</td>
 </tr>
 <tr>
   <td>19</td>
-  <td><code>base_request()</code><br><small style="color:var(--muted)">tests/test_engine.py</small></td>
+  <td><code>safe_safety_context()</code><br><small style="color:var(--muted)">tests/conftest.py</small></td>
   <td><span class="tag tag-func">Test</span></td>
   <td>External entry / no inbound edge</td>
-  <td><code>DecisionRequest</code><br><small style="color:var(--muted)">confidence/application/context_builder.py</small><br><code>InteractionContext</code><br><small style="color:var(--muted)">confidence/domain/models.py</small></td>
-  <td>base_request() node in tests/test_engine.py.</td>
+  <td><code>HarmIndicators</code><br><small style="color:var(--muted)">confidence/domain/models.py</small><br><code>SafetyContext</code><br><small style="color:var(--muted)">confidence/domain/models.py</small></td>
+  <td>safe_safety_context() node in tests/conftest.py.</td>
 </tr>
 <tr>
   <td>20</td>
-  <td><code>.persist_decision()</code><br><small style="color:var(--muted)">tests/test_engine.py</small></td>
+  <td><code>safety_contract()</code><br><small style="color:var(--muted)">tests/conftest.py</small></td>
   <td><span class="tag tag-func">Test</span></td>
-  <td><code>DummyPersistenceProvider</code><br><small style="color:var(--muted)">tests/test_engine.py</small></td>
-  <td>No direct outbound edge</td>
-  <td>.persist_decision() node in tests/test_engine.py.</td>
+  <td>External entry / no inbound edge</td>
+  <td><code>SafetyContract</code><br><small style="color:var(--muted)">confidence/domain/safety.py</small></td>
+  <td>safety_contract() node in tests/conftest.py.</td>
 </tr>
 <tr>
   <td>21</td>
-  <td><code>engine()</code><br><small style="color:var(--muted)">tests/test_engine.py</small></td>
+  <td><code>sample_context()</code><br><small style="color:var(--muted)">tests/conftest.py</small></td>
   <td><span class="tag tag-func">Test</span></td>
   <td>External entry / no inbound edge</td>
-  <td><code>ContextBuilder</code><br><small style="color:var(--muted)">confidence/application/context_builder.py</small><br><code>DecisionEngine</code><br><small style="color:var(--muted)">confidence/application/engine.py</small><br><code>DummyMarketProvider</code><br><small style="color:var(--muted)">confidence/api/dependencies.py</small><br>+3 more</td>
-  <td>engine() node in tests/test_engine.py.</td>
+  <td><code>DecisionContext</code><br><small style="color:var(--muted)">confidence/domain/models.py</small></td>
+  <td>sample_context() node in tests/conftest.py.</td>
 </tr>
 <tr>
   <td>22</td>
-  <td><code>.test_adversarial_policy_bypass_caught_by_final_check()</code><br><small style="color:var(--muted)">tests/test_engine.py</small></td>
+  <td><code>sample_interaction()</code><br><small style="color:var(--muted)">tests/conftest.py</small></td>
   <td><span class="tag tag-func">Test</span></td>
-  <td><code>TestAdversarialAndFailures</code><br><small style="color:var(--muted)">tests/test_engine.py</small></td>
-  <td>No direct outbound edge</td>
-  <td>Verifies imports, entry points, or version behavior.</td>
+  <td>External entry / no inbound edge</td>
+  <td><code>InteractionContext</code><br><small style="color:var(--muted)">confidence/domain/models.py</small></td>
+  <td>sample_interaction() node in tests/conftest.py.</td>
 </tr>
 <tr>
   <td>23</td>
-  <td><code>.test_registry_without_no_intervention_fails_fast()</code><br><small style="color:var(--muted)">tests/test_engine.py</small></td>
+  <td><code>sample_market()</code><br><small style="color:var(--muted)">tests/conftest.py</small></td>
   <td><span class="tag tag-func">Test</span></td>
-  <td><code>TestAdversarialAndFailures</code><br><small style="color:var(--muted)">tests/test_engine.py</small></td>
-  <td>No direct outbound edge</td>
-  <td>Verifies imports, entry points, or version behavior.</td>
+  <td>External entry / no inbound edge</td>
+  <td><code>MarketContext</code><br><small style="color:var(--muted)">confidence/domain/models.py</small><br><code>OddsSnapshot</code><br><small style="color:var(--muted)">confidence/domain/models.py</small></td>
+  <td>sample_market() node in tests/conftest.py.</td>
 </tr>
 <tr>
   <td>24</td>
-  <td><code>.test_timeout_enforcement()</code><br><small style="color:var(--muted)">tests/test_engine.py</small></td>
+  <td><code>sample_slip()</code><br><small style="color:var(--muted)">tests/conftest.py</small></td>
   <td><span class="tag tag-func">Test</span></td>
-  <td><code>TestAdversarialAndFailures</code><br><small style="color:var(--muted)">tests/test_engine.py</small></td>
-  <td>No direct outbound edge</td>
-  <td>Verifies imports, entry points, or version behavior.</td>
+  <td>External entry / no inbound edge</td>
+  <td><code>OddsSnapshot</code><br><small style="color:var(--muted)">confidence/domain/models.py</small><br><code>Selection</code><br><small style="color:var(--muted)">confidence/domain/models.py</small><br><code>SlipContext</code><br><small style="color:var(--muted)">confidence/domain/models.py</small></td>
+  <td>sample_slip() node in tests/conftest.py.</td>
 </tr>
 <tr>
   <td>25</td>
-  <td><code>.test_scenario_a_odds_uncertainty()</code><br><small style="color:var(--muted)">tests/test_engine.py</small></td>
+  <td><code>self_excluded_safety_context()</code><br><small style="color:var(--muted)">tests/conftest.py</small></td>
   <td><span class="tag tag-func">Test</span></td>
-  <td><code>TestEndToEndScenarios</code><br><small style="color:var(--muted)">tests/test_engine.py</small></td>
-  <td>No direct outbound edge</td>
-  <td>Verifies imports, entry points, or version behavior.</td>
+  <td>External entry / no inbound edge</td>
+  <td><code>HarmIndicators</code><br><small style="color:var(--muted)">confidence/domain/models.py</small><br><code>SafetyContext</code><br><small style="color:var(--muted)">confidence/domain/models.py</small></td>
+  <td>self_excluded_safety_context() node in tests/conftest.py.</td>
 </tr>
 <tr>
   <td>26</td>
-  <td><code>.test_scenario_b_market_uncertainty()</code><br><small style="color:var(--muted)">tests/test_engine.py</small></td>
+  <td><code>session()</code><br><small style="color:var(--muted)">tests/conftest.py</small></td>
   <td><span class="tag tag-func">Test</span></td>
-  <td><code>TestEndToEndScenarios</code><br><small style="color:var(--muted)">tests/test_engine.py</small></td>
-  <td>No direct outbound edge</td>
-  <td>Verifies imports, entry points, or version behavior.</td>
+  <td>External entry / no inbound edge</td>
+  <td><code>Session</code><br><small style="color:var(--muted)">confidence/domain/models.py</small></td>
+  <td>session() node in tests/conftest.py.</td>
 </tr>
 <tr>
   <td>27</td>
-  <td><code>.test_scenario_c_legitimate_reconsideration()</code><br><small style="color:var(--muted)">tests/test_engine.py</small></td>
+  <td><code>stale_safety_context()</code><br><small style="color:var(--muted)">tests/conftest.py</small></td>
   <td><span class="tag tag-func">Test</span></td>
-  <td><code>TestEndToEndScenarios</code><br><small style="color:var(--muted)">tests/test_engine.py</small></td>
-  <td>No direct outbound edge</td>
-  <td>Turns a local path or remote repository into analysis context.</td>
+  <td>External entry / no inbound edge</td>
+  <td><code>datetime</code><br><code>HarmIndicators</code><br><small style="color:var(--muted)">confidence/domain/models.py</small><br><code>SafetyContext</code><br><small style="color:var(--muted)">confidence/domain/models.py</small></td>
+  <td>stale_safety_context() node in tests/conftest.py.</td>
 </tr>
 <tr>
   <td>28</td>
-  <td><code>.test_scenario_d_potential_harm()</code><br><small style="color:var(--muted)">tests/test_engine.py</small></td>
+  <td><code>.test_default_no_harm()</code><br><small style="color:var(--muted)">tests/test_domain.py</small></td>
   <td><span class="tag tag-func">Test</span></td>
-  <td><code>TestEndToEndScenarios</code><br><small style="color:var(--muted)">tests/test_engine.py</small></td>
-  <td>No direct outbound edge</td>
+  <td><code>TestHarmIndicators</code><br><small style="color:var(--muted)">tests/test_domain.py</small></td>
+  <td><code>HarmIndicators</code><br><small style="color:var(--muted)">confidence/domain/models.py</small></td>
   <td>Verifies imports, entry points, or version behavior.</td>
 </tr>
 <tr>
   <td>29</td>
-  <td><code>.test_scenario_e_self_exclusion()</code><br><small style="color:var(--muted)">tests/test_engine.py</small></td>
+  <td><code>.test_multiple_indicators()</code><br><small style="color:var(--muted)">tests/test_domain.py</small></td>
   <td><span class="tag tag-func">Test</span></td>
-  <td><code>TestEndToEndScenarios</code><br><small style="color:var(--muted)">tests/test_engine.py</small></td>
-  <td>No direct outbound edge</td>
+  <td><code>TestHarmIndicators</code><br><small style="color:var(--muted)">tests/test_domain.py</small></td>
+  <td><code>HarmIndicators</code><br><small style="color:var(--muted)">confidence/domain/models.py</small></td>
   <td>Verifies imports, entry points, or version behavior.</td>
 </tr>
 <tr>
   <td>30</td>
-  <td><code>.test_scenario_f_missing_authoritative_odds()</code><br><small style="color:var(--muted)">tests/test_engine.py</small></td>
+  <td><code>.test_single_indicator()</code><br><small style="color:var(--muted)">tests/test_domain.py</small></td>
   <td><span class="tag tag-func">Test</span></td>
-  <td><code>TestEndToEndScenarios</code><br><small style="color:var(--muted)">tests/test_engine.py</small></td>
-  <td>No direct outbound edge</td>
+  <td><code>TestHarmIndicators</code><br><small style="color:var(--muted)">tests/test_domain.py</small></td>
+  <td><code>HarmIndicators</code><br><small style="color:var(--muted)">confidence/domain/models.py</small></td>
   <td>Verifies imports, entry points, or version behavior.</td>
 </tr>
 </table>
@@ -2237,14 +2238,14 @@ flowchart LR
 <tr><td><code>tests/test_domain.py</code></td><td>33 nodes</td></tr>
 <tr><td><code>tests/conftest.py</code></td><td>30 nodes</td></tr>
 <tr><td><code>tests/test_actions.py</code></td><td>27 nodes</td></tr>
-<tr><td><code>confidence/domain/models.py</code></td><td>22 nodes</td></tr>
-<tr><td><code>confidence/application/engine.py</code></td><td>17 nodes</td></tr>
+<tr><td><code>confidence/domain/models.py</code></td><td>24 nodes</td></tr>
 <tr><td><code>tests/test_schema.py</code></td><td>17 nodes</td></tr>
+<tr><td><code>tests/test_event_contracts.py</code></td><td>12 nodes</td></tr>
     </table>
   </div>
   <div class="card">
     <h4>Design Notes</h4>
-    <p>This section comes from graphify community clustering. Relationship summary: references x175, method x124, calls x90, explains x84. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
+    <p>This section comes from graphify community clustering. Relationship summary: references x161, method x110, calls x81, explains x67. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
   </div>
 </div>
 <hr>
@@ -2360,8 +2361,121 @@ flowchart LR
 </div>
 <hr>
 
-<!-- ====== 10. rules/graphify.md ====== -->
-<h2 id="rules-graphify-md">10. rules/graphify.md</h2>
+<!-- ====== 10. .__init__ ====== -->
+<h2 id="init">10. .__init__</h2>
+<p>.__init__ groups implementation around confidence, application, enginepy, actionregistry, mostly in confidence/application/engine.py. This section covers 6 nodes and 5 internal edges; the diagram shows only representative relationships to stay readable.</p>
+
+<div class="mermaid">
+%%{init: {"theme": "dark", "themeVariables": {"fontSize": "15.0px", "fontFamily": "Segoe UI, system-ui, sans-serif", "primaryColor": "#1e293b", "primaryTextColor": "#e2e8f0", "primaryBorderColor": "#38bdf8", "secondaryColor": "#0f172a", "tertiaryColor": "#334155", "lineColor": "#64748b", "textColor": "#e2e8f0"}, "flowchart": {"htmlLabels": true, "curve": "basis", "nodeSpacing": 48, "rankSpacing": 64, "padding": 14, "diagramPadding": 10, "useMaxWidth": true}}}%%
+flowchart LR
+    %% Section: .__init__ (6 nodes, 5 edges)
+    subgraph init_External_generated_8d25bd0d["External / generated"]
+        src_confidence_application_engine_py_actionregis_10adb43d("ActionRegistry")
+        src_confidence_application_engine_py_policyselec_ea8b1545("PolicySelector")
+        src_confidence_application_engine_py_responsegen_c482a564("ResponseGenerator")
+        src_confidence_application_engine_py_safetycontr_d3d2c61e("SafetyContract")
+        src_confidence_application_engine_py_stateestima_5e0dcd4d("StateEstimator")
+    end
+    src_confidence_application_engine_decisionengine_7752d6e7("__init__()<br/><small>confidence/application/engine.py</small>")
+    src_confidence_application_engine_decisionengine_7752d6e7 -->|references| src_confidence_application_engine_py_actionregis_10adb43d
+    src_confidence_application_engine_decisionengine_7752d6e7 -->|references| src_confidence_application_engine_py_policyselec_ea8b1545
+    src_confidence_application_engine_decisionengine_7752d6e7 -->|references| src_confidence_application_engine_py_responsegen_c482a564
+    src_confidence_application_engine_decisionengine_7752d6e7 -->|references| src_confidence_application_engine_py_safetycontr_d3d2c61e
+    src_confidence_application_engine_decisionengine_7752d6e7 -->|references| src_confidence_application_engine_py_stateestima_5e0dcd4d
+    class src_confidence_application_engine_py_actionregis_10adb43d klass;
+    class src_confidence_application_engine_py_policyselec_ea8b1545 klass;
+    class src_confidence_application_engine_py_responsegen_c482a564 klass;
+    class src_confidence_application_engine_py_safetycontr_d3d2c61e klass;
+    class src_confidence_application_engine_py_stateestima_5e0dcd4d klass;
+    class src_confidence_application_engine_decisionengine_7752d6e7 function;
+    classDef entry fill:#422006,stroke:#fbbf24,color:#fde68a,stroke-width:1px;
+    classDef api fill:#450a0a,stroke:#f87171,color:#fee2e2,stroke-width:1px;
+    classDef async fill:#2e1065,stroke:#a78bfa,color:#ede9fe,stroke-width:1px;
+    classDef klass fill:#064e3b,stroke:#34d399,color:#d1fae5,stroke-width:1px;
+    classDef ui fill:#831843,stroke:#f472b6,color:#fce7f3,stroke-width:1px;
+    classDef module fill:#172554,stroke:#60a5fa,color:#dbeafe,stroke-width:1px;
+    classDef test fill:#3f3f46,stroke:#a1a1aa,color:#f4f4f5,stroke-width:1px;
+    classDef concept fill:#292524,stroke:#a8a29e,color:#fafaf9,stroke-dasharray:4 3;
+    classDef function fill:#0f172a,stroke:#38bdf8,color:#e0f2fe,stroke-width:1px;
+</div>
+
+<h3>Call Details</h3>
+<table class="call-table">
+<tr>
+  <th style="width:5%">#</th>
+  <th style="width:28%">Node</th>
+  <th style="width:10%">Type</th>
+  <th style="width:17%">Caller</th>
+  <th style="width:20%">Callees</th>
+  <th style="width:20%">Description</th>
+</tr>
+<tr>
+  <td>1</td>
+  <td><code>.__init__()</code><br><small style="color:var(--muted)">confidence/application/engine.py</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>DecisionEngine</code><br><small style="color:var(--muted)">confidence/application/engine.py</small></td>
+  <td>No direct outbound edge</td>
+  <td>.__init__() node in confidence/application/engine.py.</td>
+</tr>
+<tr>
+  <td>2</td>
+  <td><code>ActionRegistry</code><br><small style="color:var(--muted)"></small></td>
+  <td><span class="tag tag-class">Class</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>ActionRegistry node in project.</td>
+</tr>
+<tr>
+  <td>3</td>
+  <td><code>PolicySelector</code><br><small style="color:var(--muted)"></small></td>
+  <td><span class="tag tag-class">Class</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>PolicySelector node in project.</td>
+</tr>
+<tr>
+  <td>4</td>
+  <td><code>ResponseGenerator</code><br><small style="color:var(--muted)"></small></td>
+  <td><span class="tag tag-class">Class</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>ResponseGenerator node in project.</td>
+</tr>
+<tr>
+  <td>5</td>
+  <td><code>SafetyContract</code><br><small style="color:var(--muted)"></small></td>
+  <td><span class="tag tag-class">Class</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>SafetyContract node in project.</td>
+</tr>
+<tr>
+  <td>6</td>
+  <td><code>StateEstimator</code><br><small style="color:var(--muted)"></small></td>
+  <td><span class="tag tag-class">Class</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>StateEstimator node in project.</td>
+</tr>
+</table>
+
+<div class="grid">
+  <div class="card">
+    <h4>Key Files</h4>
+    <table style="width:100%;font-size:0.85rem;">
+      <tr><th>File</th><th>Coverage</th></tr>
+      <tr><td><code>confidence/application/engine.py</code></td><td>1 nodes</td></tr>
+    </table>
+  </div>
+  <div class="card">
+    <h4>Design Notes</h4>
+    <p>This section comes from graphify community clustering. Relationship summary: references x5. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
+  </div>
+</div>
+<hr>
+
+<!-- ====== 11. rules/graphify.md ====== -->
+<h2 id="rules-graphify-md">11. rules/graphify.md</h2>
 <p>rules/graphify.md groups implementation around rules, graphifymd, agents, graphify, mostly in .agents/rules/graphify.md. This section covers 2 nodes and 1 internal edges; the diagram shows only representative relationships to stay readable.</p>
 
 <div class="mermaid">
@@ -2427,8 +2541,8 @@ flowchart LR
 </div>
 <hr>
 
-<!-- ====== 11. .agents/skills/graphify/references/extraction-spec.md ====== -->
-<h2 id="agents-skills-graphify-references-extraction-spe">11. .agents/skills/graphify/references/extraction-spec.md</h2>
+<!-- ====== 12. .agents/skills/graphify/references/extraction-spec.md ====== -->
+<h2 id="agents-skills-graphify-references-extraction-spe">12. .agents/skills/graphify/references/extraction-spec.md</h2>
 <p>.agents/skills/graphify/references/extraction-spec.md groups implementation around graphify, extraction, agents, skills, mostly in graphify/references/extraction-spec.md. This section covers 2 nodes and 1 internal edges; the diagram shows only representative relationships to stay readable.</p>
 
 <div class="mermaid">
@@ -2494,8 +2608,8 @@ flowchart LR
 </div>
 <hr>
 
-<!-- ====== 12. workflows/graphify.md ====== -->
-<h2 id="workflows-graphify-md">12. workflows/graphify.md</h2>
+<!-- ====== 13. workflows/graphify.md ====== -->
+<h2 id="workflows-graphify-md">13. workflows/graphify.md</h2>
 <p>workflows/graphify.md groups implementation around workflows, graphifymd, agents, workflow, mostly in .agents/workflows/graphify.md. This section covers 2 nodes and 1 internal edges; the diagram shows only representative relationships to stay readable.</p>
 
 <div class="mermaid">
@@ -2561,8 +2675,8 @@ flowchart LR
 </div>
 <hr>
 
-<!-- ====== 13. Database Module Init ====== -->
-<h2 id="database-module-init">13. Database Module Init</h2>
+<!-- ====== 14. Database Module Init ====== -->
+<h2 id="database-module-init">14. Database Module Init</h2>
 <p>Database Module Init groups implementation around confidence, mostly in confidence/db/__init__.py. This section covers 1 nodes and 0 internal edges; the diagram shows only representative relationships to stay readable.</p>
 
 <div class="mermaid">
@@ -2617,8 +2731,8 @@ flowchart LR
 </div>
 <hr>
 
-<!-- ====== 14. DecisionRequest ====== -->
-<h2 id="decisionrequest">14. DecisionRequest</h2>
+<!-- ====== 15. DecisionRequest ====== -->
+<h2 id="decisionrequest">15. DecisionRequest</h2>
 <p>DecisionRequest groups implementation around decisionrequest, mostly in unmapped files. This section covers 1 nodes and 0 internal edges; the diagram shows only representative relationships to stay readable.</p>
 
 <div class="mermaid">
@@ -2673,16 +2787,51 @@ flowchart LR
 </div>
 <hr>
 
-<!-- ====== 15. Protocol ====== -->
-<h2 id="protocol">15. Protocol</h2>
-<p>Protocol groups implementation around protocol, mostly in unmapped files. This section covers 1 nodes and 0 internal edges; the diagram shows only representative relationships to stay readable.</p>
+<!-- ====== 16. Other ====== -->
+<h2 id="other">16. Other</h2>
+<p>Other groups implementation around fix, protocol, step6py, contextbuilder, mostly in fix_step6.py, confidence/workers/__init__.py, fix_step7.py. This section covers 24 nodes and 0 internal edges; the diagram shows only representative relationships to stay readable.</p>
 
 <div class="mermaid">
 %%{init: {"theme": "dark", "themeVariables": {"fontSize": "15.0px", "fontFamily": "Segoe UI, system-ui, sans-serif", "primaryColor": "#1e293b", "primaryTextColor": "#e2e8f0", "primaryBorderColor": "#38bdf8", "secondaryColor": "#0f172a", "tertiaryColor": "#334155", "lineColor": "#64748b", "textColor": "#e2e8f0"}, "flowchart": {"htmlLabels": true, "curve": "basis", "nodeSpacing": 48, "rankSpacing": 64, "padding": 14, "diagramPadding": 10, "useMaxWidth": true}}}%%
 flowchart LR
-    %% Section: Protocol (1 nodes, 0 edges)
+    %% Section: Other (24 nodes, 0 edges)
+    src_confidence_api_dependencies_py_actionregistr_a3aff000("ActionRegistry")
+    src_confidence_api_dependencies_py_asyncengine_1eade5d8("AsyncEngine")
+    src_confidence_application_context_builder_py_ba_65c3d2dc("BaseModel")
+    src_confidence_domain_events_py_basemodel_61af829a("BaseModel")
+    src_confidence_api_routes_py_confidenceevent_f36054db("ConfidenceEvent")
+    src_confidence_api_dependencies_py_contextbuilde_0efaef33("ContextBuilder")
+    src_confidence_application_engine_py_contextbuil_7f532ddb("ContextBuilder")
+    src_confidence_api_routes_py_decisionengine_192fd346("DecisionEngine")
+    src_confidence_api_dependencies_py_marketcontext_2c4e0fcc("MarketContext")
+    src_confidence_api_dependencies_py_policyselecto_be8907ed("PolicySelector")
     src_confidence_application_engine_py_protocol_afd7ad32("Protocol")
+    src_confidence_infrastructure_providers_py_proto_a30d5add("Protocol")
+    src_confidence_infrastructure_event_bus_py_proto_4f7b8e62("Protocol")
+    src_confidence_api_dependencies_py_responsegener_f1676efc("ResponseGenerator")
+    src_confidence_api_dependencies_py_safetycontext_6f9c792b("SafetyContext")
+    src_confidence_api_dependencies_py_safetycontrac_07952684("SafetyContract")
+    src_confidence_api_dependencies_py_slipcontext_5990042b("SlipContext")
+    src_confidence_api_dependencies_py_stateestimato_f20807cc("StateEstimator")
+    %% Omitted for readability: 6 nodes, 0 edges
+    class src_confidence_api_dependencies_py_actionregistr_a3aff000 klass;
+    class src_confidence_api_dependencies_py_asyncengine_1eade5d8 async;
+    class src_confidence_application_context_builder_py_ba_65c3d2dc klass;
+    class src_confidence_domain_events_py_basemodel_61af829a klass;
+    class src_confidence_api_routes_py_confidenceevent_f36054db klass;
+    class src_confidence_api_dependencies_py_contextbuilde_0efaef33 klass;
+    class src_confidence_application_engine_py_contextbuil_7f532ddb klass;
+    class src_confidence_api_routes_py_decisionengine_192fd346 klass;
+    class src_confidence_api_dependencies_py_marketcontext_2c4e0fcc klass;
+    class src_confidence_api_dependencies_py_policyselecto_be8907ed klass;
     class src_confidence_application_engine_py_protocol_afd7ad32 klass;
+    class src_confidence_infrastructure_providers_py_proto_a30d5add klass;
+    class src_confidence_infrastructure_event_bus_py_proto_4f7b8e62 klass;
+    class src_confidence_api_dependencies_py_responsegener_f1676efc klass;
+    class src_confidence_api_dependencies_py_safetycontext_6f9c792b klass;
+    class src_confidence_api_dependencies_py_safetycontrac_07952684 klass;
+    class src_confidence_api_dependencies_py_slipcontext_5990042b klass;
+    class src_confidence_api_dependencies_py_stateestimato_f20807cc klass;
     classDef entry fill:#422006,stroke:#fbbf24,color:#fde68a,stroke-width:1px;
     classDef api fill:#450a0a,stroke:#f87171,color:#fee2e2,stroke-width:1px;
     classDef async fill:#2e1065,stroke:#a78bfa,color:#ede9fe,stroke-width:1px;
@@ -2711,97 +2860,6 @@ flowchart LR
   <td>External entry / no inbound edge</td>
   <td>No direct outbound edge</td>
   <td>Protocol node in project.</td>
-</tr>
-</table>
-
-<div class="grid">
-  <div class="card">
-    <h4>Key Files</h4>
-    <table style="width:100%;font-size:0.85rem;">
-      <tr><th>File</th><th>Coverage</th></tr>
-      <tr><td colspan="2">No source file mapping</td></tr>
-    </table>
-  </div>
-  <div class="card">
-    <h4>Design Notes</h4>
-    <p>This section comes from graphify community clustering. Relationship summary: No high-confidence call edges detected. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
-  </div>
-</div>
-<hr>
-
-<!-- ====== 16. Other ====== -->
-<h2 id="other">16. Other</h2>
-<p>Other groups implementation around fix, step6py, contextbuilder, basemodel, mostly in fix_step6.py, confidence/workers/__init__.py. This section covers 21 nodes and 0 internal edges; the diagram shows only representative relationships to stay readable.</p>
-
-<div class="mermaid">
-%%{init: {"theme": "dark", "themeVariables": {"fontSize": "15.0px", "fontFamily": "Segoe UI, system-ui, sans-serif", "primaryColor": "#1e293b", "primaryTextColor": "#e2e8f0", "primaryBorderColor": "#38bdf8", "secondaryColor": "#0f172a", "tertiaryColor": "#334155", "lineColor": "#64748b", "textColor": "#e2e8f0"}, "flowchart": {"htmlLabels": true, "curve": "basis", "nodeSpacing": 48, "rankSpacing": 64, "padding": 14, "diagramPadding": 10, "useMaxWidth": true}}}%%
-flowchart LR
-    %% Section: Other (21 nodes, 0 edges)
-    src_confidence_api_dependencies_py_actionregistr_a3aff000("ActionRegistry")
-    src_confidence_api_dependencies_py_asyncengine_1eade5d8("AsyncEngine")
-    src_confidence_application_context_builder_py_ba_65c3d2dc("BaseModel")
-    src_confidence_domain_events_py_basemodel_61af829a("BaseModel")
-    confidenceevent_5a426b97("ConfidenceEvent")
-    src_confidence_api_dependencies_py_contextbuilde_0efaef33("ContextBuilder")
-    src_confidence_application_engine_py_contextbuil_7f532ddb("ContextBuilder")
-    src_confidence_api_dependencies_py_marketcontext_2c4e0fcc("MarketContext")
-    src_confidence_api_dependencies_py_policyselecto_be8907ed("PolicySelector")
-    src_confidence_infrastructure_providers_py_proto_a30d5add("Protocol")
-    src_confidence_infrastructure_event_bus_py_proto_4f7b8e62("Protocol")
-    src_confidence_api_dependencies_py_responsegener_f1676efc("ResponseGenerator")
-    src_confidence_api_dependencies_py_safetycontext_6f9c792b("SafetyContext")
-    src_confidence_api_dependencies_py_safetycontrac_07952684("SafetyContract")
-    src_confidence_api_dependencies_py_slipcontext_5990042b("SlipContext")
-    src_confidence_api_dependencies_py_stateestimato_f20807cc("StateEstimator")
-    src_confidence_infrastructure_providers_py_uuid_560ee504("UUID")
-    src_confidence_api_dependencies_py_uuid_90b2a5ab("UUID")
-    %% Omitted for readability: 3 nodes, 0 edges
-    class src_confidence_api_dependencies_py_actionregistr_a3aff000 klass;
-    class src_confidence_api_dependencies_py_asyncengine_1eade5d8 async;
-    class src_confidence_application_context_builder_py_ba_65c3d2dc klass;
-    class src_confidence_domain_events_py_basemodel_61af829a klass;
-    class confidenceevent_5a426b97 klass;
-    class src_confidence_api_dependencies_py_contextbuilde_0efaef33 klass;
-    class src_confidence_application_engine_py_contextbuil_7f532ddb klass;
-    class src_confidence_api_dependencies_py_marketcontext_2c4e0fcc klass;
-    class src_confidence_api_dependencies_py_policyselecto_be8907ed klass;
-    class src_confidence_infrastructure_providers_py_proto_a30d5add klass;
-    class src_confidence_infrastructure_event_bus_py_proto_4f7b8e62 klass;
-    class src_confidence_api_dependencies_py_responsegener_f1676efc klass;
-    class src_confidence_api_dependencies_py_safetycontext_6f9c792b klass;
-    class src_confidence_api_dependencies_py_safetycontrac_07952684 klass;
-    class src_confidence_api_dependencies_py_slipcontext_5990042b klass;
-    class src_confidence_api_dependencies_py_stateestimato_f20807cc klass;
-    class src_confidence_infrastructure_providers_py_uuid_560ee504 klass;
-    class src_confidence_api_dependencies_py_uuid_90b2a5ab klass;
-    classDef entry fill:#422006,stroke:#fbbf24,color:#fde68a,stroke-width:1px;
-    classDef api fill:#450a0a,stroke:#f87171,color:#fee2e2,stroke-width:1px;
-    classDef async fill:#2e1065,stroke:#a78bfa,color:#ede9fe,stroke-width:1px;
-    classDef klass fill:#064e3b,stroke:#34d399,color:#d1fae5,stroke-width:1px;
-    classDef ui fill:#831843,stroke:#f472b6,color:#fce7f3,stroke-width:1px;
-    classDef module fill:#172554,stroke:#60a5fa,color:#dbeafe,stroke-width:1px;
-    classDef test fill:#3f3f46,stroke:#a1a1aa,color:#f4f4f5,stroke-width:1px;
-    classDef concept fill:#292524,stroke:#a8a29e,color:#fafaf9,stroke-dasharray:4 3;
-    classDef function fill:#0f172a,stroke:#38bdf8,color:#e0f2fe,stroke-width:1px;
-</div>
-
-<h3>Call Details</h3>
-<table class="call-table">
-<tr>
-  <th style="width:5%">#</th>
-  <th style="width:28%">Node</th>
-  <th style="width:10%">Type</th>
-  <th style="width:17%">Caller</th>
-  <th style="width:20%">Callees</th>
-  <th style="width:20%">Description</th>
-</tr>
-<tr>
-  <td>1</td>
-  <td><code>ConfidenceEvent</code><br><small style="color:var(--muted)"></small></td>
-  <td><span class="tag tag-class">Class</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>ConfidenceEvent node in project.</td>
 </tr>
 <tr>
   <td>2</td>
@@ -2963,6 +3021,30 @@ flowchart LR
   <td>No direct outbound edge</td>
   <td>Module file in confidence/workers/__init__.py.</td>
 </tr>
+<tr>
+  <td>22</td>
+  <td><code>fix_step7.py</code><br><small style="color:var(--muted)">fix_step7.py</small></td>
+  <td><span class="tag tag-class">Module</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>Module file in fix_step7.py.</td>
+</tr>
+<tr>
+  <td>23</td>
+  <td><code>ConfidenceEvent</code><br><small style="color:var(--muted)"></small></td>
+  <td><span class="tag tag-class">Class</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>ConfidenceEvent node in project.</td>
+</tr>
+<tr>
+  <td>24</td>
+  <td><code>DecisionEngine</code><br><small style="color:var(--muted)"></small></td>
+  <td><span class="tag tag-class">Class</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>DecisionEngine node in project.</td>
+</tr>
 </table>
 
 <div class="grid">
@@ -2971,6 +3053,7 @@ flowchart LR
     <table style="width:100%;font-size:0.85rem;">
       <tr><th>File</th><th>Coverage</th></tr>
       <tr><td><code>fix_step6.py</code></td><td>1 nodes</td></tr>
+<tr><td><code>fix_step7.py</code></td><td>1 nodes</td></tr>
 <tr><td><code>confidence/workers/__init__.py</code></td><td>1 nodes</td></tr>
     </table>
   </div>
@@ -2987,18 +3070,18 @@ flowchart LR
   <div class="card">
     <h4>Graph</h4>
     <table style="width:100%;font-size:0.85rem;">
-      <tr><td>Nodes</td><td>810</td></tr>
-      <tr><td>Edges</td><td>1300</td></tr>
+      <tr><td>Nodes</td><td>816</td></tr>
+      <tr><td>Edges</td><td>1304</td></tr>
       <tr><td>Hyperedges</td><td>0</td></tr>
-      <tr><td>Communities</td><td>81</td></tr>
+      <tr><td>Communities</td><td>96</td></tr>
       <tr><td>Documented Sections</td><td>15</td></tr>
     </table>
   </div>
   <div class="card">
     <h4>Edge Confidence</h4>
     <table style="width:100%;font-size:0.85rem;">
-      <tr><td>EXTRACTED</td><td>1189</td></tr>
-      <tr><td>INFERRED</td><td>111</td></tr>
+      <tr><td>EXTRACTED</td><td>1192</td></tr>
+      <tr><td>INFERRED</td><td>112</td></tr>
       <tr><td>AMBIGUOUS</td><td>0</td></tr>
     </table>
   </div>
@@ -3006,7 +3089,7 @@ flowchart LR
 
 <div style="text-align:center; padding:40px 0; color: var(--muted); font-size:0.9rem;">
   <p>Confidence — Architecture Documentation</p>
-  <p>Generated: 2026-09-04 05:23 UTC · graphify callflow-html</p>
+  <p>Generated: 2026-09-04 05:24 UTC · graphify callflow-html</p>
 </div>
 
 </div><!-- .container -->
