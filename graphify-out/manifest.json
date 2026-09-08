@@ -54,8 +54,8 @@
     "semantic_hash": ""
   },
   "src/confidence/application/engine.py": {
-    "mtime": 1788498077.396718,
-    "seen": 1788498143.9180098,
+    "mtime": 1788499707.3741386,
+    "seen": 1788499752.3219562,
     "ast_hash": "49f716a9b5c91d96b27c913550ac3705",
     "semantic_hash": ""
   },
@@ -90,15 +90,15 @@
     "semantic_hash": ""
   },
   "src/confidence/domain/actions.py": {
-    "mtime": 1788456527.8162618,
-    "seen": 1788496932.5141392,
-    "ast_hash": "69b942af318e198583600bdf71ed7e70",
-    "semantic_hash": "69b942af318e198583600bdf71ed7e70"
+    "mtime": 1788499728.6067765,
+    "seen": 1788499752.3219626,
+    "ast_hash": "0182e2ce054ea9d54c5312c1de8c6d10",
+    "semantic_hash": ""
   },
   "src/confidence/domain/enums.py": {
-    "mtime": 1788498161.6600971,
-    "seen": 1788498236.0115433,
-    "ast_hash": "4ea237d2b2a589d5d566e8255161d00f",
+    "mtime": 1788499707.3856385,
+    "seen": 1788499752.3219633,
+    "ast_hash": "160eb0f110f5849dab05dcbcf1b3a8b1",
     "semantic_hash": ""
   },
   "src/confidence/domain/models.py": {
@@ -120,9 +120,9 @@
     "semantic_hash": "2a019fb080b05d4215275dc895b89fdf"
   },
   "src/confidence/domain/safety.py": {
-    "mtime": 1788499607.1384563,
-    "seen": 1788499652.669747,
-    "ast_hash": "8f3b76c4aa4783107d5252a63d43970c",
+    "mtime": 1788499728.6067765,
+    "seen": 1788499752.3219688,
+    "ast_hash": "d5ce7964c3d75f0ea634b061da9a1a3f",
     "semantic_hash": ""
   },
   "src/confidence/domain/state.py": {
@@ -483,6 +483,24 @@
     "mtime": 1788499632.84415,
     "seen": 1788499652.6697228,
     "ast_hash": "a2868cfce76a723bdb15a47821d3eb4d",
+    "semantic_hash": ""
+  },
+  "fix_step10.py": {
+    "mtime": 1788499674.6754248,
+    "seen": 1788499752.3219407,
+    "ast_hash": "90e970ab207a5001914cbc9cf0adc22a",
+    "semantic_hash": ""
+  },
+  "fix_step10_2.py": {
+    "mtime": 1788499707.3586383,
+    "seen": 1788499752.3219426,
+    "ast_hash": "af769d496d08bba30596da3bdcf27dde",
+    "semantic_hash": ""
+  },
+  "tests/test_policy.py": {
+    "mtime": 1788499728.6067765,
+    "seen": 1788499752.321987,
+    "ast_hash": "e05b573d19a586a462edc6839c987844",
     "semantic_hash": ""
   }
 }
