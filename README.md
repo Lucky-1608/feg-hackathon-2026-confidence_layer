@@ -2041,3 +2041,11 @@ uvicorn confidence.api.app:app --reload --host 0.0.0.0 --port 8000
 ```
 
 **If `make check` passes and the demo opens at `/`, the local development environment is ready.**
+
+
+## Production Architecture (Phase 4)
+- **Infrastructure**: Kafka (Redpanda) for events/audit, Redis for idempotency/state, PostgreSQL for persistence.
+- **Resilience**: Circuit breakers, timeouts, rate limiting.
+- **Security**: OAuth2 Bearer token authentication, Zero-PII by design.
+- **Observability**: OpenTelemetry tracing, Prometheus metrics.
+- **Deployment**: Kubernetes ready with liveness/readiness probes.

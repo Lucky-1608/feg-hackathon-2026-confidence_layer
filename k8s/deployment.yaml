@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: confidence-layer
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: confidence-layer
+  template:
+    metadata:
+      labels:
+        app: confidence-layer
+    spec:
+      containers:
+        - name: confidence-layer
+          image: confidence-layer:latest
+          ports:
+            - containerPort: 8000
+          envFrom:
+            - secretRef:
+                name: confidence-secrets
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8000
+          readinessProbe:
+            httpGet:
+              path: /ready
+              port: 8000
