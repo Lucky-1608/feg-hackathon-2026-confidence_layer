@@ -1,207 +1,68 @@
 # Confidence Layer
 
-[![CI](https://github.com/Saisharathchandranandnetha/Confidence-layer/actions/workflows/ci.yml/badge.svg)](https://github.com/Saisharathchandranandnetha/Confidence-layer/actions/workflows/ci.yml)
+## 1. Team Name, Challenge Entered and Short Solution Title
+**Team Name:** The Decisioning Team (Sai Sharath, Saketh, Hrishikesh)
+**Challenge:** FEG Innovation Hackathon 2026 Challenge 1 — Session Quality and Session-to-Action Conversion
+**Solution Title:** Confidence Layer — A safety-constrained, real-time decision engine to resolve betslip hesitation.
 
-Safety-constrained decision support for high-intent betslip moments.
+## 2. Problem Statement
+Users reach the betslip confirm button and abandon their sessions at the final step. Traditional conversion optimization pushes urgency or social proof, creating a motivation gap and leading to dark patterns. However, hesitation at confirmation is actually an *information gap* (e.g., "Did the odds change?", "What does this market mean?"). The challenge is turning sessions into confident actions without pressuring players, while rigorously respecting Responsible Gambling (RG) limits.
 
-Confidence Layer is a synthetic hackathon prototype that detects resolvable uncertainty during betslip confirmation. It can provide a factual clarification from a fixed action registry, or deliberately return `NO_INTERVENTION` when intervention is unsafe, unsupported, or unnecessary.
+## 3. Solution Overview and Key Innovation
+Confidence Layer is a sub-100ms real-time decision engine that classifies player uncertainty and surfaces factual clarifications (or deliberately stays silent). 
+**Key Innovation:** Compliance as a mathematical property. The engine uses a Session Quality Score (SQS) where the penalty for harm indicators mathematically outweighs any conversion value. Safety checks act as hard gates *before* policy evaluation, meaning the system is structurally incapable of recommending unsafe interventions.
 
-> [!WARNING]
-> The default local configuration uses synthetic data and a fixed demo credential. It is not production-ready, does not connect to a gambling operator, and must not be used to make gambling decisions for users. Read the [implementation handoff](docs/evaluation/implementation-handoff-2026-09-08.md) before considering any deployment beyond local evaluation.
+## 4. Key Features / User Journey
+1. **Hesitation Detection:** The user hesitates on the betslip.
+2. **Context Assembly:** The system gathers session history, market data, and RG limits.
+3. **Safety Gate:** Evaluates strict safety invariants (e.g., self-exclusion, escalating stakes). If blocked, defaults to `NO_INTERVENTION`.
+4. **State Classification:** A LightGBM model classifies the uncertainty (e.g., `ODDS_CHANGE`, `MARKET_MEANING`, `LEGITIMATE_RECONSIDERATION`).
+5. **Policy Selection:** A Contextual Bandit (Vowpal Wabbit) selects the optimal safe intervention.
+6. **Factual Response:** A template-based response is presented to the user (No LLM hallucinations).
 
-## How it works
+## 5. Technology Stack
+*   **Backend:** Python 3.12+, FastAPI, Pydantic v2
+*   **Architecture:** Hexagonal (Ports & Adapters)
+*   **ML Pipeline:** LightGBM (classification), Vowpal Wabbit (contextual bandit)
+*   **Data & State:** PostgreSQL (audit), Redis (ephemeral session state, rate limits), Redpanda/Kafka (event bus)
+*   **Observability:** Prometheus, OpenTelemetry, Structlog
 
-Every request follows the same safety-first flow:
+## 6. System Requirements and Prerequisites
+*   Docker and Docker Compose
+*   Python 3.12+ (if running locally without Docker)
+*   Make
 
-```mermaid
-flowchart LR
-    A[Decision request] --> B[Authoritative context]
-    B --> C{Safety gate}
-    C -->|Blocked, stale, or unknown| H[NO_INTERVENTION]
-    C -->|Safe| D[State estimate]
-    D --> E[Eligible actions]
-    E --> F[Deterministic policy]
-    F --> G{Final safety check}
-    G -->|Pass| I[Approved response]
-    G -->|Fail| H
-```
+## 7. Installation / Setup Steps
+1. Clone the repository.
+2. Copy the environment variables: `cp .env.example .env`
+3. Boot the infrastructure and application using Docker: `make docker-up`
 
-The implementation separates three authorities:
+## 8. Environment Variables and Configuration Instructions
+All non-secret configurations are detailed in `.env.example`. Key toggles:
+*   `POLICY_TYPE`: Set to `deterministic` or `bandit`.
+*   `STATE_ESTIMATOR_TYPE`: Set to `rules` or `lgbm`.
+*   `SHADOW_MODE`: Set to `off` to present actions to the UI, or `full` to audit decisions silently.
 
-- Safety authority decides whether intervention is allowed.
-- State authority classifies the source of uncertainty.
-- Policy authority selects only from registered, eligible actions.
+## 9. How to Run the Prototype
+If using Docker, the application runs automatically on port 8000.
+To run the API natively (after starting infrastructure via `make infra-up`): `make run`
+To run the background event and bandit workers: `make run-worker`
 
-The domain layer stays independent of web and infrastructure concerns. FastAPI handles transport, the application layer coordinates decisions, and adapters provide PostgreSQL, Redis, and Kafka/Redpanda integration boundaries. See the [architecture overview](docs/architecture/overview.md) and [architecture decision record](docs/decisions/0001-hexagonal-architecture.md).
+## 10. How to Test / Validate the Prototype
+We maintain a strict >75% branch coverage floor. Run the full validation suite: `make check`. This executes Ruff linting, Mypy type checking, and Pytest coverage testing.
 
-## Project status
+## 11. Demo Instructions or Demo Flow
+1. Navigate to `http://localhost:8000/ui/` in your browser.
+2. On the **Scenario Controls** panel, toggle different states (e.g., `Odds Changed`, `Safety State -> Self Excluded`).
+3. Click the betslip and observe the **Pipeline Visualization**.
+4. You will see the system gracefully navigate the hard gates, classifying the state and rendering `NO_INTERVENTION` when safety flags are triggered.
 
-| Area | Current state |
-| --- | --- |
-| Domain and safety rules | Implemented with deterministic tests |
-| Decision API and demo UI | Implemented for local synthetic scenarios |
-| PostgreSQL, Redis, and Kafka adapters | Present; live durability and recovery are not certified |
-| Authentication | JWT/JWKS validation, scoped access and session ownership; local demo credential |
-| Evaluation framework | SQS, classifier and harm analysis, experiments, holdout and daily reports implemented |
-| ML adapters | LightGBM and Vowpal Wabbit with deterministic fallbacks; trained deployment artifacts required |
-| Operational controls | Rate limiting, kill switch, shadow mode, authenticated metrics and optional tracing |
-| Production deployment | Requires operator adapters, authoritative financial history and live validation |
+## 12. Known Limitations, Assumptions and Future Improvements
+*   **Operator Adapters:** The current providers (`SafetyProvider`, `SlipProvider`, `MarketProvider`) are dummy adapters. In production, these must connect to FEG's real internal APIs.
+*   **Auth Integration:** JWT validation is implemented, but requires integration with FEG's identity provider for production JWKS endpoints.
 
-## Quick start
-
-### Prerequisites
-
-- Python 3.12 or newer
-- Git
-- Docker with Docker Compose for PostgreSQL, Redis, and Redpanda
-- GNU Make (recommended; every command can also be run directly)
-
-### Local development
-
-```bash
-git clone https://github.com/Saisharathchandranandnetha/Confidence-layer.git
-cd Confidence-layer
-cp .env.example .env
-make venv
-make infra-up
-make run
-```
-
-Open these URLs after the API starts:
-
-- Demo UI: <http://localhost:8000/ui/>
-- OpenAPI documentation: <http://localhost:8000/docs>
-- Liveness probe: <http://localhost:8000/health>
-- Readiness probe: <http://localhost:8000/ready>
-
-`make infra-up` starts PostgreSQL, Redis, and Redpanda and applies migrations. Stop them with `make infra-down`.
-
-### Run everything with Docker
-
-```bash
-docker compose up --build
-```
-
-Compose uses `.env.docker`, which contains local-only service addresses and demo credentials. Stop the stack with `docker compose down`.
-
-## Try the decision API
-
-With the default development configuration, the local API accepts `demo-token`. JWT mode validates signed identity-provider tokens. This request exercises the synthetic odds-change scenario:
-
-```bash
-curl --request POST http://localhost:8000/v1/decisions \
-  --header 'Authorization: Bearer demo-token' \
-  --header 'Content-Type: application/json' \
-  --data '{
-    "session_id": "00000000-0000-0000-0000-000000000001",
-    "anonymous_actor_id": "actor-1",
-    "client_version": "1.0.0",
-    "slip_id": "slip-1",
-    "interaction": {
-      "dwell_time_seconds": 6,
-      "odds_changed": true
-    }
-  }'
-```
-
-Useful synthetic cases:
-
-| Input | Behavior |
-| --- | --- |
-| `actor-1` | Normal local demo actor |
-| `actor-harm` | Simulates a harmful-play signal and fails closed |
-| `actor-self-excluded` | Simulates self-exclusion and fails closed |
-| `actor-safety-down` | Simulates unavailable safety data |
-| `slip-missing-odds` | Simulates missing odds history |
-| `slip-down` | Simulates a slip-provider failure |
-
-## Development commands
-
-| Command | Purpose |
-| --- | --- |
-| `make help` | List supported commands |
-| `make venv` | Create `.venv` and install development dependencies |
-| `make format` | Format and auto-fix Python code |
-| `make lint` | Run Ruff lint and formatting checks |
-| `make typecheck` | Run strict mypy checks on application code |
-| `make test` | Run tests and enforce the branch-coverage regression floor |
-| `make check` | Run the complete pull-request quality gate |
-| `make compose-check` | Validate the Compose configuration |
-| `make test-load` | Run the local Locust load scenario |
-| `make clean` | Remove generated Python and test caches |
-
-Install the optional Git hooks after `make venv`:
-
-```bash
-.venv/bin/pre-commit install
-```
-
-The same lint, formatting, type-check, test, and 75% branch-coverage gate runs in GitHub Actions. See [CONTRIBUTING.md](CONTRIBUTING.md) for branch, review, ownership, migration, and definition-of-done rules.
-
-## Repository structure
-
-```text
-.
-├── .github/                 CI, issue forms, and pull-request template
-├── alembic/                 Versioned database migrations
-├── docs/
-│   ├── architecture/        Current system design
-│   ├── decisions/           Architecture decision records
-│   ├── evaluation/          Plans and implementation audits
-│   └── safety/              Security and safety implementation notes
-├── k8s/                     Kubernetes deployment foundation
-├── src/confidence/
-│   ├── api/                 FastAPI routes, schemas, and dependency wiring
-│   ├── application/         Decision orchestration and event processing
-│   ├── db/                  SQLAlchemy schema and connections
-│   ├── demo/                Synthetic local providers
-│   ├── domain/              Models, safety rules, policy, and action registry
-│   ├── evaluation/          Classifier, SQS, harm and experiment analysis
-│   ├── infrastructure/      PostgreSQL, Redis, Kafka, auth, and resilience adapters
-│   ├── observability/       Metrics, correlation IDs and optional tracing
-│   ├── ui/                  Static demonstration interface
-│   └── workers/             Event consumer entry points
-└── tests/                   Unit, API, adversarial, and load tests
-```
-
-Local environments, caches, build output, secrets, and generated Graphify output are excluded through `.gitignore`.
-
-## Configuration
-
-Copy `.env.example` to `.env`. The main settings are:
-
-| Variable | Default | Purpose |
-| --- | --- | --- |
-| `APP_ENV` | `development` | Selects the runtime environment; synthetic providers are restricted to local/test |
-| `DEMO_MODE` | `true` | Enables synthetic providers |
-| `AUTH_PROVIDER` | `development` | Selects local demo credentials or `jwt` |
-| `DATABASE_URL` | Local PostgreSQL | Async application database connection |
-| `DATABASE_URL_SYNC` | Local PostgreSQL | Synchronous Alembic connection |
-| `REDIS_URL` | `redis://localhost:6379/0` | Session and idempotency storage |
-| `KAFKA_BOOTSTRAP_SERVERS` | `localhost:19092` | Event publisher broker |
-| `DECISION_TIMEOUT_MS` | `100` | Decision pipeline timeout |
-| `SAFETY_CONFIDENCE_THRESHOLD` | `0.5` | Minimum configured safety confidence |
-| `STATE_CONFIDENCE_THRESHOLD` | `0.5` | Minimum state confidence |
-| `SAFETY_DATA_MAX_AGE_SECONDS` | `300` | Maximum safety-data age |
-
-For JWT mode, set `DEMO_MODE=false`, `AUTH_PROVIDER=jwt`, `JWKS_URL` (HTTPS), `JWT_ISSUER`, and `JWT_AUDIENCE`. Operator authority adapters remain unavailable placeholders that fail closed. Configuring authentication alone does not enable live interventions.
-
-`.env.example` also documents model selection, SQS weights, rate limits, shadow mode and tracing. See the [implementation handoff](docs/evaluation/implementation-handoff-2026-09-08.md) for endpoint scopes, training commands and validation limits.
-
-## Documentation
-
-The [documentation index](docs/README.md) links the maintained architecture, safety, planning, and audit records. Key documents include:
-
-- [Architecture overview](docs/architecture/overview.md)
-- [Hexagonal architecture decision](docs/decisions/0001-hexagonal-architecture.md)
-- [Production audit](docs/evaluation/production-audit-2026-09-06.md)
-- [Security controls and remaining gaps](docs/safety/security-controls.md)
-- [Security reporting policy](SECURITY.md)
-
-## Contributing and security
-
-Read [CONTRIBUTING.md](CONTRIBUTING.md) before opening a pull request. Do not commit `.env`, credentials, customer data, generated caches, or local tool output.
-
-Report suspected vulnerabilities through the private process in [SECURITY.md](SECURITY.md), rather than a public issue.
-
-This repository does not currently declare an open-source license. Copyright remains with the repository owners unless a license is added.
+## 13. Required Documentation Links
+*   [Architecture & Technical Overview](docs/architecture.md)
+*   [Impact Case & Cost-Value Analysis](docs/impact-case.md)
+*   [Compliance Analysis](docs/compliance-note.md)
+*   [Dependencies & AI Disclosure](docs/dependencies.md)
