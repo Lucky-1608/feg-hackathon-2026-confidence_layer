@@ -2,17 +2,35 @@
 
 from __future__ import annotations
 
-from fastapi import APIRouter, Depends, HTTPException, Request, status
+import json
+
+from fastapi import APIRouter, Depends, Header, HTTPException, Request, status
+from fastapi.responses import JSONResponse
 from pydantic import ValidationError
 
-from confidence.api.dependencies import get_decision_engine
+from confidence.api.dependencies import get_decision_engine, get_event_publisher
 from confidence.api.models import CreateDecisionRequest, DecisionResponse
 from confidence.application.context_builder import DecisionRequest
 from confidence.application.engine import DecisionEngine
+from confidence.config import load_config
 from confidence.domain.event_contracts import ConfidenceEvent
+from confidence.infrastructure.event_bus import EventPublisher
+from confidence.infrastructure.session_state import RedisIdempotencyStore
 from confidence.log import get_logger
 
+logger = get_logger("confidence.api.routes")
 router = APIRouter()
+
+
+# We need a dependency to get the idempotency store
+def get_idempotency_store() -> RedisIdempotencyStore:
+    # Hacky way to inject it using the existing redis client from dependencies
+    # In a real app we'd attach it to app.state
+    config = load_config()
+    from redis.asyncio import Redis
+
+    redis_client = Redis.from_url(config.redis.url, decode_responses=False)
+    return RedisIdempotencyStore(redis_client)
 
 
 @router.post(
@@ -24,9 +42,22 @@ router = APIRouter()
 )
 async def create_decision(
     request: CreateDecisionRequest,
+    idempotency_key: str | None = Header(None, alias="Idempotency-Key"),
     engine: DecisionEngine = Depends(get_decision_engine),  # noqa: B008
-) -> DecisionResponse:
+    idemp_store: RedisIdempotencyStore = Depends(get_idempotency_store),  # noqa: B008
+) -> DecisionResponse | JSONResponse:
     """Handle a decision request."""
+    # 1. Idempotency Check
+    if idempotency_key:
+        cached_response = await idemp_store.get_response(idempotency_key)
+        if cached_response:
+            logger.info("idempotent_hit", key=idempotency_key)
+            return JSONResponse(status_code=200, content=cached_response)
+
+        acquired = await idemp_store.acquire(idempotency_key)
+        if not acquired:
+            raise HTTPException(status_code=409, detail="Request already in progress")
+
     try:
         # Convert API model to Application model
         from confidence.domain.models import InteractionContext
@@ -41,7 +72,7 @@ async def create_decision(
 
         result = await engine.decide(app_request)
 
-        return DecisionResponse(
+        response = DecisionResponse(
             decision_id=result.decision.decision_id,
             action=result.decision.selected_action,
             state=result.decision.state,
@@ -53,19 +84,24 @@ async def create_decision(
             action_registry_version=result.decision.action_registry_version,
             safety_status=result.decision.safety_status,
         )
+
+        # Save to idempotency store
+        if idempotency_key:
+            # We dump the pydantic model to dict, then convert UUIDs/Enums to strings for json
+            resp_dict = json.loads(response.model_dump_json())
+            await idemp_store.save_response(idempotency_key, resp_dict)
+
+        return response
     except ValidationError as e:
-        raise HTTPException(status_code=status.HTTP_422_UNPROCESSABLE_ENTITY, detail=str(e)) from e
+        raise HTTPException(
+            status_code=status.HTTP_422_UNPROCESSABLE_ENTITY, detail={"error": "validation_error", "messages": e.errors()}
+        ) from e
     except Exception as e:
-        # In production this should be logged and return a generic 500
-        # However, the engine catches all exceptions and fails closed anyway,
-        # so this is just a final safety net for the router itself.
+        logger.error("api_error", error=str(e))
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail="Internal Server Error",
+            detail={"error": "internal_error", "message": "Internal Server Error"},
         ) from e
-
-
-logger = get_logger("confidence.api.routes")
 
 
 @router.post(
@@ -76,12 +112,10 @@ logger = get_logger("confidence.api.routes")
 )
 async def ingest_event(
     event: ConfidenceEvent,
-    request: Request,
+    req: Request,
+    publisher: EventPublisher = Depends(get_event_publisher),  # noqa: B008
 ) -> dict[str, str]:
     try:
-        from confidence.api.dependencies import get_event_publisher
-
-        publisher = get_event_publisher()
         await publisher.publish(event)
         return {"status": "accepted"}
     except Exception as e:
@@ -89,9 +123,9 @@ async def ingest_event(
             "event_ingestion_error",
             error=str(e),
             event_id=str(event.event_id),
-            path=request.url.path,
+            path=req.url.path,
         )
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail="Failed to ingest event",
+            detail={"error": "ingestion_failed", "message": "Failed to ingest event"},
         ) from e
