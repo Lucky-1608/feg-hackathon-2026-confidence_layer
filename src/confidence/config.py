@@ -89,18 +89,12 @@ def load_config() -> AppConfig:
             max_overflow=int(os.getenv("DATABASE_MAX_OVERFLOW", "10")),
         ),
         safety=SafetyConfig(
-            confidence_threshold=float(
-                os.getenv("SAFETY_CONFIDENCE_THRESHOLD", "0.5")
-            ),
-            safety_data_max_age_seconds=float(
-                os.getenv("SAFETY_DATA_MAX_AGE_SECONDS", "300.0")
-            ),
+            confidence_threshold=float(os.getenv("SAFETY_CONFIDENCE_THRESHOLD", "0.5")),
+            safety_data_max_age_seconds=float(os.getenv("SAFETY_DATA_MAX_AGE_SECONDS", "300.0")),
         ),
         decision=DecisionConfig(
             timeout_ms=int(os.getenv("DECISION_TIMEOUT_MS", "100")),
-            state_confidence_threshold=float(
-                os.getenv("STATE_CONFIDENCE_THRESHOLD", "0.5")
-            ),
+            state_confidence_threshold=float(os.getenv("STATE_CONFIDENCE_THRESHOLD", "0.5")),
         ),
         server=ServerConfig(
             host=os.getenv("HOST", "0.0.0.0"),

@@ -27,9 +27,7 @@ class ConfidenceEvent(BaseModel):
     event_id: UUID
     event_type: EventType
     session_id: UUID
-    anonymous_actor_id: str = Field(
-        description="Opaque identifier. Never contains PII."
-    )
+    anonymous_actor_id: str = Field(description="Opaque identifier. Never contains PII.")
     timestamp: datetime
     sequence_number: int = Field(ge=0)
     client_version: str

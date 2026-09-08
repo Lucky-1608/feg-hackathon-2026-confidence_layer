@@ -119,9 +119,7 @@ class TestDecisionContext:
         assert len(sample_context.markets) == 1
         assert sample_context.interaction.odds_changed is True
 
-    def test_context_serialization_roundtrip(
-        self, sample_context: DecisionContext
-    ) -> None:
+    def test_context_serialization_roundtrip(self, sample_context: DecisionContext) -> None:
         data = sample_context.model_dump(mode="json")
         restored = DecisionContext.model_validate(data)
         assert restored.session.session_id == sample_context.session.session_id
@@ -206,10 +204,7 @@ class TestDecision:
             reason="User is legitimately reconsidering",
         )
         assert d.selected_action == ActionId.NO_INTERVENTION
-        assert (
-            d.no_intervention_reason
-            == NoInterventionReason.LEGITIMATE_RECONSIDERATION
-        )
+        assert d.no_intervention_reason == NoInterventionReason.LEGITIMATE_RECONSIDERATION
 
 
 class TestOutcome:

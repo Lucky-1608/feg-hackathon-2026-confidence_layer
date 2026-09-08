@@ -100,3 +100,13 @@ See [Safety Contract](src/confidence/domain/safety.py) for the full list.
 - [Implementation Audit](docs/IMPLEMENTATION_AUDIT.md)
 - [Implementation Plan](docs/IMPLEMENTATION_PLAN.md)
 - [ADR-001: Architecture](docs/ADR-001-ARCHITECTURE.md)
+
+## Phase 2: End-to-End Decision Engine (Completed)
+
+We have successfully implemented the full deterministic pipeline:
+- FastAPI application with /v1/decisions, /health, /ready
+- Asynchronous PostgreSQL persistence via SQLAlchemy for audit logs
+- Deterministic State Authority and Policy Selector
+- Response Generator using formatted templates
+- Context Builder that safely integrates external dependencies
+- Exhaustive test suite covering End-to-End Scenarios A-H and strict invariant checks.

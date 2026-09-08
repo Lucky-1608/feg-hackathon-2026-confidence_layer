@@ -325,9 +325,7 @@ class TestSafeContext:
             confidence=0.85,
             model_version="test",
         )
-        check = safety_contract.final_safety_check(
-            ActionId.EXPLAIN_ODDS_CHANGE, result, estimate
-        )
+        check = safety_contract.final_safety_check(ActionId.EXPLAIN_ODDS_CHANGE, result, estimate)
         assert check is None  # No block
 
 

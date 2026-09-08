@@ -51,8 +51,8 @@ class ActionRegistry:
     """
 
     def __init__(self, actions: dict[ActionId, ActionDefinition] | None = None) -> None:
-        self._actions: dict[ActionId, ActionDefinition] = actions or dict(
-            _DEFAULT_ACTIONS
+        self._actions: dict[ActionId, ActionDefinition] = (
+            actions if actions is not None else dict(_DEFAULT_ACTIONS)
         )
         # NO_INTERVENTION must always be present.
         if ActionId.NO_INTERVENTION not in self._actions:
@@ -132,10 +132,7 @@ _DEFAULT_ACTIONS: list[tuple[ActionId, ActionDefinition]] = [
                 UncertaintyState.POTENTIAL_HARM,
                 UncertaintyState.LEGITIMATE_RECONSIDERATION,
             ],
-            copy_template=(
-                "This is a {market_name} market for {event_name}. "
-                "{market_definition}"
-            ),
+            copy_template=("This is a {market_name} market for {event_name}. {market_definition}"),
             enabled=True,
         ),
     ),
@@ -184,9 +181,7 @@ _DEFAULT_ACTIONS: list[tuple[ActionId, ActionDefinition]] = [
                 UncertaintyState.POTENTIAL_HARM,
                 UncertaintyState.LEGITIMATE_RECONSIDERATION,
             ],
-            copy_template=(
-                "At a {stake} stake, your potential return is {potential_return}."
-            ),
+            copy_template=("At a {stake} stake, your potential return is {potential_return}."),
             enabled=True,
         ),
     ),

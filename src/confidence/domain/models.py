@@ -30,9 +30,7 @@ class Session(BaseModel):
     """A user's betslip confirmation session."""
 
     session_id: UUID
-    anonymous_actor_id: str = Field(
-        description="Opaque identifier. Never contains PII."
-    )
+    anonymous_actor_id: str = Field(description="Opaque identifier. Never contains PII.")
     started_at: datetime
     client_version: str
 

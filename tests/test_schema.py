@@ -36,9 +36,7 @@ class TestSchemaCreation:
             "experiments",
             "audit_log",
         }
-        assert expected_tables.issubset(tables), (
-            f"Missing tables: {expected_tables - tables}"
-        )
+        assert expected_tables.issubset(tables), f"Missing tables: {expected_tables - tables}"
 
     def test_sessions_columns(self) -> None:
         engine = create_engine("sqlite:///:memory:")
@@ -57,9 +55,17 @@ class TestSchemaCreation:
         inspector = inspect(engine)
         columns = {c["name"] for c in inspector.get_columns("events")}
         expected = {
-            "event_id", "session_id", "event_type", "anonymous_actor_id",
-            "timestamp", "sequence_number", "client_version", "schema_version",
-            "context", "payload", "created_at",
+            "event_id",
+            "session_id",
+            "event_type",
+            "anonymous_actor_id",
+            "timestamp",
+            "sequence_number",
+            "client_version",
+            "schema_version",
+            "context",
+            "payload",
+            "created_at",
         }
         assert expected.issubset(columns)
 
@@ -77,11 +83,23 @@ class TestSchemaCreation:
         inspector = inspect(engine)
         columns = {c["name"] for c in inspector.get_columns("decisions")}
         expected = {
-            "decision_id", "session_id", "timestamp", "state",
-            "state_confidence", "safety_status", "safety_block_reasons",
-            "candidate_actions", "selected_action", "no_intervention_reason",
-            "policy_version", "model_version", "action_registry_version",
-            "facts_version", "reason", "response_text", "created_at",
+            "decision_id",
+            "session_id",
+            "timestamp",
+            "state",
+            "state_confidence",
+            "safety_status",
+            "safety_block_reasons",
+            "candidate_actions",
+            "selected_action",
+            "no_intervention_reason",
+            "policy_version",
+            "model_version",
+            "action_registry_version",
+            "facts_version",
+            "reason",
+            "response_text",
+            "created_at",
         }
         assert expected.issubset(columns)
 
@@ -116,11 +134,23 @@ class TestSchemaCreation:
         inspector = inspect(engine)
         columns = {c["name"] for c in inspector.get_columns("audit_log")}
         expected = {
-            "audit_id", "decision_id", "timestamp", "context_snapshot",
-            "safety_result", "state_estimate", "candidate_actions",
-            "selected_action", "no_intervention_reason", "policy_version",
-            "model_version", "action_registry_version", "facts_version",
-            "reason", "response_text", "outcome", "created_at",
+            "audit_id",
+            "decision_id",
+            "timestamp",
+            "context_snapshot",
+            "safety_result",
+            "state_estimate",
+            "candidate_actions",
+            "selected_action",
+            "no_intervention_reason",
+            "policy_version",
+            "model_version",
+            "action_registry_version",
+            "facts_version",
+            "reason",
+            "response_text",
+            "outcome",
+            "created_at",
         }
         assert expected.issubset(columns)
 
@@ -130,9 +160,17 @@ class TestSchemaCreation:
         inspector = inspect(engine)
         columns = {c["name"] for c in inspector.get_columns("action_registry")}
         expected = {
-            "id", "action_id", "category", "allowed_states",
-            "required_data", "prohibited_states", "copy_template",
-            "enabled", "version", "registry_version", "created_at",
+            "id",
+            "action_id",
+            "category",
+            "allowed_states",
+            "required_data",
+            "prohibited_states",
+            "copy_template",
+            "enabled",
+            "version",
+            "registry_version",
+            "created_at",
         }
         assert expected.issubset(columns)
 

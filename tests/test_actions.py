@@ -17,9 +17,7 @@ from confidence.domain.enums import ActionCategory, ActionId, UncertaintyState
 
 
 class TestActionRegistryConstruction:
-    def test_default_registry_has_six_actions(
-        self, action_registry: ActionRegistry
-    ) -> None:
+    def test_default_registry_has_six_actions(self, action_registry: ActionRegistry) -> None:
         actions = action_registry.all_action_ids()
         assert len(actions) == 6
         assert ActionId.NO_INTERVENTION in actions
@@ -41,9 +39,7 @@ class TestActionRegistryConstruction:
                 }
             )
 
-    def test_no_intervention_is_always_registered(
-        self, action_registry: ActionRegistry
-    ) -> None:
+    def test_no_intervention_is_always_registered(self, action_registry: ActionRegistry) -> None:
         assert action_registry.is_registered(ActionId.NO_INTERVENTION)
 
 
@@ -84,9 +80,7 @@ class TestActionEligibility:
                 f"NO_INTERVENTION should be eligible for state {state}"
             )
 
-    def test_explain_odds_eligible_when_odds_change(
-        self, action_registry: ActionRegistry
-    ) -> None:
+    def test_explain_odds_eligible_when_odds_change(self, action_registry: ActionRegistry) -> None:
         eligible = action_registry.get_eligible_for_state(
             UncertaintyState.ODDS_CHANGE,
             {"old_odds", "new_odds", "stake", "potential_return"},
@@ -94,9 +88,7 @@ class TestActionEligibility:
         eligible_ids = [a.action_id for a in eligible]
         assert ActionId.EXPLAIN_ODDS_CHANGE in eligible_ids
 
-    def test_explain_odds_not_eligible_without_data(
-        self, action_registry: ActionRegistry
-    ) -> None:
+    def test_explain_odds_not_eligible_without_data(self, action_registry: ActionRegistry) -> None:
         eligible = action_registry.get_eligible_for_state(
             UncertaintyState.ODDS_CHANGE,
             set(),  # No data available
@@ -110,9 +102,16 @@ class TestActionEligibility:
         """When state is POTENTIAL_HARM, only NO_INTERVENTION should be eligible."""
         eligible = action_registry.get_eligible_for_state(
             UncertaintyState.POTENTIAL_HARM,
-            {"old_odds", "new_odds", "stake", "potential_return",
-             "market_name", "event_name", "market_definition",
-             "selections_summary"},
+            {
+                "old_odds",
+                "new_odds",
+                "stake",
+                "potential_return",
+                "market_name",
+                "event_name",
+                "market_definition",
+                "selections_summary",
+            },
         )
         eligible_ids = [a.action_id for a in eligible]
         # Only NO_INTERVENTION should be eligible
@@ -124,9 +123,16 @@ class TestActionEligibility:
         """When state is LEGITIMATE_RECONSIDERATION, only NO_INTERVENTION should be eligible."""
         eligible = action_registry.get_eligible_for_state(
             UncertaintyState.LEGITIMATE_RECONSIDERATION,
-            {"old_odds", "new_odds", "stake", "potential_return",
-             "market_name", "event_name", "market_definition",
-             "selections_summary"},
+            {
+                "old_odds",
+                "new_odds",
+                "stake",
+                "potential_return",
+                "market_name",
+                "event_name",
+                "market_definition",
+                "selections_summary",
+            },
         )
         eligible_ids = [a.action_id for a in eligible]
         assert eligible_ids == [ActionId.NO_INTERVENTION]
@@ -178,25 +184,19 @@ class TestActionEligibility:
 
 
 class TestActionDefinitions:
-    def test_all_actions_have_versions(
-        self, action_registry: ActionRegistry
-    ) -> None:
+    def test_all_actions_have_versions(self, action_registry: ActionRegistry) -> None:
         for action_id in action_registry.all_action_ids():
             action = action_registry.get(action_id)
             assert action is not None
             assert action.version, f"Action {action_id} missing version"
 
-    def test_no_intervention_has_no_requirements(
-        self, action_registry: ActionRegistry
-    ) -> None:
+    def test_no_intervention_has_no_requirements(self, action_registry: ActionRegistry) -> None:
         action = action_registry.get(ActionId.NO_INTERVENTION)
         assert action is not None
         assert action.required_data == []
         assert action.prohibited_states == []
 
-    def test_informational_actions_have_templates(
-        self, action_registry: ActionRegistry
-    ) -> None:
+    def test_informational_actions_have_templates(self, action_registry: ActionRegistry) -> None:
         for action_id in [
             ActionId.EXPLAIN_MARKET,
             ActionId.EXPLAIN_ODDS_CHANGE,
@@ -204,6 +204,4 @@ class TestActionDefinitions:
         ]:
             action = action_registry.get(action_id)
             assert action is not None
-            assert action.copy_template is not None, (
-                f"Action {action_id} missing copy_template"
-            )
+            assert action.copy_template is not None, f"Action {action_id} missing copy_template"
