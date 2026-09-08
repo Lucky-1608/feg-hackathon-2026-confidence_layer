@@ -42,9 +42,9 @@
     "semantic_hash": "83b8c3a3449c0dc8d0f450910042d0ff"
   },
   "src/confidence/api/routes.py": {
-    "mtime": 1788499474.2970893,
-    "seen": 1788499496.3317819,
-    "ast_hash": "12ea1a40ddb6ae21111683a622d955ed",
+    "mtime": 1788500097.4691222,
+    "seen": 1788500119.1267304,
+    "ast_hash": "0324bfe4ae947f115e1b9b67a5b24724",
     "semantic_hash": ""
   },
   "src/confidence/application/context_builder.py": {
@@ -525,6 +525,42 @@
     "mtime": 1788499815.3383365,
     "seen": 1788499904.422129,
     "ast_hash": "c45308d14ac2fa8f9372f8a86c4499a9",
+    "semantic_hash": ""
+  },
+  "fix_step12.py": {
+    "mtime": 1788499946.8531747,
+    "seen": 1788500119.1267087,
+    "ast_hash": "8bf0fb016d6f7ea65e0164a5e594edfe",
+    "semantic_hash": ""
+  },
+  "fix_step12_retry.py": {
+    "mtime": 1788500049.4047663,
+    "seen": 1788500119.1267116,
+    "ast_hash": "3416f3e7779e06a913cebefb778e7de1",
+    "semantic_hash": ""
+  },
+  "fix_task.py": {
+    "mtime": 1788499931.7280707,
+    "seen": 1788500119.1267202,
+    "ast_hash": "82feb445a69aaea72de6312372e40a25",
+    "semantic_hash": ""
+  },
+  "src/confidence/observability/__init__.py": {
+    "mtime": 1788499946.867155,
+    "seen": 1788500119.1267705,
+    "ast_hash": "fbc41c66c527a8e9803e34c822a2255f",
+    "semantic_hash": ""
+  },
+  "src/confidence/observability/metrics.py": {
+    "mtime": 1788499946.879175,
+    "seen": 1788500119.126772,
+    "ast_hash": "428d73ba75f8d8277a2502b82a5b9598",
+    "semantic_hash": ""
+  },
+  "src/confidence/observability/tracing.py": {
+    "mtime": 1788499946.879175,
+    "seen": 1788500119.1267734,
+    "ast_hash": "c23d8fc13e7b9bb1fdb46e20172d8730",
     "semantic_hash": ""
   }
 }

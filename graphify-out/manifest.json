@@ -42,9 +42,9 @@
     "semantic_hash": "83b8c3a3449c0dc8d0f450910042d0ff"
   },
   "src/confidence/api/routes.py": {
-    "mtime": 1788500097.4691222,
-    "seen": 1788500119.1267304,
-    "ast_hash": "0324bfe4ae947f115e1b9b67a5b24724",
+    "mtime": 1788500133.5433474,
+    "seen": 1788500158.823055,
+    "ast_hash": "170d76ec7a2a673fd81ab0c85872f3fd",
     "semantic_hash": ""
   },
   "src/confidence/application/context_builder.py": {
@@ -561,6 +561,12 @@
     "mtime": 1788499946.879175,
     "seen": 1788500119.1267734,
     "ast_hash": "c23d8fc13e7b9bb1fdb46e20172d8730",
+    "semantic_hash": ""
+  },
+  "fix_step13.py": {
+    "mtime": 1788500133.5233471,
+    "seen": 1788500158.8230438,
+    "ast_hash": "b97c72ea74c6516bbadde58cb021408a",
     "semantic_hash": ""
   }
 }
