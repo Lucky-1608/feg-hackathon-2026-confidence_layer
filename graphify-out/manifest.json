@@ -120,10 +120,10 @@
     "semantic_hash": "2a019fb080b05d4215275dc895b89fdf"
   },
   "src/confidence/domain/safety.py": {
-    "mtime": 1788456527.8162618,
-    "seen": 1788496932.5141432,
-    "ast_hash": "2bc7fd673033fbe76597eb3bf8d6626a",
-    "semantic_hash": "2bc7fd673033fbe76597eb3bf8d6626a"
+    "mtime": 1788499607.1384563,
+    "seen": 1788499652.669747,
+    "ast_hash": "8f3b76c4aa4783107d5252a63d43970c",
+    "semantic_hash": ""
   },
   "src/confidence/domain/state.py": {
     "mtime": 1788456527.8162618,
@@ -174,15 +174,15 @@
     "semantic_hash": ""
   },
   "tests/test_engine.py": {
-    "mtime": 1788498126.9174428,
-    "seen": 1788498143.9180298,
-    "ast_hash": "6cf1d2133d990f9b47d9a75a3c9394a6",
+    "mtime": 1788499632.8550546,
+    "seen": 1788499652.6697626,
+    "ast_hash": "b2d4e095bb11f4716aa21143fe08a393",
     "semantic_hash": ""
   },
   "tests/test_safety_contract.py": {
-    "mtime": 1788498126.916939,
-    "seen": 1788498143.9180315,
-    "ast_hash": "d168fb2036e1e099ae2756defbdce864",
+    "mtime": 1788499632.8553777,
+    "seen": 1788499652.6697662,
+    "ast_hash": "54ce0572c71b869ac80d305e682a72ca",
     "semantic_hash": ""
   },
   "tests/test_schema.py": {
@@ -477,6 +477,12 @@
     "mtime": 1788499532.1594803,
     "seen": 1788499570.3758824,
     "ast_hash": "e98ae0361bbdd6881be16579a904e95a",
+    "semantic_hash": ""
+  },
+  "fix_step9.py": {
+    "mtime": 1788499632.84415,
+    "seen": 1788499652.6697228,
+    "ast_hash": "a2868cfce76a723bdb15a47821d3eb4d",
     "semantic_hash": ""
   }
 }

@@ -48,9 +48,9 @@
     "semantic_hash": ""
   },
   "src/confidence/application/context_builder.py": {
-    "mtime": 1788498013.0174394,
-    "seen": 1788498143.9180088,
-    "ast_hash": "75e3dc2dff396877a879826fdb40e66d",
+    "mtime": 1788499550.0296001,
+    "seen": 1788499570.375851,
+    "ast_hash": "8c695b1c751852623b401fa969a8b9da",
     "semantic_hash": ""
   },
   "src/confidence/application/engine.py": {
@@ -459,6 +459,24 @@
     "mtime": 1788499445.5708935,
     "seen": 1788499496.3317752,
     "ast_hash": "f5897d07789e5d5323b3d2261af14e85",
+    "semantic_hash": ""
+  },
+  "fix_step8.py": {
+    "mtime": 1788499550.0046492,
+    "seen": 1788499570.3758428,
+    "ast_hash": "38c05017ba8aab7d294c59c2934650dc",
+    "semantic_hash": ""
+  },
+  "src/confidence/infrastructure/resilience.py": {
+    "mtime": 1788499538.07552,
+    "seen": 1788499570.3758702,
+    "ast_hash": "867e65d9d235de6456d8f45f1a3578be",
+    "semantic_hash": ""
+  },
+  "tests/test_resilience.py": {
+    "mtime": 1788499532.1594803,
+    "seen": 1788499570.3758824,
+    "ast_hash": "e98ae0361bbdd6881be16579a904e95a",
     "semantic_hash": ""
   }
 }

@@ -12,7 +12,7 @@ from __future__ import annotations
 
 from pydantic import BaseModel, Field
 
-from confidence.domain.enums import ActionCategory, ActionId, UncertaintyState
+from confidence.domain.enums import ActionCategory, ActionId, SafetyClass, UncertaintyState
 
 # Registry version — increment when actions change.
 ACTION_REGISTRY_VERSION = "1"
@@ -30,6 +30,7 @@ class ActionDefinition(BaseModel):
 
     action_id: ActionId
     category: ActionCategory
+    safety_class: SafetyClass = SafetyClass.NEUTRAL
     allowed_states: list[UncertaintyState]
     required_data: list[str] = Field(default_factory=list)
     prohibited_states: list[UncertaintyState] = Field(default_factory=list)
@@ -112,6 +113,7 @@ _DEFAULT_ACTIONS: list[tuple[ActionId, ActionDefinition]] = [
         ActionDefinition(
             action_id=ActionId.NO_INTERVENTION,
             category=ActionCategory.NO_ACTION,
+            safety_class=SafetyClass.PROTECTIVE,
             allowed_states=_ALL_STATES,
             required_data=[],
             prohibited_states=[],
@@ -124,6 +126,7 @@ _DEFAULT_ACTIONS: list[tuple[ActionId, ActionDefinition]] = [
         ActionDefinition(
             action_id=ActionId.EXPLAIN_MARKET,
             category=ActionCategory.INFORMATIONAL,
+            safety_class=SafetyClass.CONVERSION_ORIENTED,
             allowed_states=[UncertaintyState.MARKET_MEANING],
             required_data=["market_name", "event_name", "market_definition"],
             prohibited_states=[
@@ -139,6 +142,7 @@ _DEFAULT_ACTIONS: list[tuple[ActionId, ActionDefinition]] = [
         ActionDefinition(
             action_id=ActionId.EXPLAIN_ODDS_CHANGE,
             category=ActionCategory.INFORMATIONAL,
+            safety_class=SafetyClass.CONVERSION_ORIENTED,
             allowed_states=[UncertaintyState.ODDS_CHANGE],
             required_data=["old_odds", "new_odds", "stake", "potential_return"],
             prohibited_states=[
@@ -158,6 +162,7 @@ _DEFAULT_ACTIONS: list[tuple[ActionId, ActionDefinition]] = [
         ActionDefinition(
             action_id=ActionId.VERIFY_SELECTIONS,
             category=ActionCategory.VERIFICATION,
+            safety_class=SafetyClass.CONVERSION_ORIENTED,
             allowed_states=[UncertaintyState.SLIP_CONFIGURATION],
             required_data=["selections_summary"],
             prohibited_states=[
@@ -173,6 +178,7 @@ _DEFAULT_ACTIONS: list[tuple[ActionId, ActionDefinition]] = [
         ActionDefinition(
             action_id=ActionId.SHOW_STAKE_RETURN,
             category=ActionCategory.INFORMATIONAL,
+            safety_class=SafetyClass.CONVERSION_ORIENTED,
             allowed_states=[UncertaintyState.STAKE_RETURN],
             required_data=["stake", "potential_return"],
             prohibited_states=[
@@ -188,6 +194,7 @@ _DEFAULT_ACTIONS: list[tuple[ActionId, ActionDefinition]] = [
         ActionDefinition(
             action_id=ActionId.OFFER_DEFER,
             category=ActionCategory.DEFERRAL,
+            safety_class=SafetyClass.NEUTRAL,
             allowed_states=[
                 UncertaintyState.MARKET_MEANING,
                 UncertaintyState.ODDS_CHANGE,

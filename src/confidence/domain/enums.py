@@ -126,3 +126,11 @@ class OutcomeType(StrEnum):
     BET_ABANDONED = "BET_ABANDONED"
     BET_DEFERRED = "BET_DEFERRED"
     SELECTION_CORRECTED = "SELECTION_CORRECTED"
+
+
+class SafetyClass(StrEnum):
+    """Safety classification of an action."""
+
+    CONVERSION_ORIENTED = "CONVERSION_ORIENTED"
+    NEUTRAL = "NEUTRAL"
+    PROTECTIVE = "PROTECTIVE"

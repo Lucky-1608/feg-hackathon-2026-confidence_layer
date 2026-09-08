@@ -13,6 +13,7 @@ from __future__ import annotations
 
 from datetime import UTC, datetime
 
+from confidence.domain.actions import ActionDefinition
 from confidence.domain.enums import (
     ActionId,
     NoInterventionReason,
@@ -165,6 +166,7 @@ class SafetyContract:
         selected_action: ActionId,
         safety_result: SafetyResult,
         state_estimate: StateEstimate,
+        action_definition: ActionDefinition | None = None,
     ) -> NoInterventionReason | None:
         """Final safety check before response generation.
 
@@ -180,7 +182,14 @@ class SafetyContract:
             return NoInterventionReason.SAFETY_BLOCKED
 
         # S3: Harmful state → no conversion-oriented intervention
-        if state_estimate.state == UncertaintyState.POTENTIAL_HARM and selected_action != ActionId.NO_INTERVENTION:
+        from confidence.domain.enums import SafetyClass
+
+        is_conversion = (
+            action_definition.safety_class == SafetyClass.CONVERSION_ORIENTED
+            if action_definition
+            else selected_action not in (ActionId.NO_INTERVENTION, ActionId.OFFER_DEFER)
+        )
+        if state_estimate.state == UncertaintyState.POTENTIAL_HARM and is_conversion:
             return NoInterventionReason.SAFETY_BLOCKED
 
         return None

@@ -1,23 +1,23 @@
 # Graph Report - Confidence  (2026-09-04)
 
 ## Corpus Check
-- 75 files · ~45,757 words
+- 78 files · ~46,306 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 816 nodes · 1304 edges · 96 communities (49 shown, 40 thin omitted)
-- Extraction: 91% EXTRACTED · 9% INFERRED · 0% AMBIGUOUS · INFERRED: 112 edges (avg confidence: 0.91)
+- 839 nodes · 1339 edges · 92 communities (46 shown, 38 thin omitted)
+- Extraction: 91% EXTRACTED · 9% INFERRED · 0% AMBIGUOUS · INFERRED: 118 edges (avg confidence: 0.9)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `c62a3470`
+- Built from commit: `fb64e447`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
 ## Community Hubs (Navigation)
 - StateEstimate
 - ActionId
-- UUID
+- PersistenceProvider
 - DecisionRequest
 - DecisionContext
 - conftest.py
@@ -49,7 +49,7 @@
 - graphify reference: add a URL and watch a folder
 - graphify reference: commit hook and native CLAUDE.md integration
 - graphify reference: incremental update and cluster-only
-- .persist_decision
+- execute_with_resilience
 - graphify reference: GitHub clone and cross-repo merge
 - graphify reference: transcribe video and audio
 - graphify reference: GitHub clone and cross-repo merge
@@ -65,7 +65,7 @@
 - Protocol
 - DecisionContext
 - RedisSessionStore
-- event_consumer.py
+- log.py
 - SafetyStatus
 - ActionDefinition
 - create_decision
@@ -81,7 +81,7 @@
 - fixture
 - PolicySelector
 - SequenceValidator
-- log.py
+- app.py
 - BaseModel
 - datetime
 - ResponseGenerator
@@ -91,23 +91,18 @@
 - StateEstimator
 - UUID
 - Protocol
-- KafkaDeadLetterQueue
-- test_session_state.py
 - test_engine.py
-- .get_safety_context
+- Protocol
 - .__init__
 - DummySafetyProvider
-- .persist_decision
-- .build
-- .get_market_context
-- .get_slip_context
+- DecisionContext
 - .test_prohibited_copy
 - ConfidenceEvent
 - DecisionEngine
 
 ## God Nodes (most connected - your core abstractions)
-1. `StateEstimate` - 28 edges
-2. `DecisionRequest` - 28 edges
+1. `DecisionRequest` - 28 edges
+2. `StateEstimate` - 28 edges
 3. `DecisionEngine` - 28 edges
 4. `ActionId` - 26 edges
 5. `UncertaintyState` - 19 edges
@@ -118,21 +113,21 @@
 10. `ActionDefinition` - 16 edges
 
 ## Surprising Connections (you probably didn't know these)
-- `engine()` --uses--> `ContextBuilder`  [INFERRED]
+- `TestAdversarialAndFailures` --uses--> `DecisionRequest`  [INFERRED]
   tests/test_engine.py → src/confidence/application/context_builder.py
+- `engine()` --uses--> `DummySlipProvider`  [INFERRED]
+  tests/test_engine.py → src/confidence/api/dependencies.py
+- `TestEndToEndScenarios` --uses--> `DummySlipProvider`  [INFERRED]
+  tests/test_engine.py → src/confidence/api/dependencies.py
+- `TestPropertyInvariants` --uses--> `DummySlipProvider`  [INFERRED]
+  tests/test_engine.py → src/confidence/api/dependencies.py
 - `test_in_memory_event_publisher()` --uses--> `InMemoryEventPublisher`  [INFERRED]
   tests/test_event_bus.py → src/confidence/infrastructure/event_bus.py
-- `engine()` --uses--> `DummyMarketProvider`  [INFERRED]
-  tests/test_engine.py → src/confidence/api/dependencies.py
-- `engine()` --uses--> `DummySafetyProvider`  [INFERRED]
-  tests/test_engine.py → src/confidence/api/dependencies.py
-- `TestAdversarialAndFailures` --uses--> `DummySafetyProvider`  [INFERRED]
-  tests/test_engine.py → src/confidence/api/dependencies.py
 
 ## Import Cycles
 - None detected.
 
-## Communities (96 total, 40 thin omitted)
+## Communities (92 total, 38 thin omitted)
 
 ### Community 0 - "StateEstimate"
 Cohesion: 0.08
@@ -142,13 +137,13 @@ Nodes (25): Output of the State Authority. The State Authority answers: 'What is
 Cohesion: 0.16
 Nodes (11): ActionRegistry, Return all registered action IDs., In-memory registry of all valid actions. Invariants enforced: - S9: Policy can…, Get an action definition by ID., Check if an action is registered (invariant S9)., ActionId, Registered action identifiers. The policy can only select from these registered…, Response Generator. Deterministically formats the final response using approved… (+3 more)
 
-### Community 2 - "UUID"
-Cohesion: 0.13
-Nodes (21): Protocol, ContextBuilder, Context Builder. Constructs the DecisionContext from the incoming request and…, Builds a complete, trustworthy DecisionContext., Decision Engine Orchestrator. Coordinates the complete end-to-end pipeline: 1.…, MarketProvider, PersistenceProvider, Domain Ports (Protocols). The domain owns its interfaces (hexagonal… (+13 more)
+### Community 2 - "PersistenceProvider"
+Cohesion: 0.12
+Nodes (13): PersistenceProvider, Decision, DecisionContext, Domain Ports (Protocols). The domain owns its interfaces (hexagonal…, Interface for async audit logging., Persist a decision and its audit log to the database., DatabasePersistenceProvider, AsyncEngine (+5 more)
 
 ### Community 3 - "DecisionRequest"
-Cohesion: 0.22
-Nodes (11): asyncio, DecisionRequest, The incoming API request for a decision., DecisionEngine, Central orchestrator for the Confidence Layer. Executes the decision pipeline…, ∀ blocked safety contexts: selected_action == NO_INTERVENTION, ∀ selected actions: selected_action ∈ ActionRegistry, ∀ selected informational actions: required_data ⊆ available_authoritative_data (+3 more)
+Cohesion: 0.24
+Nodes (10): asyncio, DecisionRequest, The incoming API request for a decision., DecisionEngine, Central orchestrator for the Confidence Layer. Executes the decision pipeline…, ∀ blocked safety contexts: selected_action == NO_INTERVENTION, ∀ selected actions: selected_action ∈ ActionRegistry, ∀ selected informational actions: required_data ⊆ available_authoritative_data (+2 more)
 
 ### Community 4 - "DecisionContext"
 Cohesion: 0.29
@@ -156,7 +151,7 @@ Nodes (6): DecisionContext, Complete context assembled by the Context Builder fo
 
 ### Community 5 - "conftest.py"
 Cohesion: 0.06
-Nodes (54): SlipContext, HarmIndicators, InteractionContext, MarketContext, OddsSnapshot, Outcome, BaseModel, Safety-relevant state, sourced from authoritative server-side systems. These… (+46 more)
+Nodes (56): DecisionContext, SlipContext, Construct the context safely., HarmIndicators, InteractionContext, MarketContext, OddsSnapshot, Outcome (+48 more)
 
 ### Community 6 - "connection.py"
 Cohesion: 0.15
@@ -167,8 +162,8 @@ Cohesion: 0.11
 Nodes (6): Database schema for the Confidence Layer. Uses SQLAlchemy Core table…, Tests for the database schema. Verifies that the SQLAlchemy schema creates all…, create_all should be safe to call multiple times., Verify all tables can be created and have correct structure., All 9 required tables must be created., TestSchemaCreation
 
 ### Community 8 - "ConfidenceEvent"
-Cohesion: 0.14
-Nodes (13): BaseModel, datetime, field_validator, EventType, Types of client events the system processes., ConfidenceEvent, Versioned event schema for the Confidence Layer. Events are the primary input…, A versioned event from the client. Schema follows the architecture spec's event… (+5 more)
+Cohesion: 0.07
+Nodes (25): BaseModel, datetime, field_validator, SafetyContext, EventType, Types of client events the system processes., ConfidenceEvent, Versioned event schema for the Confidence Layer. Events are the primary input… (+17 more)
 
 ### Community 9 - "test_domain.py"
 Cohesion: 0.09
@@ -191,8 +186,8 @@ Cohesion: 0.08
 Nodes (24): For /graphify add and --watch, For /graphify query, For the commit hook and native CLAUDE.md integration, For --update and --cluster-only, /graphify, Honesty Rules, Interpreter guard for subcommands, Part A - Structural extraction for code files (+16 more)
 
 ### Community 20 - "dependencies.py"
-Cohesion: 0.12
-Nodes (23): ActionRegistry, AsyncEngine, ContextBuilder, PersistenceProvider, PolicySelector, ResponseGenerator, SafetyContract, SlipProvider (+15 more)
+Cohesion: 0.14
+Nodes (20): ActionRegistry, AsyncEngine, ContextBuilder, PersistenceProvider, PolicySelector, ResponseGenerator, SafetyContract, get_action_registry() (+12 more)
 
 ### Community 21 - "EventPublisher"
 Cohesion: 0.10
@@ -258,9 +253,9 @@ Nodes (3): For git commit hook, For native CLAUDE.md integration, graphify refer
 Cohesion: 0.50
 Nodes (3): For --cluster-only, For --update (incremental re-extraction), graphify reference: incremental update and cluster-only
 
-### Community 37 - ".persist_decision"
-Cohesion: 0.50
-Nodes (3): Decision, DecisionContext, Persist a decision and its audit log to the database. Called as a background…
+### Community 37 - "execute_with_resilience"
+Cohesion: 0.12
+Nodes (14): CircuitBreaker, execute_with_resilience(), Resilience patterns. Implements timeouts, circuit breakers, and retries for…, A simple async circuit breaker., Record a success and reset if half-open., Check if execution is allowed., Configuration for resilience strategies., Execute a function with timeout, retries, and circuit breaker. (+6 more)
 
 ### Community 49 - "domain/models.py"
 Cohesion: 0.13
@@ -271,12 +266,12 @@ Cohesion: 0.22
 Nodes (5): DecisionContext, Harm > everything else., TestPolicySelector, TestResponseGenerator, TestStateEstimator
 
 ### Community 52 - "RedisSessionStore"
-Cohesion: 0.11
-Nodes (17): Any, InteractionContext, Session, Redis, UUID, Session State & Idempotency in Redis. Manages distributed state for sessions…, Attempt to acquire idempotency lock. Returns True if acquired (first attempt)., Save the successful response for a given idempotency key. (+9 more)
+Cohesion: 0.08
+Nodes (24): Any, InteractionContext, Session, Redis, UUID, Session State & Idempotency in Redis. Manages distributed state for sessions…, Attempt to acquire idempotency lock. Returns True if acquired (first attempt)., Save the successful response for a given idempotency key. (+16 more)
 
-### Community 53 - "event_consumer.py"
-Cohesion: 0.18
-Nodes (9): RedisSessionStore, EventProcessor, ConfidenceEvent, Event Processor. Processes incoming events from the message broker to update…, Processes domain events to update interaction context., Process a single event and update the session., Event Consumer Worker. Long-running process that consumes events from…, Run the event consumer loop. (+1 more)
+### Community 53 - "log.py"
+Cohesion: 0.11
+Nodes (16): RedisSessionStore, get_idempotency_store(), API routes for the Confidence Layer., EventProcessor, ConfidenceEvent, Event Processor. Processes incoming events from the message broker to update…, Processes domain events to update interaction context., Process a single event and update the session. (+8 more)
 
 ### Community 54 - "SafetyStatus"
 Cohesion: 0.19
@@ -298,56 +293,44 @@ Nodes (10): NoInterventionReason, DecisionResult, Decision, DecisionContext, The
 Cohesion: 0.27
 Nodes (6): Redis, UUID, Event Ordering. Validates sequence numbers to enforce strict ordering of events…, Validates and tracks event sequence numbers using Redis., Validate that the sequence number is exactly the next expected one. If valid,…, SequenceValidator
 
-### Community 70 - "log.py"
-Cohesion: 0.16
-Nodes (15): FastAPI, create_app(), lifespan(), FastAPI application entrypoint. Uses the modern lifespan context manager for…, Application lifespan manager — handles startup and shutdown., Create and configure the FastAPI application., get_event_publisher(), Get the event publisher instance. (+7 more)
-
-### Community 81 - "KafkaDeadLetterQueue"
-Cohesion: 0.13
-Nodes (10): DeadLetterQueue, KafkaDeadLetterQueue, Protocol, Dead Letter Queue (DLQ). Handles events that fail processing or validation., Interface for dead-lettering failed events., Push a failed message to the DLQ., Kafka/Redpanda implementation of DLQ., Start the DLQ producer. (+2 more)
-
-### Community 82 - "test_session_state.py"
-Cohesion: 0.25
-Nodes (7): Tests for session state and event ordering., Provide a FakeRedis connection., redis(), test_idempotency_store(), test_sequence_validator(), test_session_store_save_get(), test_session_store_update_interaction()
+### Community 70 - "app.py"
+Cohesion: 0.33
+Nodes (8): FastAPI, create_app(), lifespan(), FastAPI application entrypoint. Uses the modern lifespan context manager for…, Application lifespan manager — handles startup and shutdown., Create and configure the FastAPI application., get_event_publisher(), Get the event publisher instance.
 
 ### Community 83 - "test_engine.py"
-Cohesion: 0.38
-Nodes (5): fixture, base_request(), DummyPersistenceProvider, engine(), Tests for the Decision Engine and End-to-End Scenarios. Covers: - Unit tests…
+Cohesion: 0.22
+Nodes (9): fixture, ContextBuilder, Context Builder. Constructs the DecisionContext from the incoming request and…, Builds a complete, trustworthy DecisionContext., Decision Engine Orchestrator. Coordinates the complete end-to-end pipeline: 1.…, base_request(), DummyPersistenceProvider, engine() (+1 more)
 
-### Community 84 - ".get_safety_context"
-Cohesion: 0.29
-Nodes (5): SafetyContext, Session, UUID, Fetch safety context (self-exclusion, restrictions, harm indicators)., Fetch session metadata.
+### Community 84 - "Protocol"
+Cohesion: 0.10
+Nodes (18): Protocol, MarketProvider, MarketContext, SafetyContext, Session, SlipContext, UUID, Provides authoritative safety state for a session/user. (+10 more)
 
 ### Community 85 - ".__init__"
 Cohesion: 0.33
 Nodes (5): ActionRegistry, PolicySelector, ResponseGenerator, SafetyContract, StateEstimator
 
 ### Community 86 - "DummySafetyProvider"
-Cohesion: 0.40
-Nodes (4): SafetyContext, SafetyProvider, DummySafetyProvider, Synthetic safety provider for demo scenarios. Branches on actor_id — NEVER use…
-
-### Community 87 - ".persist_decision"
-Cohesion: 0.50
-Nodes (3): Decision, DecisionContext, Persist a decision and its audit log to the database.
+Cohesion: 0.22
+Nodes (7): SafetyProvider, SlipProvider, DummySafetyProvider, DummySlipProvider, Synthetic safety provider for demo scenarios. Branches on actor_id — NEVER use…, Synthetic slip provider for demo scenarios., TestAdversarialAndFailures
 
 ## Knowledge Gaps
 - **90 isolated node(s):** `dwellTimer`, `sessionId`, `telemetry`, `confidence-layer`, `For /graphify add and --watch` (+85 more)
-  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 411 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
-- **40 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 420 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
+- **38 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `InteractionContext` connect `conftest.py` to `create_decision`, `domain/models.py`, `test_engine.py`, `DecisionRequest`?**
-  _High betweenness centrality (0.071) - this node is a cross-community bridge._
 - **Why does `StateEstimate` connect `StateEstimate` to `DecisionContext`, `conftest.py`, `test_domain.py`, `domain/models.py`, `DecisionContext`, `enums.py`, `ActionDefinition`?**
   _High betweenness centrality (0.063) - this node is a cross-community bridge._
-- **Why does `HarmIndicators` connect `conftest.py` to `StateEstimate`, `domain/models.py`, `DummySafetyProvider`?**
-  _High betweenness centrality (0.056) - this node is a cross-community bridge._
-- **Are the 17 inferred relationships involving `StateEstimate` (e.g. with `UncertaintyState` and `.test_audit_contains_full_provenance()`) actually correct?**
-  _`StateEstimate` has 17 INFERRED edges - model-reasoned connections that need verification._
+- **Why does `ActionDefinition` connect `ActionDefinition` to `ActionId`, `ActionRegistry`, `enums.py`?**
+  _High betweenness centrality (0.054) - this node is a cross-community bridge._
+- **Why does `InteractionContext` connect `conftest.py` to `create_decision`, `domain/models.py`, `test_engine.py`, `DecisionRequest`?**
+  _High betweenness centrality (0.052) - this node is a cross-community bridge._
 - **Are the 5 inferred relationships involving `DecisionRequest` (e.g. with `create_decision()` and `DecisionEngine`) actually correct?**
   _`DecisionRequest` has 5 INFERRED edges - model-reasoned connections that need verification._
+- **Are the 17 inferred relationships involving `StateEstimate` (e.g. with `UncertaintyState` and `.test_audit_contains_full_provenance()`) actually correct?**
+  _`StateEstimate` has 17 INFERRED edges - model-reasoned connections that need verification._
 - **Are the 6 inferred relationships involving `DecisionEngine` (e.g. with `ContextBuilder` and `DecisionRequest`) actually correct?**
   _`DecisionEngine` has 6 INFERRED edges - model-reasoned connections that need verification._
 - **Are the 8 inferred relationships involving `ActionId` (e.g. with `DecisionResponse` and `ActionDefinition`) actually correct?**
