@@ -42,9 +42,9 @@
     "semantic_hash": "83b8c3a3449c0dc8d0f450910042d0ff"
   },
   "src/confidence/api/routes.py": {
-    "mtime": 1788500133.5433474,
-    "seen": 1788500158.823055,
-    "ast_hash": "170d76ec7a2a673fd81ab0c85872f3fd",
+    "mtime": 1788500221.3308933,
+    "seen": 1788500241.403406,
+    "ast_hash": "3abb065e1c4059c9eedec3cdef3cf53f",
     "semantic_hash": ""
   },
   "src/confidence/application/context_builder.py": {
@@ -573,6 +573,30 @@
     "mtime": 1788500176.332614,
     "seen": 1788500191.0600324,
     "ast_hash": "15d539bfed45ca6ff42792ef101a39ef",
+    "semantic_hash": ""
+  },
+  "fix_routes_imports.py": {
+    "mtime": 1788500221.297893,
+    "seen": 1788500241.4033806,
+    "ast_hash": "fa087a6aa4f55f31ee1b32db27efd0e3",
+    "semantic_hash": ""
+  },
+  "fix_step15.py": {
+    "mtime": 1788500205.2620604,
+    "seen": 1788500241.4033923,
+    "ast_hash": "8e6ab972f7fdcb309b0ee97174fa0634",
+    "semantic_hash": ""
+  },
+  "src/confidence/infrastructure/auth.py": {
+    "mtime": 1788500205.2857938,
+    "seen": 1788500241.4034278,
+    "ast_hash": "389ad293ebdb9bb8be2199f84471a8b0",
+    "semantic_hash": ""
+  },
+  "docs/SECURITY.md": {
+    "mtime": 1788500205.2746503,
+    "seen": 1788500241.4034865,
+    "ast_hash": "11f58779b9bc288d48d0928d06d87a66",
     "semantic_hash": ""
   }
 }

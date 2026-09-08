@@ -13,7 +13,7 @@ class DatabaseConfig(BaseSettings):
     """PostgreSQL connection configuration."""
 
     url: str = "postgresql+asyncpg://confidence:confidence@localhost:5432/confidence"
-    url_sync: str = "postgresql://confidence:confidence@localhost:5432/confidence"
+    url_sync: str = "postgresql+psycopg://confidence:confidence@localhost:5432/confidence"
     pool_size: int = 5
     max_overflow: int = 10
 
