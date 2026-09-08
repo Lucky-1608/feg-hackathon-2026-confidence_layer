@@ -37,7 +37,7 @@ dev = [
     "aiosqlite>=0.20",
     "hypothesis>=6.98",
     "locust>=2.20",
-    "fakeredis>=2.21",
+    "fakeredis[lua]>=2.21",
 ]
 
 [tool.hatch.build.targets.wheel]

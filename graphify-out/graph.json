@@ -199,39 +199,13 @@
       "source_location": "L352"
     },
     {
-      "id": "src_confidence_api_dependencies_dummymarketprovider",
-      "label": "DummyMarketProvider",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 2,
-      "community_name": "dependencies.py",
-      "file_type": "code",
-      "norm_label": "dummymarketprovider",
-      "source_file": "src/confidence/api/dependencies.py",
-      "source_location": "L95"
-    },
-    {
-      "id": "src_confidence_api_dependencies_dummyslipprovider",
-      "label": "DummySlipProvider",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 2,
-      "community_name": "dependencies.py",
-      "file_type": "code",
-      "norm_label": "dummyslipprovider",
-      "source_file": "src/confidence/api/dependencies.py",
-      "source_location": "L59"
-    },
-    {
       "id": "src_confidence_application_context_builder_contextbuilder",
       "label": "ContextBuilder",
       "_callable": true,
       "_callable_class": true,
       "_origin": "ast",
       "community": 2,
-      "community_name": "dependencies.py",
+      "community_name": "ContextBuilder",
       "file_type": "code",
       "norm_label": "contextbuilder",
       "source_file": "src/confidence/application/context_builder.py",
@@ -244,24 +218,11 @@
       "_callable_class": true,
       "_origin": "ast",
       "community": 2,
-      "community_name": "dependencies.py",
+      "community_name": "ContextBuilder",
       "file_type": "code",
       "norm_label": "marketprovider",
       "source_file": "src/confidence/domain/ports.py",
       "source_location": "L41"
-    },
-    {
-      "id": "src_confidence_domain_ports_persistenceprovider",
-      "label": "PersistenceProvider",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 2,
-      "community_name": "dependencies.py",
-      "file_type": "code",
-      "norm_label": "persistenceprovider",
-      "source_file": "src/confidence/domain/ports.py",
-      "source_location": "L59"
     },
     {
       "id": "src_confidence_domain_ports_safetyprovider",
@@ -270,7 +231,7 @@
       "_callable_class": true,
       "_origin": "ast",
       "community": 2,
-      "community_name": "dependencies.py",
+      "community_name": "ContextBuilder",
       "file_type": "code",
       "norm_label": "safetyprovider",
       "source_file": "src/confidence/domain/ports.py",
@@ -283,11 +244,50 @@
       "_callable_class": true,
       "_origin": "ast",
       "community": 2,
-      "community_name": "dependencies.py",
+      "community_name": "ContextBuilder",
       "file_type": "code",
       "norm_label": "slipprovider",
       "source_file": "src/confidence/domain/ports.py",
       "source_location": "L32"
+    },
+    {
+      "id": "src_confidence_infrastructure_event_bus_eventpublisher",
+      "label": "EventPublisher",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 21,
+      "community_name": "KafkaEventPublisher",
+      "file_type": "code",
+      "norm_label": "eventpublisher",
+      "source_file": "src/confidence/infrastructure/event_bus.py",
+      "source_location": "L21"
+    },
+    {
+      "id": "src_confidence_infrastructure_event_bus_inmemoryeventpublisher",
+      "label": "InMemoryEventPublisher",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 21,
+      "community_name": "KafkaEventPublisher",
+      "file_type": "code",
+      "norm_label": "inmemoryeventpublisher",
+      "source_file": "src/confidence/infrastructure/event_bus.py",
+      "source_location": "L80"
+    },
+    {
+      "id": "src_confidence_infrastructure_event_bus_kafkaeventpublisher",
+      "label": "KafkaEventPublisher",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 21,
+      "community_name": "KafkaEventPublisher",
+      "file_type": "code",
+      "norm_label": "kafkaeventpublisher",
+      "source_file": "src/confidence/infrastructure/event_bus.py",
+      "source_location": "L29"
     },
     {
       "id": "tests_test_actions_testactiondefinitions",
@@ -394,17 +394,69 @@
       "source_location": "L192"
     },
     {
+      "id": "src_confidence_api_dependencies_dummymarketprovider",
+      "label": "DummyMarketProvider",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 26,
+      "community_name": "DummySafetyProvider",
+      "file_type": "code",
+      "norm_label": "dummymarketprovider",
+      "source_file": "src/confidence/api/dependencies.py",
+      "source_location": "L95"
+    },
+    {
       "id": "src_confidence_api_dependencies_dummysafetyprovider",
       "label": "DummySafetyProvider",
       "_callable": true,
       "_callable_class": true,
       "_origin": "ast",
-      "community": 3,
-      "community_name": "DecisionEngine",
+      "community": 26,
+      "community_name": "DummySafetyProvider",
       "file_type": "code",
       "norm_label": "dummysafetyprovider",
       "source_file": "src/confidence/api/dependencies.py",
       "source_location": "L39"
+    },
+    {
+      "id": "src_confidence_api_dependencies_dummyslipprovider",
+      "label": "DummySlipProvider",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 26,
+      "community_name": "DummySafetyProvider",
+      "file_type": "code",
+      "norm_label": "dummyslipprovider",
+      "source_file": "src/confidence/api/dependencies.py",
+      "source_location": "L59"
+    },
+    {
+      "id": "src_confidence_domain_ports_persistenceprovider",
+      "label": "PersistenceProvider",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 27,
+      "community_name": "PersistenceProvider",
+      "file_type": "code",
+      "norm_label": "persistenceprovider",
+      "source_file": "src/confidence/domain/ports.py",
+      "source_location": "L59"
+    },
+    {
+      "id": "tests_test_engine_dummypersistenceprovider",
+      "label": "DummyPersistenceProvider",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 27,
+      "community_name": "PersistenceProvider",
+      "file_type": "code",
+      "norm_label": "dummypersistenceprovider",
+      "source_file": "tests/test_engine.py",
+      "source_location": "L48"
     },
     {
       "id": "src_confidence_api_models_createdecisionrequest",
@@ -457,32 +509,6 @@
       "norm_label": "decisionresult",
       "source_file": "src/confidence/application/engine.py",
       "source_location": "L41"
-    },
-    {
-      "id": "src_confidence_domain_models_interactioncontext",
-      "label": "InteractionContext",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 3,
-      "community_name": "DecisionEngine",
-      "file_type": "code",
-      "norm_label": "interactioncontext",
-      "source_file": "src/confidence/domain/models.py",
-      "source_location": "L117"
-    },
-    {
-      "id": "tests_test_engine_dummypersistenceprovider",
-      "label": "DummyPersistenceProvider",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 3,
-      "community_name": "DecisionEngine",
-      "file_type": "code",
-      "norm_label": "dummypersistenceprovider",
-      "source_file": "tests/test_engine.py",
-      "source_location": "L48"
     },
     {
       "id": "tests_test_engine_testadversarialandfailures",
@@ -615,6 +641,19 @@
       "source_location": "L84"
     },
     {
+      "id": "src_confidence_domain_models_interactioncontext",
+      "label": "InteractionContext",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "conftest.py",
+      "file_type": "code",
+      "norm_label": "interactioncontext",
+      "source_file": "src/confidence/domain/models.py",
+      "source_location": "L117"
+    },
+    {
       "id": "src_confidence_domain_models_marketcontext",
       "label": "MarketContext",
       "_callable": true,
@@ -641,6 +680,19 @@
       "source_location": "L38"
     },
     {
+      "id": "src_confidence_domain_models_outcome",
+      "label": "Outcome",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "conftest.py",
+      "file_type": "code",
+      "norm_label": "outcome",
+      "source_file": "src/confidence/domain/models.py",
+      "source_location": "L219"
+    },
+    {
       "id": "src_confidence_domain_models_safetycontext",
       "label": "SafetyContext",
       "_callable": true,
@@ -652,6 +704,19 @@
       "norm_label": "safetycontext",
       "source_file": "src/confidence/domain/models.py",
       "source_location": "L101"
+    },
+    {
+      "id": "src_confidence_domain_models_selection",
+      "label": "Selection",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "conftest.py",
+      "file_type": "code",
+      "norm_label": "selection",
+      "source_file": "src/confidence/domain/models.py",
+      "source_location": "L46"
     },
     {
       "id": "src_confidence_domain_models_session",
@@ -691,6 +756,19 @@
       "norm_label": "testharmindicators",
       "source_file": "tests/test_domain.py",
       "source_location": "L59"
+    },
+    {
+      "id": "tests_test_domain_testselection",
+      "label": "TestSelection",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "conftest.py",
+      "file_type": "code",
+      "norm_label": "testselection",
+      "source_file": "tests/test_domain.py",
+      "source_location": "L85"
     },
     {
       "id": "tests_test_engine_testpolicyselector",
@@ -784,17 +862,69 @@
       "source_location": "L50"
     },
     {
+      "id": "src_confidence_config_appconfig",
+      "label": "AppConfig",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 6,
+      "community_name": "config.py",
+      "file_type": "code",
+      "norm_label": "appconfig",
+      "source_file": "src/confidence/config.py",
+      "source_location": "L58"
+    },
+    {
       "id": "src_confidence_config_databaseconfig",
       "label": "DatabaseConfig",
       "_callable": true,
       "_callable_class": true,
       "_origin": "ast",
       "community": 6,
-      "community_name": "connection.py",
+      "community_name": "config.py",
       "file_type": "code",
       "norm_label": "databaseconfig",
       "source_file": "src/confidence/config.py",
       "source_location": "L24"
+    },
+    {
+      "id": "src_confidence_config_decisionconfig",
+      "label": "DecisionConfig",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 6,
+      "community_name": "config.py",
+      "file_type": "code",
+      "norm_label": "decisionconfig",
+      "source_file": "src/confidence/config.py",
+      "source_location": "L42"
+    },
+    {
+      "id": "src_confidence_config_safetyconfig",
+      "label": "SafetyConfig",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 6,
+      "community_name": "config.py",
+      "file_type": "code",
+      "norm_label": "safetyconfig",
+      "source_file": "src/confidence/config.py",
+      "source_location": "L34"
+    },
+    {
+      "id": "src_confidence_config_serverconfig",
+      "label": "ServerConfig",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 6,
+      "community_name": "config.py",
+      "file_type": "code",
+      "norm_label": "serverconfig",
+      "source_file": "src/confidence/config.py",
+      "source_location": "L50"
     },
     {
       "id": "src_confidence_domain_actions_actiondefinition",
@@ -836,58 +966,6 @@
       "source_location": "L14"
     },
     {
-      "id": "src_confidence_config_appconfig",
-      "label": "AppConfig",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 69,
-      "community_name": "config.py",
-      "file_type": "code",
-      "norm_label": "appconfig",
-      "source_file": "src/confidence/config.py",
-      "source_location": "L58"
-    },
-    {
-      "id": "src_confidence_config_decisionconfig",
-      "label": "DecisionConfig",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 69,
-      "community_name": "config.py",
-      "file_type": "code",
-      "norm_label": "decisionconfig",
-      "source_file": "src/confidence/config.py",
-      "source_location": "L42"
-    },
-    {
-      "id": "src_confidence_config_safetyconfig",
-      "label": "SafetyConfig",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 69,
-      "community_name": "config.py",
-      "file_type": "code",
-      "norm_label": "safetyconfig",
-      "source_file": "src/confidence/config.py",
-      "source_location": "L34"
-    },
-    {
-      "id": "src_confidence_config_serverconfig",
-      "label": "ServerConfig",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 69,
-      "community_name": "config.py",
-      "file_type": "code",
-      "norm_label": "serverconfig",
-      "source_file": "src/confidence/config.py",
-      "source_location": "L50"
-    },
-    {
       "id": "tests_test_schema_testschemacreation",
       "label": "TestSchemaCreation",
       "_callable": true,
@@ -927,6 +1005,32 @@
       "source_location": "L20"
     },
     {
+      "id": "src_confidence_infrastructure_dlq_deadletterqueue",
+      "label": "DeadLetterQueue",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 8,
+      "community_name": "ConfidenceEvent",
+      "file_type": "code",
+      "norm_label": "deadletterqueue",
+      "source_file": "src/confidence/infrastructure/dlq.py",
+      "source_location": "L18"
+    },
+    {
+      "id": "src_confidence_infrastructure_dlq_kafkadeadletterqueue",
+      "label": "KafkaDeadLetterQueue",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 8,
+      "community_name": "ConfidenceEvent",
+      "file_type": "code",
+      "norm_label": "kafkadeadletterqueue",
+      "source_file": "src/confidence/infrastructure/dlq.py",
+      "source_location": "L26"
+    },
+    {
       "id": "tests_test_event_contracts_testconfidenceevent",
       "label": "TestConfidenceEvent",
       "_callable": true,
@@ -940,19 +1044,6 @@
       "source_location": "L22"
     },
     {
-      "id": "src_confidence_domain_models_outcome",
-      "label": "Outcome",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 9,
-      "community_name": "test_domain.py",
-      "file_type": "code",
-      "norm_label": "outcome",
-      "source_file": "src/confidence/domain/models.py",
-      "source_location": "L219"
-    },
-    {
       "id": "src_confidence_domain_models_safetyresult",
       "label": "SafetyResult",
       "_callable": true,
@@ -964,19 +1055,6 @@
       "norm_label": "safetyresult",
       "source_file": "src/confidence/domain/models.py",
       "source_location": "L163"
-    },
-    {
-      "id": "src_confidence_domain_models_selection",
-      "label": "Selection",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 9,
-      "community_name": "test_domain.py",
-      "file_type": "code",
-      "norm_label": "selection",
-      "source_file": "src/confidence/domain/models.py",
-      "source_location": "L46"
     },
     {
       "id": "tests_test_domain_testauditrecord",
@@ -1055,19 +1133,6 @@
       "norm_label": "testsafetyresult",
       "source_file": "tests/test_domain.py",
       "source_location": "L129"
-    },
-    {
-      "id": "tests_test_domain_testselection",
-      "label": "TestSelection",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 9,
-      "community_name": "test_domain.py",
-      "file_type": "code",
-      "norm_label": "testselection",
-      "source_file": "tests/test_domain.py",
-      "source_location": "L85"
     },
     {
       "id": "tests_test_domain_testsession",
@@ -1612,24 +1677,12 @@
       "source_location": "L21"
     },
     {
-      "id": "src_confidence_api_dependencies_get_context_builder",
-      "label": "get_context_builder()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 2,
-      "community_name": "dependencies.py",
-      "file_type": "code",
-      "norm_label": "get_context_builder()",
-      "source_file": "src/confidence/api/dependencies.py",
-      "source_location": "L148"
-    },
-    {
       "id": "src_confidence_application_context_builder_contextbuilder_init",
       "label": ".__init__()",
       "_callable": true,
       "_origin": "ast",
       "community": 2,
-      "community_name": "dependencies.py",
+      "community_name": "ContextBuilder",
       "file_type": "code",
       "norm_label": ".__init__()",
       "source_file": "src/confidence/application/context_builder.py",
@@ -1641,7 +1694,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 20,
-      "community_name": "get_decision_engine",
+      "community_name": "dependencies.py",
       "file_type": "code",
       "norm_label": "get_action_registry()",
       "source_file": "src/confidence/api/dependencies.py",
@@ -1653,11 +1706,35 @@
       "_callable": true,
       "_origin": "ast",
       "community": 20,
-      "community_name": "get_decision_engine",
+      "community_name": "dependencies.py",
       "file_type": "code",
       "norm_label": "get_decision_engine()",
       "source_file": "src/confidence/api/dependencies.py",
       "source_location": "L156"
+    },
+    {
+      "id": "src_confidence_api_dependencies_get_engine",
+      "label": "get_engine()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 20,
+      "community_name": "dependencies.py",
+      "file_type": "code",
+      "norm_label": "get_engine()",
+      "source_file": "src/confidence/api/dependencies.py",
+      "source_location": "L108"
+    },
+    {
+      "id": "src_confidence_api_dependencies_get_persistence_provider",
+      "label": "get_persistence_provider()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 20,
+      "community_name": "dependencies.py",
+      "file_type": "code",
+      "norm_label": "get_persistence_provider()",
+      "source_file": "src/confidence/api/dependencies.py",
+      "source_location": "L122"
     },
     {
       "id": "src_confidence_api_dependencies_get_policy_selector",
@@ -1665,7 +1742,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 20,
-      "community_name": "get_decision_engine",
+      "community_name": "dependencies.py",
       "file_type": "code",
       "norm_label": "get_policy_selector()",
       "source_file": "src/confidence/api/dependencies.py",
@@ -1677,7 +1754,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 20,
-      "community_name": "get_decision_engine",
+      "community_name": "dependencies.py",
       "file_type": "code",
       "norm_label": "get_response_generator()",
       "source_file": "src/confidence/api/dependencies.py",
@@ -1689,7 +1766,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 20,
-      "community_name": "get_decision_engine",
+      "community_name": "dependencies.py",
       "file_type": "code",
       "norm_label": "get_safety_contract()",
       "source_file": "src/confidence/api/dependencies.py",
@@ -1701,59 +1778,95 @@
       "_callable": true,
       "_origin": "ast",
       "community": 20,
-      "community_name": "get_decision_engine",
+      "community_name": "dependencies.py",
       "file_type": "code",
       "norm_label": "get_state_estimator()",
       "source_file": "src/confidence/api/dependencies.py",
       "source_location": "L134"
     },
     {
-      "id": "src_confidence_api_app_create_app",
-      "label": "create_app()",
+      "id": "src_confidence_infrastructure_event_bus_eventpublisher_publish",
+      "label": ".publish()",
       "_callable": true,
       "_origin": "ast",
       "community": 21,
-      "community_name": "lifespan",
+      "community_name": "KafkaEventPublisher",
       "file_type": "code",
-      "norm_label": "create_app()",
-      "source_file": "src/confidence/api/app.py",
-      "source_location": "L50"
+      "norm_label": ".publish()",
+      "source_file": "src/confidence/infrastructure/event_bus.py",
+      "source_location": "L24"
     },
     {
-      "id": "src_confidence_api_app_lifespan",
-      "label": "lifespan()",
+      "id": "src_confidence_infrastructure_event_bus_inmemoryeventpublisher_init",
+      "label": ".__init__()",
       "_callable": true,
       "_origin": "ast",
       "community": 21,
-      "community_name": "lifespan",
+      "community_name": "KafkaEventPublisher",
       "file_type": "code",
-      "norm_label": "lifespan()",
-      "source_file": "src/confidence/api/app.py",
-      "source_location": "L23"
+      "norm_label": ".__init__()",
+      "source_file": "src/confidence/infrastructure/event_bus.py",
+      "source_location": "L83"
     },
     {
-      "id": "src_confidence_log_configure_logging",
-      "label": "configure_logging()",
+      "id": "src_confidence_infrastructure_event_bus_inmemoryeventpublisher_publish",
+      "label": ".publish()",
       "_callable": true,
       "_origin": "ast",
       "community": 21,
-      "community_name": "lifespan",
+      "community_name": "KafkaEventPublisher",
       "file_type": "code",
-      "norm_label": "configure_logging()",
-      "source_file": "src/confidence/log.py",
-      "source_location": "L16"
+      "norm_label": ".publish()",
+      "source_file": "src/confidence/infrastructure/event_bus.py",
+      "source_location": "L86"
     },
     {
-      "id": "src_confidence_log_get_logger",
-      "label": "get_logger()",
+      "id": "src_confidence_infrastructure_event_bus_kafkaeventpublisher_init",
+      "label": ".__init__()",
       "_callable": true,
       "_origin": "ast",
       "community": 21,
-      "community_name": "lifespan",
+      "community_name": "KafkaEventPublisher",
       "file_type": "code",
-      "norm_label": "get_logger()",
-      "source_file": "src/confidence/log.py",
-      "source_location": "L49"
+      "norm_label": ".__init__()",
+      "source_file": "src/confidence/infrastructure/event_bus.py",
+      "source_location": "L32"
+    },
+    {
+      "id": "src_confidence_infrastructure_event_bus_kafkaeventpublisher_publish",
+      "label": ".publish()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 21,
+      "community_name": "KafkaEventPublisher",
+      "file_type": "code",
+      "norm_label": ".publish()",
+      "source_file": "src/confidence/infrastructure/event_bus.py",
+      "source_location": "L55"
+    },
+    {
+      "id": "src_confidence_infrastructure_event_bus_kafkaeventpublisher_start",
+      "label": ".start()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 21,
+      "community_name": "KafkaEventPublisher",
+      "file_type": "code",
+      "norm_label": ".start()",
+      "source_file": "src/confidence/infrastructure/event_bus.py",
+      "source_location": "L37"
+    },
+    {
+      "id": "src_confidence_infrastructure_event_bus_kafkaeventpublisher_stop",
+      "label": ".stop()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 21,
+      "community_name": "KafkaEventPublisher",
+      "file_type": "code",
+      "norm_label": ".stop()",
+      "source_file": "src/confidence/infrastructure/event_bus.py",
+      "source_location": "L48"
     },
     {
       "id": "tests_test_actions_testactiondefinitions_test_all_actions_have_versions",
@@ -1977,11 +2090,47 @@
       "_callable": true,
       "_origin": "ast",
       "community": 26,
-      "community_name": ".get_market_context",
+      "community_name": "DummySafetyProvider",
       "file_type": "code",
       "norm_label": ".get_market_context()",
       "source_file": "src/confidence/api/dependencies.py",
       "source_location": "L98"
+    },
+    {
+      "id": "src_confidence_api_dependencies_dummysafetyprovider_get_safety_context",
+      "label": ".get_safety_context()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 26,
+      "community_name": "DummySafetyProvider",
+      "file_type": "code",
+      "norm_label": ".get_safety_context()",
+      "source_file": "src/confidence/api/dependencies.py",
+      "source_location": "L45"
+    },
+    {
+      "id": "src_confidence_api_dependencies_get_context_builder",
+      "label": "get_context_builder()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 26,
+      "community_name": "DummySafetyProvider",
+      "file_type": "code",
+      "norm_label": "get_context_builder()",
+      "source_file": "src/confidence/api/dependencies.py",
+      "source_location": "L148"
+    },
+    {
+      "id": "tests_test_engine_engine",
+      "label": "engine()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 26,
+      "community_name": "DummySafetyProvider",
+      "file_type": "code",
+      "norm_label": "engine()",
+      "source_file": "tests/test_engine.py",
+      "source_location": "L65"
     },
     {
       "id": "src_confidence_application_engine_decisionengine_init",
@@ -1989,11 +2138,35 @@
       "_callable": true,
       "_origin": "ast",
       "community": 27,
-      "community_name": ".__init__",
+      "community_name": "PersistenceProvider",
       "file_type": "code",
       "norm_label": ".__init__()",
       "source_file": "src/confidence/application/engine.py",
       "source_location": "L57"
+    },
+    {
+      "id": "src_confidence_domain_ports_persistenceprovider_persist_decision",
+      "label": ".persist_decision()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 27,
+      "community_name": "PersistenceProvider",
+      "file_type": "code",
+      "norm_label": ".persist_decision()",
+      "source_file": "src/confidence/domain/ports.py",
+      "source_location": "L62"
+    },
+    {
+      "id": "tests_test_engine_dummypersistenceprovider_persist_decision",
+      "label": ".persist_decision()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 27,
+      "community_name": "PersistenceProvider",
+      "file_type": "code",
+      "norm_label": ".persist_decision()",
+      "source_file": "tests/test_engine.py",
+      "source_location": "L49"
     },
     {
       "id": "alembic_env_run_migrations_offline",
@@ -2116,6 +2289,18 @@
       "source_location": "L44"
     },
     {
+      "id": "test_ui_api_test",
+      "label": "test()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 3,
+      "community_name": "DecisionEngine",
+      "file_type": "code",
+      "norm_label": "test()",
+      "source_file": "test_ui_api.py",
+      "source_location": "L5"
+    },
+    {
       "id": "tests_test_engine_base_request",
       "label": "base_request()",
       "_callable": true,
@@ -2126,30 +2311,6 @@
       "norm_label": "base_request()",
       "source_file": "tests/test_engine.py",
       "source_location": "L54"
-    },
-    {
-      "id": "tests_test_engine_dummypersistenceprovider_persist_decision",
-      "label": ".persist_decision()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 3,
-      "community_name": "DecisionEngine",
-      "file_type": "code",
-      "norm_label": ".persist_decision()",
-      "source_file": "tests/test_engine.py",
-      "source_location": "L49"
-    },
-    {
-      "id": "tests_test_engine_engine",
-      "label": "engine()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 3,
-      "community_name": "DecisionEngine",
-      "file_type": "code",
-      "norm_label": "engine()",
-      "source_file": "tests/test_engine.py",
-      "source_location": "L65"
     },
     {
       "id": "tests_test_engine_testadversarialandfailures_test_adversarial_policy_bypass_caught_by_final_check",
@@ -2332,30 +2493,6 @@
       "source_location": "L372"
     },
     {
-      "id": "src_confidence_api_dependencies_get_engine",
-      "label": "get_engine()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 37,
-      "community_name": "DatabasePersistenceProvider",
-      "file_type": "code",
-      "norm_label": "get_engine()",
-      "source_file": "src/confidence/api/dependencies.py",
-      "source_location": "L108"
-    },
-    {
-      "id": "src_confidence_api_dependencies_get_persistence_provider",
-      "label": "get_persistence_provider()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 37,
-      "community_name": "DatabasePersistenceProvider",
-      "file_type": "code",
-      "norm_label": "get_persistence_provider()",
-      "source_file": "src/confidence/api/dependencies.py",
-      "source_location": "L122"
-    },
-    {
       "id": "src_confidence_infrastructure_persistence_databasepersistenceprovider_init",
       "label": ".__init__()",
       "_callable": true,
@@ -2464,16 +2601,16 @@
       "source_location": "L181"
     },
     {
-      "id": "src_confidence_api_dependencies_dummysafetyprovider_get_safety_context",
-      "label": ".get_safety_context()",
+      "id": "src_confidence_api_dependencies_dummyslipprovider_get_slip_context",
+      "label": ".get_slip_context()",
       "_callable": true,
       "_origin": "ast",
       "community": 5,
       "community_name": "conftest.py",
       "file_type": "code",
-      "norm_label": ".get_safety_context()",
+      "norm_label": ".get_slip_context()",
       "source_file": "src/confidence/api/dependencies.py",
-      "source_location": "L45"
+      "source_location": "L62"
     },
     {
       "id": "src_confidence_domain_models_harmindicators_has_any",
@@ -2692,6 +2829,30 @@
       "source_location": "L64"
     },
     {
+      "id": "tests_test_domain_testselection_test_selection_with_odds_history",
+      "label": ".test_selection_with_odds_history()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "conftest.py",
+      "file_type": "code",
+      "norm_label": ".test_selection_with_odds_history()",
+      "source_file": "tests/test_domain.py",
+      "source_location": "L96"
+    },
+    {
+      "id": "tests_test_domain_testselection_test_valid_selection",
+      "label": ".test_valid_selection()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "conftest.py",
+      "file_type": "code",
+      "norm_label": ".test_valid_selection()",
+      "source_file": "tests/test_domain.py",
+      "source_location": "L86"
+    },
+    {
       "id": "tests_test_engine_testpolicyselector_test_selects_exact_match",
       "label": ".test_selects_exact_match()",
       "_callable": true,
@@ -2848,12 +3009,60 @@
       "source_location": "L35"
     },
     {
+      "id": "src_confidence_api_app_create_app",
+      "label": "create_app()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 6,
+      "community_name": "config.py",
+      "file_type": "code",
+      "norm_label": "create_app()",
+      "source_file": "src/confidence/api/app.py",
+      "source_location": "L50"
+    },
+    {
+      "id": "src_confidence_api_app_lifespan",
+      "label": "lifespan()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 6,
+      "community_name": "config.py",
+      "file_type": "code",
+      "norm_label": "lifespan()",
+      "source_file": "src/confidence/api/app.py",
+      "source_location": "L23"
+    },
+    {
+      "id": "src_confidence_config_load_config",
+      "label": "load_config()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 6,
+      "community_name": "config.py",
+      "file_type": "code",
+      "norm_label": "load_config()",
+      "source_file": "src/confidence/config.py",
+      "source_location": "L69"
+    },
+    {
+      "id": "src_confidence_config_load_env",
+      "label": "_load_env()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 6,
+      "community_name": "config.py",
+      "file_type": "code",
+      "norm_label": "_load_env()",
+      "source_file": "src/confidence/config.py",
+      "source_location": "L16"
+    },
+    {
       "id": "src_confidence_db_connection_create_async_db_engine",
       "label": "create_async_db_engine()",
       "_callable": true,
       "_origin": "ast",
       "community": 6,
-      "community_name": "connection.py",
+      "community_name": "config.py",
       "file_type": "code",
       "norm_label": "create_async_db_engine()",
       "source_file": "src/confidence/db/connection.py",
@@ -2865,7 +3074,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 6,
-      "community_name": "connection.py",
+      "community_name": "config.py",
       "file_type": "code",
       "norm_label": "create_async_session_factory()",
       "source_file": "src/confidence/db/connection.py",
@@ -2877,7 +3086,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 6,
-      "community_name": "connection.py",
+      "community_name": "config.py",
       "file_type": "code",
       "norm_label": "create_sync_db_engine()",
       "source_file": "src/confidence/db/connection.py",
@@ -2889,11 +3098,35 @@
       "_callable": true,
       "_origin": "ast",
       "community": 6,
-      "community_name": "connection.py",
+      "community_name": "config.py",
       "file_type": "code",
       "norm_label": "create_sync_session_factory()",
       "source_file": "src/confidence/db/connection.py",
       "source_location": "L41"
+    },
+    {
+      "id": "src_confidence_log_configure_logging",
+      "label": "configure_logging()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 6,
+      "community_name": "config.py",
+      "file_type": "code",
+      "norm_label": "configure_logging()",
+      "source_file": "src/confidence/log.py",
+      "source_location": "L16"
+    },
+    {
+      "id": "src_confidence_log_get_logger",
+      "label": "get_logger()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 6,
+      "community_name": "config.py",
+      "file_type": "code",
+      "norm_label": "get_logger()",
+      "source_file": "src/confidence/log.py",
+      "source_location": "L49"
     },
     {
       "id": "src_confidence_domain_actions_actionregistry_get_enabled_actions",
@@ -2942,30 +3175,6 @@
       "norm_label": ".select_action()",
       "source_file": "src/confidence/domain/policy.py",
       "source_location": "L36"
-    },
-    {
-      "id": "src_confidence_config_load_config",
-      "label": "load_config()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 69,
-      "community_name": "config.py",
-      "file_type": "code",
-      "norm_label": "load_config()",
-      "source_file": "src/confidence/config.py",
-      "source_location": "L69"
-    },
-    {
-      "id": "src_confidence_config_load_env",
-      "label": "_load_env()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 69,
-      "community_name": "config.py",
-      "file_type": "code",
-      "norm_label": "_load_env()",
-      "source_file": "src/confidence/config.py",
-      "source_location": "L16"
     },
     {
       "id": "tests_test_schema_testschemacreation_test_action_registry_columns",
@@ -3100,18 +3309,6 @@
       "source_location": "L41"
     },
     {
-      "id": "src_confidence_domain_ports_persistenceprovider_persist_decision",
-      "label": ".persist_decision()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 70,
-      "community_name": ".persist_decision",
-      "file_type": "code",
-      "norm_label": ".persist_decision()",
-      "source_file": "src/confidence/domain/ports.py",
-      "source_location": "L62"
-    },
-    {
       "id": "src_confidence_domain_event_contracts_confidenceevent_actor_id_must_not_be_empty",
       "label": ".actor_id_must_not_be_empty()",
       "_callable": true,
@@ -3146,6 +3343,78 @@
       "norm_label": ".version_must_not_be_empty()",
       "source_file": "src/confidence/domain/event_contracts.py",
       "source_location": "L53"
+    },
+    {
+      "id": "src_confidence_infrastructure_dlq_deadletterqueue_push",
+      "label": ".push()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 8,
+      "community_name": "ConfidenceEvent",
+      "file_type": "code",
+      "norm_label": ".push()",
+      "source_file": "src/confidence/infrastructure/dlq.py",
+      "source_location": "L21"
+    },
+    {
+      "id": "src_confidence_infrastructure_dlq_kafkadeadletterqueue_init",
+      "label": ".__init__()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 8,
+      "community_name": "ConfidenceEvent",
+      "file_type": "code",
+      "norm_label": ".__init__()",
+      "source_file": "src/confidence/infrastructure/dlq.py",
+      "source_location": "L29"
+    },
+    {
+      "id": "src_confidence_infrastructure_dlq_kafkadeadletterqueue_push",
+      "label": ".push()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 8,
+      "community_name": "ConfidenceEvent",
+      "file_type": "code",
+      "norm_label": ".push()",
+      "source_file": "src/confidence/infrastructure/dlq.py",
+      "source_location": "L49"
+    },
+    {
+      "id": "src_confidence_infrastructure_dlq_kafkadeadletterqueue_start",
+      "label": ".start()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 8,
+      "community_name": "ConfidenceEvent",
+      "file_type": "code",
+      "norm_label": ".start()",
+      "source_file": "src/confidence/infrastructure/dlq.py",
+      "source_location": "L41"
+    },
+    {
+      "id": "src_confidence_infrastructure_dlq_kafkadeadletterqueue_stop",
+      "label": ".stop()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 8,
+      "community_name": "ConfidenceEvent",
+      "file_type": "code",
+      "norm_label": ".stop()",
+      "source_file": "src/confidence/infrastructure/dlq.py",
+      "source_location": "L45"
+    },
+    {
+      "id": "tests_test_event_bus_test_in_memory_event_publisher",
+      "label": "test_in_memory_event_publisher()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 8,
+      "community_name": "ConfidenceEvent",
+      "file_type": "code",
+      "norm_label": "test_in_memory_event_publisher()",
+      "source_file": "tests/test_event_bus.py",
+      "source_location": "L14"
     },
     {
       "id": "tests_test_event_contracts_testconfidenceevent_test_all_event_types_valid",
@@ -3242,18 +3511,6 @@
       "norm_label": ".test_valid_event()",
       "source_file": "tests/test_event_contracts.py",
       "source_location": "L23"
-    },
-    {
-      "id": "src_confidence_api_dependencies_dummyslipprovider_get_slip_context",
-      "label": ".get_slip_context()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 9,
-      "community_name": "test_domain.py",
-      "file_type": "code",
-      "norm_label": ".get_slip_context()",
-      "source_file": "src/confidence/api/dependencies.py",
-      "source_location": "L62"
     },
     {
       "id": "src_confidence_domain_safety_safetycontract_evaluate_safety",
@@ -3386,30 +3643,6 @@
       "norm_label": ".test_safe_result()",
       "source_file": "tests/test_domain.py",
       "source_location": "L130"
-    },
-    {
-      "id": "tests_test_domain_testselection_test_selection_with_odds_history",
-      "label": ".test_selection_with_odds_history()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 9,
-      "community_name": "test_domain.py",
-      "file_type": "code",
-      "norm_label": ".test_selection_with_odds_history()",
-      "source_file": "tests/test_domain.py",
-      "source_location": "L96"
-    },
-    {
-      "id": "tests_test_domain_testselection_test_valid_selection",
-      "label": ".test_valid_selection()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 9,
-      "community_name": "test_domain.py",
-      "file_type": "code",
-      "norm_label": ".test_valid_selection()",
-      "source_file": "tests/test_domain.py",
-      "source_location": "L86"
     },
     {
       "id": "tests_test_domain_testsession_test_session_serialization_roundtrip",
@@ -4492,43 +4725,21 @@
       "label": "Protocol",
       "_origin": "ast",
       "community": 2,
-      "community_name": "dependencies.py",
+      "community_name": "ContextBuilder",
       "file_type": "code",
       "norm_label": "protocol",
       "source_file": "",
       "source_location": ""
     },
     {
-      "id": "src_confidence_api_dependencies",
-      "label": "dependencies.py",
-      "_origin": "ast",
-      "community": 2,
-      "community_name": "dependencies.py",
-      "file_type": "code",
-      "norm_label": "dependencies.py",
-      "source_file": "src/confidence/api/dependencies.py",
-      "source_location": "L1"
-    },
-    {
       "id": "src_confidence_application_context_builder",
       "label": "context_builder.py",
       "_origin": "ast",
       "community": 2,
-      "community_name": "dependencies.py",
+      "community_name": "ContextBuilder",
       "file_type": "code",
       "norm_label": "context_builder.py",
       "source_file": "src/confidence/application/context_builder.py",
-      "source_location": "L1"
-    },
-    {
-      "id": "src_confidence_application_engine",
-      "label": "engine.py",
-      "_origin": "ast",
-      "community": 2,
-      "community_name": "dependencies.py",
-      "file_type": "code",
-      "norm_label": "engine.py",
-      "source_file": "src/confidence/application/engine.py",
       "source_location": "L1"
     },
     {
@@ -4536,73 +4747,18 @@
       "label": "ports.py",
       "_origin": "ast",
       "community": 2,
-      "community_name": "dependencies.py",
+      "community_name": "ContextBuilder",
       "file_type": "code",
       "norm_label": "ports.py",
       "source_file": "src/confidence/domain/ports.py",
       "source_location": "L1"
     },
     {
-      "id": "src_confidence_infrastructure_persistence",
-      "label": "persistence.py",
-      "_origin": "ast",
-      "community": 2,
-      "community_name": "dependencies.py",
-      "file_type": "code",
-      "norm_label": "persistence.py",
-      "source_file": "src/confidence/infrastructure/persistence.py",
-      "source_location": "L1"
-    },
-    {
-      "id": "uuid",
-      "label": "UUID",
-      "_origin": "ast",
-      "community": 2,
-      "community_name": "dependencies.py",
-      "file_type": "code",
-      "norm_label": "uuid",
-      "source_file": "",
-      "source_location": ""
-    },
-    {
-      "id": "src_confidence_api_dependencies_rationale_1",
-      "label": "Dependency injection for the API. Wires together domain authorities, provider\u2026",
-      "_origin": "ast",
-      "community": 2,
-      "community_name": "dependencies.py",
-      "file_type": "rationale",
-      "norm_label": "dependency injection for the api. wires together domain authorities, provider...",
-      "source_file": "src/confidence/api/dependencies.py",
-      "source_location": "L1"
-    },
-    {
-      "id": "src_confidence_api_dependencies_rationale_60",
-      "label": "Synthetic slip provider for demo scenarios.",
-      "_origin": "ast",
-      "community": 2,
-      "community_name": "dependencies.py",
-      "file_type": "rationale",
-      "norm_label": "synthetic slip provider for demo scenarios.",
-      "source_file": "src/confidence/api/dependencies.py",
-      "source_location": "L60"
-    },
-    {
-      "id": "src_confidence_api_dependencies_rationale_96",
-      "label": "Synthetic market provider for demo scenarios.",
-      "_origin": "ast",
-      "community": 2,
-      "community_name": "dependencies.py",
-      "file_type": "rationale",
-      "norm_label": "synthetic market provider for demo scenarios.",
-      "source_file": "src/confidence/api/dependencies.py",
-      "source_location": "L96"
-    },
-    {
       "id": "src_confidence_application_context_builder_rationale_1",
       "label": "Context Builder. Constructs the DecisionContext from the incoming request and\u2026",
       "_origin": "ast",
       "community": 2,
-      "community_name": "dependencies.py",
+      "community_name": "ContextBuilder",
       "file_type": "rationale",
       "norm_label": "context builder. constructs the decisioncontext from the incoming request and...",
       "source_file": "src/confidence/application/context_builder.py",
@@ -4613,29 +4769,18 @@
       "label": "Builds a complete, trustworthy DecisionContext.",
       "_origin": "ast",
       "community": 2,
-      "community_name": "dependencies.py",
+      "community_name": "ContextBuilder",
       "file_type": "rationale",
       "norm_label": "builds a complete, trustworthy decisioncontext.",
       "source_file": "src/confidence/application/context_builder.py",
       "source_location": "L29"
     },
     {
-      "id": "src_confidence_application_engine_rationale_1",
-      "label": "Decision Engine Orchestrator. Coordinates the complete end-to-end pipeline: 1.\u2026",
-      "_origin": "ast",
-      "community": 2,
-      "community_name": "dependencies.py",
-      "file_type": "rationale",
-      "norm_label": "decision engine orchestrator. coordinates the complete end-to-end pipeline: 1....",
-      "source_file": "src/confidence/application/engine.py",
-      "source_location": "L1"
-    },
-    {
       "id": "src_confidence_domain_ports_rationale_1",
       "label": "Domain Ports (Protocols). The domain owns its interfaces (hexagonal\u2026",
       "_origin": "ast",
       "community": 2,
-      "community_name": "dependencies.py",
+      "community_name": "ContextBuilder",
       "file_type": "rationale",
       "norm_label": "domain ports (protocols). the domain owns its interfaces (hexagonal...",
       "source_file": "src/confidence/domain/ports.py",
@@ -4646,7 +4791,7 @@
       "label": "Provides authoritative safety state for a session/user.",
       "_origin": "ast",
       "community": 2,
-      "community_name": "dependencies.py",
+      "community_name": "ContextBuilder",
       "file_type": "rationale",
       "norm_label": "provides authoritative safety state for a session/user.",
       "source_file": "src/confidence/domain/ports.py",
@@ -4657,7 +4802,7 @@
       "label": "Provides authoritative betslip state.",
       "_origin": "ast",
       "community": 2,
-      "community_name": "dependencies.py",
+      "community_name": "ContextBuilder",
       "file_type": "rationale",
       "norm_label": "provides authoritative betslip state.",
       "source_file": "src/confidence/domain/ports.py",
@@ -4668,32 +4813,21 @@
       "label": "Provides authoritative market data.",
       "_origin": "ast",
       "community": 2,
-      "community_name": "dependencies.py",
+      "community_name": "ContextBuilder",
       "file_type": "rationale",
       "norm_label": "provides authoritative market data.",
       "source_file": "src/confidence/domain/ports.py",
       "source_location": "L42"
     },
     {
-      "id": "src_confidence_domain_ports_rationale_60",
-      "label": "Interface for async audit logging.",
+      "id": "src_confidence_api_dependencies",
+      "label": "dependencies.py",
       "_origin": "ast",
-      "community": 2,
+      "community": 20,
       "community_name": "dependencies.py",
-      "file_type": "rationale",
-      "norm_label": "interface for async audit logging.",
-      "source_file": "src/confidence/domain/ports.py",
-      "source_location": "L60"
-    },
-    {
-      "id": "src_confidence_infrastructure_persistence_rationale_1",
-      "label": "Persistence for audit logs and decisions. Architectural constraint: Persistence\u2026",
-      "_origin": "ast",
-      "community": 2,
-      "community_name": "dependencies.py",
-      "file_type": "rationale",
-      "norm_label": "persistence for audit logs and decisions. architectural constraint: persistence...",
-      "source_file": "src/confidence/infrastructure/persistence.py",
+      "file_type": "code",
+      "norm_label": "dependencies.py",
+      "source_file": "src/confidence/api/dependencies.py",
       "source_location": "L1"
     },
     {
@@ -4701,9 +4835,20 @@
       "label": "ActionRegistry",
       "_origin": "ast",
       "community": 20,
-      "community_name": "get_decision_engine",
+      "community_name": "dependencies.py",
       "file_type": "code",
       "norm_label": "actionregistry",
+      "source_file": "",
+      "source_location": ""
+    },
+    {
+      "id": "src_confidence_api_dependencies_py_asyncengine",
+      "label": "AsyncEngine",
+      "_origin": "ast",
+      "community": 20,
+      "community_name": "dependencies.py",
+      "file_type": "code",
+      "norm_label": "asyncengine",
       "source_file": "",
       "source_location": ""
     },
@@ -4712,7 +4857,7 @@
       "label": "PolicySelector",
       "_origin": "ast",
       "community": 20,
-      "community_name": "get_decision_engine",
+      "community_name": "dependencies.py",
       "file_type": "code",
       "norm_label": "policyselector",
       "source_file": "",
@@ -4723,7 +4868,7 @@
       "label": "ResponseGenerator",
       "_origin": "ast",
       "community": 20,
-      "community_name": "get_decision_engine",
+      "community_name": "dependencies.py",
       "file_type": "code",
       "norm_label": "responsegenerator",
       "source_file": "",
@@ -4734,7 +4879,7 @@
       "label": "SafetyContract",
       "_origin": "ast",
       "community": 20,
-      "community_name": "get_decision_engine",
+      "community_name": "dependencies.py",
       "file_type": "code",
       "norm_label": "safetycontract",
       "source_file": "",
@@ -4745,121 +4890,143 @@
       "label": "StateEstimator",
       "_origin": "ast",
       "community": 20,
-      "community_name": "get_decision_engine",
+      "community_name": "dependencies.py",
       "file_type": "code",
       "norm_label": "stateestimator",
       "source_file": "",
       "source_location": ""
     },
     {
-      "id": "any",
-      "label": "Any",
+      "id": "src_confidence_api_dependencies_rationale_1",
+      "label": "Dependency injection for the API. Wires together domain authorities, provider\u2026",
+      "_origin": "ast",
+      "community": 20,
+      "community_name": "dependencies.py",
+      "file_type": "rationale",
+      "norm_label": "dependency injection for the api. wires together domain authorities, provider...",
+      "source_file": "src/confidence/api/dependencies.py",
+      "source_location": "L1"
+    },
+    {
+      "id": "src_confidence_api_dependencies_rationale_109",
+      "label": "Get or create the async database engine.",
+      "_origin": "ast",
+      "community": 20,
+      "community_name": "dependencies.py",
+      "file_type": "rationale",
+      "norm_label": "get or create the async database engine.",
+      "source_file": "src/confidence/api/dependencies.py",
+      "source_location": "L109"
+    },
+    {
+      "id": "confidenceevent",
+      "label": "ConfidenceEvent",
       "_origin": "ast",
       "community": 21,
-      "community_name": "lifespan",
+      "community_name": "KafkaEventPublisher",
       "file_type": "code",
-      "norm_label": "any",
+      "norm_label": "confidenceevent",
       "source_file": "",
       "source_location": ""
     },
     {
-      "id": "fastapi",
-      "label": "FastAPI",
+      "id": "src_confidence_infrastructure_event_bus",
+      "label": "event_bus.py",
       "_origin": "ast",
       "community": 21,
-      "community_name": "lifespan",
+      "community_name": "KafkaEventPublisher",
       "file_type": "code",
-      "norm_label": "fastapi",
+      "norm_label": "event_bus.py",
+      "source_file": "src/confidence/infrastructure/event_bus.py",
+      "source_location": "L1"
+    },
+    {
+      "id": "src_confidence_infrastructure_event_bus_py_protocol",
+      "label": "Protocol",
+      "_origin": "ast",
+      "community": 21,
+      "community_name": "KafkaEventPublisher",
+      "file_type": "code",
+      "norm_label": "protocol",
       "source_file": "",
       "source_location": ""
     },
     {
-      "id": "src_confidence_api_app",
-      "label": "app.py",
+      "id": "src_confidence_infrastructure_event_bus_rationale_1",
+      "label": "Event Bus Abstraction. Provides a unified interface for publishing events to\u2026",
       "_origin": "ast",
       "community": 21,
-      "community_name": "lifespan",
-      "file_type": "code",
-      "norm_label": "app.py",
-      "source_file": "src/confidence/api/app.py",
+      "community_name": "KafkaEventPublisher",
+      "file_type": "rationale",
+      "norm_label": "event bus abstraction. provides a unified interface for publishing events to...",
+      "source_file": "src/confidence/infrastructure/event_bus.py",
       "source_location": "L1"
     },
     {
-      "id": "src_confidence_log",
-      "label": "log.py",
+      "id": "src_confidence_infrastructure_event_bus_rationale_22",
+      "label": "Interface for publishing events.",
       "_origin": "ast",
       "community": 21,
-      "community_name": "lifespan",
-      "file_type": "code",
-      "norm_label": "log.py",
-      "source_file": "src/confidence/log.py",
-      "source_location": "L1"
+      "community_name": "KafkaEventPublisher",
+      "file_type": "rationale",
+      "norm_label": "interface for publishing events.",
+      "source_file": "src/confidence/infrastructure/event_bus.py",
+      "source_location": "L22"
     },
     {
-      "id": "src_confidence_api_app_rationale_1",
-      "label": "FastAPI application entrypoint. Uses the modern lifespan context manager for\u2026",
+      "id": "src_confidence_infrastructure_event_bus_rationale_25",
+      "label": "Publish a domain event to the message broker.",
       "_origin": "ast",
       "community": 21,
-      "community_name": "lifespan",
+      "community_name": "KafkaEventPublisher",
       "file_type": "rationale",
-      "norm_label": "fastapi application entrypoint. uses the modern lifespan context manager for...",
-      "source_file": "src/confidence/api/app.py",
-      "source_location": "L1"
+      "norm_label": "publish a domain event to the message broker.",
+      "source_file": "src/confidence/infrastructure/event_bus.py",
+      "source_location": "L25"
     },
     {
-      "id": "src_confidence_api_app_rationale_24",
-      "label": "Application lifespan manager \u2014 handles startup and shutdown.",
+      "id": "src_confidence_infrastructure_event_bus_rationale_30",
+      "label": "Kafka/Redpanda implementation of the event publisher.",
       "_origin": "ast",
       "community": 21,
-      "community_name": "lifespan",
+      "community_name": "KafkaEventPublisher",
       "file_type": "rationale",
-      "norm_label": "application lifespan manager \u2014 handles startup and shutdown.",
-      "source_file": "src/confidence/api/app.py",
-      "source_location": "L24"
+      "norm_label": "kafka/redpanda implementation of the event publisher.",
+      "source_file": "src/confidence/infrastructure/event_bus.py",
+      "source_location": "L30"
     },
     {
-      "id": "src_confidence_api_app_rationale_51",
-      "label": "Create and configure the FastAPI application.",
+      "id": "src_confidence_infrastructure_event_bus_rationale_38",
+      "label": "Initialize and start the Kafka producer.",
       "_origin": "ast",
       "community": 21,
-      "community_name": "lifespan",
+      "community_name": "KafkaEventPublisher",
       "file_type": "rationale",
-      "norm_label": "create and configure the fastapi application.",
-      "source_file": "src/confidence/api/app.py",
-      "source_location": "L51"
+      "norm_label": "initialize and start the kafka producer.",
+      "source_file": "src/confidence/infrastructure/event_bus.py",
+      "source_location": "L38"
     },
     {
-      "id": "src_confidence_log_rationale_1",
-      "label": "Structured logging for the Confidence Layer. Uses structlog for JSON-formatted,\u2026",
+      "id": "src_confidence_infrastructure_event_bus_rationale_49",
+      "label": "Stop the Kafka producer.",
       "_origin": "ast",
       "community": 21,
-      "community_name": "lifespan",
+      "community_name": "KafkaEventPublisher",
       "file_type": "rationale",
-      "norm_label": "structured logging for the confidence layer. uses structlog for json-formatted,...",
-      "source_file": "src/confidence/log.py",
-      "source_location": "L1"
+      "norm_label": "stop the kafka producer.",
+      "source_file": "src/confidence/infrastructure/event_bus.py",
+      "source_location": "L49"
     },
     {
-      "id": "src_confidence_log_rationale_17",
-      "label": "Configure structured logging for the application. Call once at startup. All\u2026",
+      "id": "src_confidence_infrastructure_event_bus_rationale_81",
+      "label": "In-memory publisher for testing.",
       "_origin": "ast",
       "community": 21,
-      "community_name": "lifespan",
+      "community_name": "KafkaEventPublisher",
       "file_type": "rationale",
-      "norm_label": "configure structured logging for the application. call once at startup. all...",
-      "source_file": "src/confidence/log.py",
-      "source_location": "L17"
-    },
-    {
-      "id": "src_confidence_log_rationale_50",
-      "label": "Get a structured logger by name. Returns a structlog BoundLogger instance.\u2026",
-      "_origin": "ast",
-      "community": 21,
-      "community_name": "lifespan",
-      "file_type": "rationale",
-      "norm_label": "get a structured logger by name. returns a structlog boundlogger instance....",
-      "source_file": "src/confidence/log.py",
-      "source_location": "L50"
+      "norm_label": "in-memory publisher for testing.",
+      "source_file": "src/confidence/infrastructure/event_bus.py",
+      "source_location": "L81"
     },
     {
       "id": "tests_test_actions",
@@ -5309,22 +5476,88 @@
       "source_location": "L79"
     },
     {
+      "id": "fixture",
+      "label": "fixture",
+      "_origin": "ast",
+      "community": 26,
+      "community_name": "DummySafetyProvider",
+      "file_type": "code",
+      "norm_label": "fixture",
+      "source_file": "",
+      "source_location": ""
+    },
+    {
       "id": "src_confidence_api_dependencies_py_marketcontext",
       "label": "MarketContext",
       "_origin": "ast",
       "community": 26,
-      "community_name": ".get_market_context",
+      "community_name": "DummySafetyProvider",
       "file_type": "code",
       "norm_label": "marketcontext",
       "source_file": "",
       "source_location": ""
     },
     {
+      "id": "src_confidence_api_dependencies_py_safetycontext",
+      "label": "SafetyContext",
+      "_origin": "ast",
+      "community": 26,
+      "community_name": "DummySafetyProvider",
+      "file_type": "code",
+      "norm_label": "safetycontext",
+      "source_file": "",
+      "source_location": ""
+    },
+    {
+      "id": "src_confidence_api_dependencies_py_uuid",
+      "label": "UUID",
+      "_origin": "ast",
+      "community": 26,
+      "community_name": "DummySafetyProvider",
+      "file_type": "code",
+      "norm_label": "uuid",
+      "source_file": "",
+      "source_location": ""
+    },
+    {
+      "id": "src_confidence_api_dependencies_rationale_40",
+      "label": "Synthetic safety provider for demo scenarios. Branches on actor_id \u2014 NEVER use\u2026",
+      "_origin": "ast",
+      "community": 26,
+      "community_name": "DummySafetyProvider",
+      "file_type": "rationale",
+      "norm_label": "synthetic safety provider for demo scenarios. branches on actor_id \u2014 never use...",
+      "source_file": "src/confidence/api/dependencies.py",
+      "source_location": "L40"
+    },
+    {
+      "id": "src_confidence_api_dependencies_rationale_60",
+      "label": "Synthetic slip provider for demo scenarios.",
+      "_origin": "ast",
+      "community": 26,
+      "community_name": "DummySafetyProvider",
+      "file_type": "rationale",
+      "norm_label": "synthetic slip provider for demo scenarios.",
+      "source_file": "src/confidence/api/dependencies.py",
+      "source_location": "L60"
+    },
+    {
+      "id": "src_confidence_api_dependencies_rationale_96",
+      "label": "Synthetic market provider for demo scenarios.",
+      "_origin": "ast",
+      "community": 26,
+      "community_name": "DummySafetyProvider",
+      "file_type": "rationale",
+      "norm_label": "synthetic market provider for demo scenarios.",
+      "source_file": "src/confidence/api/dependencies.py",
+      "source_location": "L96"
+    },
+    {
       "id": "src_confidence_application_engine_py_actionregistry",
       "label": "ActionRegistry",
       "_origin": "ast",
       "community": 27,
-      "community_name": ".__init__",
+      "community_name": "PersistenceProvider",
       "file_type": "code",
       "norm_label": "actionregistry",
       "source_file": "",
@@ -5335,7 +5568,7 @@
       "label": "PolicySelector",
       "_origin": "ast",
       "community": 27,
-      "community_name": ".__init__",
+      "community_name": "PersistenceProvider",
       "file_type": "code",
       "norm_label": "policyselector",
       "source_file": "",
@@ -5346,7 +5579,7 @@
       "label": "ResponseGenerator",
       "_origin": "ast",
       "community": 27,
-      "community_name": ".__init__",
+      "community_name": "PersistenceProvider",
       "file_type": "code",
       "norm_label": "responsegenerator",
       "source_file": "",
@@ -5357,7 +5590,7 @@
       "label": "SafetyContract",
       "_origin": "ast",
       "community": 27,
-      "community_name": ".__init__",
+      "community_name": "PersistenceProvider",
       "file_type": "code",
       "norm_label": "safetycontract",
       "source_file": "",
@@ -5368,11 +5601,55 @@
       "label": "StateEstimator",
       "_origin": "ast",
       "community": 27,
-      "community_name": ".__init__",
+      "community_name": "PersistenceProvider",
       "file_type": "code",
       "norm_label": "stateestimator",
       "source_file": "",
       "source_location": ""
+    },
+    {
+      "id": "src_confidence_domain_ports_py_decision",
+      "label": "Decision",
+      "_origin": "ast",
+      "community": 27,
+      "community_name": "PersistenceProvider",
+      "file_type": "code",
+      "norm_label": "decision",
+      "source_file": "",
+      "source_location": ""
+    },
+    {
+      "id": "src_confidence_domain_ports_py_decisioncontext",
+      "label": "DecisionContext",
+      "_origin": "ast",
+      "community": 27,
+      "community_name": "PersistenceProvider",
+      "file_type": "code",
+      "norm_label": "decisioncontext",
+      "source_file": "",
+      "source_location": ""
+    },
+    {
+      "id": "src_confidence_domain_ports_rationale_60",
+      "label": "Interface for async audit logging.",
+      "_origin": "ast",
+      "community": 27,
+      "community_name": "PersistenceProvider",
+      "file_type": "rationale",
+      "norm_label": "interface for async audit logging.",
+      "source_file": "src/confidence/domain/ports.py",
+      "source_location": "L60"
+    },
+    {
+      "id": "src_confidence_domain_ports_rationale_63",
+      "label": "Persist a decision and its audit log to the database.",
+      "_origin": "ast",
+      "community": 27,
+      "community_name": "PersistenceProvider",
+      "file_type": "rationale",
+      "norm_label": "persist a decision and its audit log to the database.",
+      "source_file": "src/confidence/domain/ports.py",
+      "source_location": "L63"
     },
     {
       "id": "agents_skills_graphify_references_query",
@@ -5502,17 +5779,6 @@
       "source_location": ""
     },
     {
-      "id": "fixture",
-      "label": "fixture",
-      "_origin": "ast",
-      "community": 3,
-      "community_name": "DecisionEngine",
-      "file_type": "code",
-      "norm_label": "fixture",
-      "source_file": "",
-      "source_location": ""
-    },
-    {
       "id": "nointerventionreason",
       "label": "NoInterventionReason",
       "_origin": "ast",
@@ -5557,6 +5823,17 @@
       "source_location": ""
     },
     {
+      "id": "src_confidence_application_engine",
+      "label": "engine.py",
+      "_origin": "ast",
+      "community": 3,
+      "community_name": "DecisionEngine",
+      "file_type": "code",
+      "norm_label": "engine.py",
+      "source_file": "src/confidence/application/engine.py",
+      "source_location": "L1"
+    },
+    {
       "id": "src_confidence_application_engine_py_decision",
       "label": "Decision",
       "_origin": "ast",
@@ -5579,6 +5856,17 @@
       "source_location": ""
     },
     {
+      "id": "test_ui_api",
+      "label": "test_ui_api.py",
+      "_origin": "ast",
+      "community": 3,
+      "community_name": "DecisionEngine",
+      "file_type": "code",
+      "norm_label": "test_ui_api.py",
+      "source_file": "test_ui_api.py",
+      "source_location": "L1"
+    },
+    {
       "id": "tests_test_engine",
       "label": "test_engine.py",
       "_origin": "ast",
@@ -5588,17 +5876,6 @@
       "norm_label": "test_engine.py",
       "source_file": "tests/test_engine.py",
       "source_location": "L1"
-    },
-    {
-      "id": "src_confidence_api_dependencies_rationale_40",
-      "label": "Synthetic safety provider for demo scenarios. Branches on actor_id \u2014 NEVER use\u2026",
-      "_origin": "ast",
-      "community": 3,
-      "community_name": "DecisionEngine",
-      "file_type": "rationale",
-      "norm_label": "synthetic safety provider for demo scenarios. branches on actor_id \u2014 never use...",
-      "source_file": "src/confidence/api/dependencies.py",
-      "source_location": "L40"
     },
     {
       "id": "src_confidence_api_models_rationale_32",
@@ -5654,6 +5931,17 @@
       "norm_label": "construct the context safely.",
       "source_file": "src/confidence/application/context_builder.py",
       "source_location": "L42"
+    },
+    {
+      "id": "src_confidence_application_engine_rationale_1",
+      "label": "Decision Engine Orchestrator. Coordinates the complete end-to-end pipeline: 1.\u2026",
+      "_origin": "ast",
+      "community": 3,
+      "community_name": "DecisionEngine",
+      "file_type": "rationale",
+      "norm_label": "decision engine orchestrator. coordinates the complete end-to-end pipeline: 1....",
+      "source_file": "src/confidence/application/engine.py",
+      "source_location": "L1"
     },
     {
       "id": "src_confidence_application_engine_rationale_130",
@@ -5731,17 +6019,6 @@
       "norm_label": "schedule audit persistence as a background task. this is intentionally fire-...",
       "source_file": "src/confidence/application/engine.py",
       "source_location": "L96"
-    },
-    {
-      "id": "src_confidence_domain_models_rationale_118",
-      "label": "Behavioral signals from the user's interaction with the betslip. Every feature\u2026",
-      "_origin": "ast",
-      "community": 3,
-      "community_name": "DecisionEngine",
-      "file_type": "rationale",
-      "norm_label": "behavioral signals from the user's interaction with the betslip. every feature...",
-      "source_file": "src/confidence/domain/models.py",
-      "source_location": "L118"
     },
     {
       "id": "tests_test_engine_rationale_1",
@@ -6159,15 +6436,15 @@
       "source_location": "L1"
     },
     {
-      "id": "src_confidence_api_dependencies_py_asyncengine",
-      "label": "AsyncEngine",
+      "id": "src_confidence_infrastructure_persistence",
+      "label": "persistence.py",
       "_origin": "ast",
       "community": 37,
       "community_name": "DatabasePersistenceProvider",
       "file_type": "code",
-      "norm_label": "asyncengine",
-      "source_file": "",
-      "source_location": ""
+      "norm_label": "persistence.py",
+      "source_file": "src/confidence/infrastructure/persistence.py",
+      "source_location": "L1"
     },
     {
       "id": "src_confidence_infrastructure_persistence_py_asyncengine",
@@ -6203,15 +6480,15 @@
       "source_location": ""
     },
     {
-      "id": "src_confidence_api_dependencies_rationale_109",
-      "label": "Get or create the async database engine.",
+      "id": "src_confidence_infrastructure_persistence_rationale_1",
+      "label": "Persistence for audit logs and decisions. Architectural constraint: Persistence\u2026",
       "_origin": "ast",
       "community": 37,
       "community_name": "DatabasePersistenceProvider",
       "file_type": "rationale",
-      "norm_label": "get or create the async database engine.",
-      "source_file": "src/confidence/api/dependencies.py",
-      "source_location": "L109"
+      "norm_label": "persistence for audit logs and decisions. architectural constraint: persistence...",
+      "source_file": "src/confidence/infrastructure/persistence.py",
+      "source_location": "L1"
     },
     {
       "id": "src_confidence_infrastructure_persistence_rationale_26",
@@ -6686,24 +6963,13 @@
       "source_location": "L35"
     },
     {
-      "id": "src_confidence_api_dependencies_py_safetycontext",
-      "label": "SafetyContext",
+      "id": "src_confidence_api_dependencies_py_slipcontext",
+      "label": "SlipContext",
       "_origin": "ast",
       "community": 5,
       "community_name": "conftest.py",
       "file_type": "code",
-      "norm_label": "safetycontext",
-      "source_file": "",
-      "source_location": ""
-    },
-    {
-      "id": "src_confidence_api_dependencies_py_uuid",
-      "label": "UUID",
-      "_origin": "ast",
-      "community": 5,
-      "community_name": "conftest.py",
-      "file_type": "code",
-      "norm_label": "uuid",
+      "norm_label": "slipcontext",
       "source_file": "",
       "source_location": ""
     },
@@ -6763,6 +7029,28 @@
       "source_location": "L102"
     },
     {
+      "id": "src_confidence_domain_models_rationale_118",
+      "label": "Behavioral signals from the user's interaction with the betslip. Every feature\u2026",
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "conftest.py",
+      "file_type": "rationale",
+      "norm_label": "behavioral signals from the user's interaction with the betslip. every feature...",
+      "source_file": "src/confidence/domain/models.py",
+      "source_location": "L118"
+    },
+    {
+      "id": "src_confidence_domain_models_rationale_220",
+      "label": "Recorded outcome following a decision. Outcomes are submitted via POST\u2026",
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "conftest.py",
+      "file_type": "rationale",
+      "norm_label": "recorded outcome following a decision. outcomes are submitted via post...",
+      "source_file": "src/confidence/domain/models.py",
+      "source_location": "L220"
+    },
+    {
       "id": "src_confidence_domain_models_rationale_30",
       "label": "A user's betslip confirmation session.",
       "_origin": "ast",
@@ -6783,6 +7071,17 @@
       "norm_label": "a point-in-time odds value from an authoritative source.",
       "source_file": "src/confidence/domain/models.py",
       "source_location": "L39"
+    },
+    {
+      "id": "src_confidence_domain_models_rationale_47",
+      "label": "A single selection within a betslip.",
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "conftest.py",
+      "file_type": "rationale",
+      "norm_label": "a single selection within a betslip.",
+      "source_file": "src/confidence/domain/models.py",
+      "source_location": "L47"
     },
     {
       "id": "src_confidence_domain_models_rationale_60",
@@ -7258,11 +7557,22 @@
       "source_location": ""
     },
     {
+      "id": "any",
+      "label": "Any",
+      "_origin": "ast",
+      "community": 6,
+      "community_name": "config.py",
+      "file_type": "code",
+      "norm_label": "any",
+      "source_file": "",
+      "source_location": ""
+    },
+    {
       "id": "async_sessionmaker",
       "label": "async_sessionmaker",
       "_origin": "ast",
       "community": 6,
-      "community_name": "connection.py",
+      "community_name": "config.py",
       "file_type": "code",
       "norm_label": "async_sessionmaker",
       "source_file": "",
@@ -7273,7 +7583,7 @@
       "label": "AsyncSession",
       "_origin": "ast",
       "community": 6,
-      "community_name": "connection.py",
+      "community_name": "config.py",
       "file_type": "code",
       "norm_label": "asyncsession",
       "source_file": "",
@@ -7284,9 +7594,20 @@
       "label": "Engine",
       "_origin": "ast",
       "community": 6,
-      "community_name": "connection.py",
+      "community_name": "config.py",
       "file_type": "code",
       "norm_label": "engine",
+      "source_file": "",
+      "source_location": ""
+    },
+    {
+      "id": "fastapi",
+      "label": "FastAPI",
+      "_origin": "ast",
+      "community": 6,
+      "community_name": "config.py",
+      "file_type": "code",
+      "norm_label": "fastapi",
       "source_file": "",
       "source_location": ""
     },
@@ -7295,18 +7616,40 @@
       "label": "sessionmaker",
       "_origin": "ast",
       "community": 6,
-      "community_name": "connection.py",
+      "community_name": "config.py",
       "file_type": "code",
       "norm_label": "sessionmaker",
       "source_file": "",
       "source_location": ""
     },
     {
+      "id": "src_confidence_api_app",
+      "label": "app.py",
+      "_origin": "ast",
+      "community": 6,
+      "community_name": "config.py",
+      "file_type": "code",
+      "norm_label": "app.py",
+      "source_file": "src/confidence/api/app.py",
+      "source_location": "L1"
+    },
+    {
+      "id": "src_confidence_config",
+      "label": "config.py",
+      "_origin": "ast",
+      "community": 6,
+      "community_name": "config.py",
+      "file_type": "code",
+      "norm_label": "config.py",
+      "source_file": "src/confidence/config.py",
+      "source_location": "L1"
+    },
+    {
       "id": "src_confidence_db_connection",
       "label": "connection.py",
       "_origin": "ast",
       "community": 6,
-      "community_name": "connection.py",
+      "community_name": "config.py",
       "file_type": "code",
       "norm_label": "connection.py",
       "source_file": "src/confidence/db/connection.py",
@@ -7317,29 +7660,150 @@
       "label": "AsyncEngine",
       "_origin": "ast",
       "community": 6,
-      "community_name": "connection.py",
+      "community_name": "config.py",
       "file_type": "code",
       "norm_label": "asyncengine",
       "source_file": "",
       "source_location": ""
     },
     {
+      "id": "src_confidence_log",
+      "label": "log.py",
+      "_origin": "ast",
+      "community": 6,
+      "community_name": "config.py",
+      "file_type": "code",
+      "norm_label": "log.py",
+      "source_file": "src/confidence/log.py",
+      "source_location": "L1"
+    },
+    {
+      "id": "src_confidence_api_app_rationale_1",
+      "label": "FastAPI application entrypoint. Uses the modern lifespan context manager for\u2026",
+      "_origin": "ast",
+      "community": 6,
+      "community_name": "config.py",
+      "file_type": "rationale",
+      "norm_label": "fastapi application entrypoint. uses the modern lifespan context manager for...",
+      "source_file": "src/confidence/api/app.py",
+      "source_location": "L1"
+    },
+    {
+      "id": "src_confidence_api_app_rationale_24",
+      "label": "Application lifespan manager \u2014 handles startup and shutdown.",
+      "_origin": "ast",
+      "community": 6,
+      "community_name": "config.py",
+      "file_type": "rationale",
+      "norm_label": "application lifespan manager \u2014 handles startup and shutdown.",
+      "source_file": "src/confidence/api/app.py",
+      "source_location": "L24"
+    },
+    {
+      "id": "src_confidence_api_app_rationale_51",
+      "label": "Create and configure the FastAPI application.",
+      "_origin": "ast",
+      "community": 6,
+      "community_name": "config.py",
+      "file_type": "rationale",
+      "norm_label": "create and configure the fastapi application.",
+      "source_file": "src/confidence/api/app.py",
+      "source_location": "L51"
+    },
+    {
+      "id": "src_confidence_config_rationale_1",
+      "label": "Environment-based configuration for the Confidence Layer. All configuration is\u2026",
+      "_origin": "ast",
+      "community": 6,
+      "community_name": "config.py",
+      "file_type": "rationale",
+      "norm_label": "environment-based configuration for the confidence layer. all configuration is...",
+      "source_file": "src/confidence/config.py",
+      "source_location": "L1"
+    },
+    {
+      "id": "src_confidence_config_rationale_17",
+      "label": "Load .env file if present.",
+      "_origin": "ast",
+      "community": 6,
+      "community_name": "config.py",
+      "file_type": "rationale",
+      "norm_label": "load .env file if present.",
+      "source_file": "src/confidence/config.py",
+      "source_location": "L17"
+    },
+    {
       "id": "src_confidence_config_rationale_25",
       "label": "PostgreSQL connection configuration.",
       "_origin": "ast",
       "community": 6,
-      "community_name": "connection.py",
+      "community_name": "config.py",
       "file_type": "rationale",
       "norm_label": "postgresql connection configuration.",
       "source_file": "src/confidence/config.py",
       "source_location": "L25"
     },
     {
+      "id": "src_confidence_config_rationale_35",
+      "label": "Safety Authority configuration.",
+      "_origin": "ast",
+      "community": 6,
+      "community_name": "config.py",
+      "file_type": "rationale",
+      "norm_label": "safety authority configuration.",
+      "source_file": "src/confidence/config.py",
+      "source_location": "L35"
+    },
+    {
+      "id": "src_confidence_config_rationale_43",
+      "label": "Decision Engine configuration.",
+      "_origin": "ast",
+      "community": 6,
+      "community_name": "config.py",
+      "file_type": "rationale",
+      "norm_label": "decision engine configuration.",
+      "source_file": "src/confidence/config.py",
+      "source_location": "L43"
+    },
+    {
+      "id": "src_confidence_config_rationale_51",
+      "label": "HTTP server configuration.",
+      "_origin": "ast",
+      "community": 6,
+      "community_name": "config.py",
+      "file_type": "rationale",
+      "norm_label": "http server configuration.",
+      "source_file": "src/confidence/config.py",
+      "source_location": "L51"
+    },
+    {
+      "id": "src_confidence_config_rationale_59",
+      "label": "Top-level application configuration.",
+      "_origin": "ast",
+      "community": 6,
+      "community_name": "config.py",
+      "file_type": "rationale",
+      "norm_label": "top-level application configuration.",
+      "source_file": "src/confidence/config.py",
+      "source_location": "L59"
+    },
+    {
+      "id": "src_confidence_config_rationale_70",
+      "label": "Load configuration from environment variables. Call this once at application\u2026",
+      "_origin": "ast",
+      "community": 6,
+      "community_name": "config.py",
+      "file_type": "rationale",
+      "norm_label": "load configuration from environment variables. call this once at application...",
+      "source_file": "src/confidence/config.py",
+      "source_location": "L70"
+    },
+    {
       "id": "src_confidence_db_connection_rationale_1",
       "label": "Database connection management. Provides async engine and session factory for\u2026",
       "_origin": "ast",
       "community": 6,
-      "community_name": "connection.py",
+      "community_name": "config.py",
       "file_type": "rationale",
       "norm_label": "database connection management. provides async engine and session factory for...",
       "source_file": "src/confidence/db/connection.py",
@@ -7350,7 +7814,7 @@
       "label": "Create an async SQLAlchemy engine for PostgreSQL.",
       "_origin": "ast",
       "community": 6,
-      "community_name": "connection.py",
+      "community_name": "config.py",
       "file_type": "rationale",
       "norm_label": "create an async sqlalchemy engine for postgresql.",
       "source_file": "src/confidence/db/connection.py",
@@ -7361,7 +7825,7 @@
       "label": "Create a sync SQLAlchemy engine (for migrations and testing).",
       "_origin": "ast",
       "community": 6,
-      "community_name": "connection.py",
+      "community_name": "config.py",
       "file_type": "rationale",
       "norm_label": "create a sync sqlalchemy engine (for migrations and testing).",
       "source_file": "src/confidence/db/connection.py",
@@ -7372,7 +7836,7 @@
       "label": "Create an async session factory.",
       "_origin": "ast",
       "community": 6,
-      "community_name": "connection.py",
+      "community_name": "config.py",
       "file_type": "rationale",
       "norm_label": "create an async session factory.",
       "source_file": "src/confidence/db/connection.py",
@@ -7383,11 +7847,44 @@
       "label": "Create a sync session factory (for testing).",
       "_origin": "ast",
       "community": 6,
-      "community_name": "connection.py",
+      "community_name": "config.py",
       "file_type": "rationale",
       "norm_label": "create a sync session factory (for testing).",
       "source_file": "src/confidence/db/connection.py",
       "source_location": "L42"
+    },
+    {
+      "id": "src_confidence_log_rationale_1",
+      "label": "Structured logging for the Confidence Layer. Uses structlog for JSON-formatted,\u2026",
+      "_origin": "ast",
+      "community": 6,
+      "community_name": "config.py",
+      "file_type": "rationale",
+      "norm_label": "structured logging for the confidence layer. uses structlog for json-formatted,...",
+      "source_file": "src/confidence/log.py",
+      "source_location": "L1"
+    },
+    {
+      "id": "src_confidence_log_rationale_17",
+      "label": "Configure structured logging for the application. Call once at startup. All\u2026",
+      "_origin": "ast",
+      "community": 6,
+      "community_name": "config.py",
+      "file_type": "rationale",
+      "norm_label": "configure structured logging for the application. call once at startup. all...",
+      "source_file": "src/confidence/log.py",
+      "source_location": "L17"
+    },
+    {
+      "id": "src_confidence_log_rationale_50",
+      "label": "Get a structured logger by name. Returns a structlog BoundLogger instance.\u2026",
+      "_origin": "ast",
+      "community": 6,
+      "community_name": "config.py",
+      "file_type": "rationale",
+      "norm_label": "get a structured logger by name. returns a structlog boundlogger instance....",
+      "source_file": "src/confidence/log.py",
+      "source_location": "L50"
     },
     {
       "id": "slipcontext",
@@ -7566,94 +8063,6 @@
       "source_location": "L42"
     },
     {
-      "id": "src_confidence_config",
-      "label": "config.py",
-      "_origin": "ast",
-      "community": 69,
-      "community_name": "config.py",
-      "file_type": "code",
-      "norm_label": "config.py",
-      "source_file": "src/confidence/config.py",
-      "source_location": "L1"
-    },
-    {
-      "id": "src_confidence_config_rationale_1",
-      "label": "Environment-based configuration for the Confidence Layer. All configuration is\u2026",
-      "_origin": "ast",
-      "community": 69,
-      "community_name": "config.py",
-      "file_type": "rationale",
-      "norm_label": "environment-based configuration for the confidence layer. all configuration is...",
-      "source_file": "src/confidence/config.py",
-      "source_location": "L1"
-    },
-    {
-      "id": "src_confidence_config_rationale_17",
-      "label": "Load .env file if present.",
-      "_origin": "ast",
-      "community": 69,
-      "community_name": "config.py",
-      "file_type": "rationale",
-      "norm_label": "load .env file if present.",
-      "source_file": "src/confidence/config.py",
-      "source_location": "L17"
-    },
-    {
-      "id": "src_confidence_config_rationale_35",
-      "label": "Safety Authority configuration.",
-      "_origin": "ast",
-      "community": 69,
-      "community_name": "config.py",
-      "file_type": "rationale",
-      "norm_label": "safety authority configuration.",
-      "source_file": "src/confidence/config.py",
-      "source_location": "L35"
-    },
-    {
-      "id": "src_confidence_config_rationale_43",
-      "label": "Decision Engine configuration.",
-      "_origin": "ast",
-      "community": 69,
-      "community_name": "config.py",
-      "file_type": "rationale",
-      "norm_label": "decision engine configuration.",
-      "source_file": "src/confidence/config.py",
-      "source_location": "L43"
-    },
-    {
-      "id": "src_confidence_config_rationale_51",
-      "label": "HTTP server configuration.",
-      "_origin": "ast",
-      "community": 69,
-      "community_name": "config.py",
-      "file_type": "rationale",
-      "norm_label": "http server configuration.",
-      "source_file": "src/confidence/config.py",
-      "source_location": "L51"
-    },
-    {
-      "id": "src_confidence_config_rationale_59",
-      "label": "Top-level application configuration.",
-      "_origin": "ast",
-      "community": 69,
-      "community_name": "config.py",
-      "file_type": "rationale",
-      "norm_label": "top-level application configuration.",
-      "source_file": "src/confidence/config.py",
-      "source_location": "L59"
-    },
-    {
-      "id": "src_confidence_config_rationale_70",
-      "label": "Load configuration from environment variables. Call this once at application\u2026",
-      "_origin": "ast",
-      "community": 69,
-      "community_name": "config.py",
-      "file_type": "rationale",
-      "norm_label": "load configuration from environment variables. call this once at application...",
-      "source_file": "src/confidence/config.py",
-      "source_location": "L70"
-    },
-    {
       "id": "src_confidence_db_schema",
       "label": "schema.py",
       "_origin": "ast",
@@ -7731,39 +8140,6 @@
       "source_location": "L22"
     },
     {
-      "id": "src_confidence_domain_ports_py_decision",
-      "label": "Decision",
-      "_origin": "ast",
-      "community": 70,
-      "community_name": ".persist_decision",
-      "file_type": "code",
-      "norm_label": "decision",
-      "source_file": "",
-      "source_location": ""
-    },
-    {
-      "id": "src_confidence_domain_ports_py_decisioncontext",
-      "label": "DecisionContext",
-      "_origin": "ast",
-      "community": 70,
-      "community_name": ".persist_decision",
-      "file_type": "code",
-      "norm_label": "decisioncontext",
-      "source_file": "",
-      "source_location": ""
-    },
-    {
-      "id": "src_confidence_domain_ports_rationale_63",
-      "label": "Persist a decision and its audit log to the database.",
-      "_origin": "ast",
-      "community": 70,
-      "community_name": ".persist_decision",
-      "file_type": "rationale",
-      "norm_label": "persist a decision and its audit log to the database.",
-      "source_file": "src/confidence/domain/ports.py",
-      "source_location": "L63"
-    },
-    {
       "id": "src_confidence_domain_events_py_basemodel",
       "label": "BaseModel",
       "_origin": "ast",
@@ -7830,6 +8206,39 @@
       "source_location": "L1"
     },
     {
+      "id": "src_confidence_infrastructure_dlq",
+      "label": "dlq.py",
+      "_origin": "ast",
+      "community": 8,
+      "community_name": "ConfidenceEvent",
+      "file_type": "code",
+      "norm_label": "dlq.py",
+      "source_file": "src/confidence/infrastructure/dlq.py",
+      "source_location": "L1"
+    },
+    {
+      "id": "src_confidence_infrastructure_dlq_py_protocol",
+      "label": "Protocol",
+      "_origin": "ast",
+      "community": 8,
+      "community_name": "ConfidenceEvent",
+      "file_type": "code",
+      "norm_label": "protocol",
+      "source_file": "",
+      "source_location": ""
+    },
+    {
+      "id": "tests_test_event_bus",
+      "label": "test_event_bus.py",
+      "_origin": "ast",
+      "community": 8,
+      "community_name": "ConfidenceEvent",
+      "file_type": "code",
+      "norm_label": "test_event_bus.py",
+      "source_file": "tests/test_event_bus.py",
+      "source_location": "L1"
+    },
+    {
       "id": "tests_test_event_contracts",
       "label": "test_event_contracts.py",
       "_origin": "ast",
@@ -7839,6 +8248,17 @@
       "norm_label": "test_event_contracts.py",
       "source_file": "tests/test_event_contracts.py",
       "source_location": "L1"
+    },
+    {
+      "id": "uuid",
+      "label": "UUID",
+      "_origin": "ast",
+      "community": 8,
+      "community_name": "ConfidenceEvent",
+      "file_type": "code",
+      "norm_label": "uuid",
+      "source_file": "",
+      "source_location": ""
     },
     {
       "id": "src_confidence_domain_enums_rationale_107",
@@ -7874,6 +8294,94 @@
       "source_location": "L21"
     },
     {
+      "id": "src_confidence_infrastructure_dlq_rationale_1",
+      "label": "Dead Letter Queue (DLQ). Handles events that fail processing or validation.",
+      "_origin": "ast",
+      "community": 8,
+      "community_name": "ConfidenceEvent",
+      "file_type": "rationale",
+      "norm_label": "dead letter queue (dlq). handles events that fail processing or validation.",
+      "source_file": "src/confidence/infrastructure/dlq.py",
+      "source_location": "L1"
+    },
+    {
+      "id": "src_confidence_infrastructure_dlq_rationale_19",
+      "label": "Interface for dead-lettering failed events.",
+      "_origin": "ast",
+      "community": 8,
+      "community_name": "ConfidenceEvent",
+      "file_type": "rationale",
+      "norm_label": "interface for dead-lettering failed events.",
+      "source_file": "src/confidence/infrastructure/dlq.py",
+      "source_location": "L19"
+    },
+    {
+      "id": "src_confidence_infrastructure_dlq_rationale_22",
+      "label": "Push a failed message to the DLQ.",
+      "_origin": "ast",
+      "community": 8,
+      "community_name": "ConfidenceEvent",
+      "file_type": "rationale",
+      "norm_label": "push a failed message to the dlq.",
+      "source_file": "src/confidence/infrastructure/dlq.py",
+      "source_location": "L22"
+    },
+    {
+      "id": "src_confidence_infrastructure_dlq_rationale_27",
+      "label": "Kafka/Redpanda implementation of DLQ.",
+      "_origin": "ast",
+      "community": 8,
+      "community_name": "ConfidenceEvent",
+      "file_type": "rationale",
+      "norm_label": "kafka/redpanda implementation of dlq.",
+      "source_file": "src/confidence/infrastructure/dlq.py",
+      "source_location": "L27"
+    },
+    {
+      "id": "src_confidence_infrastructure_dlq_rationale_42",
+      "label": "Start the DLQ producer.",
+      "_origin": "ast",
+      "community": 8,
+      "community_name": "ConfidenceEvent",
+      "file_type": "rationale",
+      "norm_label": "start the dlq producer.",
+      "source_file": "src/confidence/infrastructure/dlq.py",
+      "source_location": "L42"
+    },
+    {
+      "id": "src_confidence_infrastructure_dlq_rationale_46",
+      "label": "Stop the DLQ producer.",
+      "_origin": "ast",
+      "community": 8,
+      "community_name": "ConfidenceEvent",
+      "file_type": "rationale",
+      "norm_label": "stop the dlq producer.",
+      "source_file": "src/confidence/infrastructure/dlq.py",
+      "source_location": "L46"
+    },
+    {
+      "id": "src_confidence_infrastructure_dlq_rationale_50",
+      "label": "Push a failed message to DLQ.",
+      "_origin": "ast",
+      "community": 8,
+      "community_name": "ConfidenceEvent",
+      "file_type": "rationale",
+      "norm_label": "push a failed message to dlq.",
+      "source_file": "src/confidence/infrastructure/dlq.py",
+      "source_location": "L50"
+    },
+    {
+      "id": "tests_test_event_bus_rationale_1",
+      "label": "Tests for Event Bus and DLQ.",
+      "_origin": "ast",
+      "community": 8,
+      "community_name": "ConfidenceEvent",
+      "file_type": "rationale",
+      "norm_label": "tests for event bus and dlq.",
+      "source_file": "tests/test_event_bus.py",
+      "source_location": "L1"
+    },
+    {
       "id": "tests_test_event_contracts_rationale_1",
       "label": "Tests for the event schema. Verifies event validation, required fields,\u2026",
       "_origin": "ast",
@@ -7894,17 +8402,6 @@
       "norm_label": "every eventtype enum value should produce a valid event.",
       "source_file": "tests/test_event_contracts.py",
       "source_location": "L116"
-    },
-    {
-      "id": "src_confidence_api_dependencies_py_slipcontext",
-      "label": "SlipContext",
-      "_origin": "ast",
-      "community": 9,
-      "community_name": "test_domain.py",
-      "file_type": "code",
-      "norm_label": "slipcontext",
-      "source_file": "",
-      "source_location": ""
     },
     {
       "id": "src_confidence_domain_safety_py_datetime",
@@ -7982,28 +8479,6 @@
       "norm_label": "output of the safety authority. the safety authority answers: 'can we...",
       "source_file": "src/confidence/domain/models.py",
       "source_location": "L164"
-    },
-    {
-      "id": "src_confidence_domain_models_rationale_220",
-      "label": "Recorded outcome following a decision. Outcomes are submitted via POST\u2026",
-      "_origin": "ast",
-      "community": 9,
-      "community_name": "test_domain.py",
-      "file_type": "rationale",
-      "norm_label": "recorded outcome following a decision. outcomes are submitted via post...",
-      "source_file": "src/confidence/domain/models.py",
-      "source_location": "L220"
-    },
-    {
-      "id": "src_confidence_domain_models_rationale_47",
-      "label": "A single selection within a betslip.",
-      "_origin": "ast",
-      "community": 9,
-      "community_name": "test_domain.py",
-      "file_type": "rationale",
-      "norm_label": "a single selection within a betslip.",
-      "source_file": "src/confidence/domain/models.py",
-      "source_location": "L47"
     },
     {
       "id": "src_confidence_domain_safety_rationale_79",
@@ -9458,6 +9933,18 @@
       "weight": 1.0
     },
     {
+      "source": "tests_test_event_bus_test_in_memory_event_publisher",
+      "target": "asyncio",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "decorator",
+      "source_file": "tests/test_event_bus.py",
+      "source_location": "L13",
+      "weight": 1.0
+    },
+    {
       "source": "src_confidence_domain_init",
       "target": "src_confidence_domain_event_contracts",
       "relation": "re_exports",
@@ -10394,6 +10881,18 @@
       "weight": 1.0
     },
     {
+      "source": "test_ui_api",
+      "target": "asyncio",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "test_ui_api.py",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
       "source": "tests_test_engine",
       "target": "asyncio",
       "relation": "imports",
@@ -10826,6 +11325,54 @@
       "weight": 1.0
     },
     {
+      "source": "src_confidence_infrastructure_dlq",
+      "target": "uuid",
+      "relation": "imports_from",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "src/confidence/infrastructure/dlq.py",
+      "source_location": "L11",
+      "weight": 1.0
+    },
+    {
+      "source": "src_confidence_infrastructure_dlq",
+      "target": "src_confidence_log",
+      "relation": "imports_from",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "src/confidence/infrastructure/dlq.py",
+      "source_location": "L13",
+      "weight": 1.0
+    },
+    {
+      "source": "src_confidence_infrastructure_dlq",
+      "target": "datetime",
+      "relation": "imports_from",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "src/confidence/infrastructure/dlq.py",
+      "source_location": "L9",
+      "weight": 1.0
+    },
+    {
+      "source": "src_confidence_infrastructure_event_bus",
+      "target": "src_confidence_log",
+      "relation": "imports_from",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "src/confidence/infrastructure/event_bus.py",
+      "source_location": "L16",
+      "weight": 1.0
+    },
+    {
       "source": "src_confidence_infrastructure_persistence",
       "target": "uuid",
       "relation": "imports_from",
@@ -10967,6 +11514,30 @@
       "context": "import",
       "source_file": "tests/test_engine.py",
       "source_location": "L26",
+      "weight": 1.0
+    },
+    {
+      "source": "tests_test_event_bus",
+      "target": "datetime",
+      "relation": "imports_from",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "tests/test_event_bus.py",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "tests_test_event_bus",
+      "target": "uuid",
+      "relation": "imports_from",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "tests/test_event_bus.py",
+      "source_location": "L4",
       "weight": 1.0
     },
     {
@@ -11639,6 +12210,66 @@
       "context": "parameter_type",
       "source_file": "src/confidence/domain/state.py",
       "source_location": "L33",
+      "weight": 1.0
+    },
+    {
+      "source": "src_confidence_infrastructure_dlq_deadletterqueue_push",
+      "target": "uuid",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "parameter_type",
+      "source_file": "src/confidence/infrastructure/dlq.py",
+      "source_location": "L21",
+      "weight": 1.0
+    },
+    {
+      "source": "src_confidence_infrastructure_dlq_kafkadeadletterqueue_push",
+      "target": "uuid",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "parameter_type",
+      "source_file": "src/confidence/infrastructure/dlq.py",
+      "source_location": "L49",
+      "weight": 1.0
+    },
+    {
+      "source": "src_confidence_infrastructure_event_bus_eventpublisher_publish",
+      "target": "confidenceevent",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "parameter_type",
+      "source_file": "src/confidence/infrastructure/event_bus.py",
+      "source_location": "L24",
+      "weight": 1.0
+    },
+    {
+      "source": "src_confidence_infrastructure_event_bus_inmemoryeventpublisher_publish",
+      "target": "confidenceevent",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "parameter_type",
+      "source_file": "src/confidence/infrastructure/event_bus.py",
+      "source_location": "L86",
+      "weight": 1.0
+    },
+    {
+      "source": "src_confidence_infrastructure_event_bus_kafkaeventpublisher_publish",
+      "target": "confidenceevent",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "parameter_type",
+      "source_file": "src/confidence/infrastructure/event_bus.py",
+      "source_location": "L55",
       "weight": 1.0
     },
     {
@@ -15257,6 +15888,61 @@
       "weight": 1.0
     },
     {
+      "source": "src_confidence_infrastructure_dlq",
+      "target": "src_confidence_infrastructure_dlq_deadletterqueue",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/confidence/infrastructure/dlq.py",
+      "source_location": "L18",
+      "weight": 1.0
+    },
+    {
+      "source": "src_confidence_infrastructure_dlq",
+      "target": "src_confidence_infrastructure_dlq_kafkadeadletterqueue",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/confidence/infrastructure/dlq.py",
+      "source_location": "L26",
+      "weight": 1.0
+    },
+    {
+      "source": "src_confidence_infrastructure_event_bus",
+      "target": "src_confidence_infrastructure_event_bus_eventpublisher",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/confidence/infrastructure/event_bus.py",
+      "source_location": "L21",
+      "weight": 1.0
+    },
+    {
+      "source": "src_confidence_infrastructure_event_bus",
+      "target": "src_confidence_infrastructure_event_bus_kafkaeventpublisher",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/confidence/infrastructure/event_bus.py",
+      "source_location": "L29",
+      "weight": 1.0
+    },
+    {
+      "source": "src_confidence_infrastructure_event_bus",
+      "target": "src_confidence_infrastructure_event_bus_inmemoryeventpublisher",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/confidence/infrastructure/event_bus.py",
+      "source_location": "L80",
+      "weight": 1.0
+    },
+    {
       "source": "src_confidence_infrastructure_persistence",
       "target": "src_confidence_infrastructure_persistence_databasepersistenceprovider",
       "relation": "contains",
@@ -15386,6 +16072,17 @@
       "confidence_score": 1.0,
       "source_file": "src/confidence/ui/app.js",
       "source_location": "L73",
+      "weight": 1.0
+    },
+    {
+      "source": "test_ui_api",
+      "target": "test_ui_api_test",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "test_ui_api.py",
+      "source_location": "L5",
       "weight": 1.0
     },
     {
@@ -15804,6 +16501,17 @@
       "confidence_score": 1.0,
       "source_file": "tests/test_engine.py",
       "source_location": "L85",
+      "weight": 1.0
+    },
+    {
+      "source": "tests_test_event_bus",
+      "target": "tests_test_event_bus_test_in_memory_event_publisher",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "tests/test_event_bus.py",
+      "source_location": "L14",
       "weight": 1.0
     },
     {
@@ -16335,6 +17043,61 @@
       "weight": 1.0
     },
     {
+      "source": "src_confidence_infrastructure_dlq_deadletterqueue",
+      "target": "src_confidence_infrastructure_dlq_py_protocol",
+      "relation": "inherits",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/confidence/infrastructure/dlq.py",
+      "source_location": "L18",
+      "weight": 1.0
+    },
+    {
+      "source": "src_confidence_infrastructure_dlq_kafkadeadletterqueue",
+      "target": "src_confidence_infrastructure_dlq_deadletterqueue",
+      "relation": "inherits",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/confidence/infrastructure/dlq.py",
+      "source_location": "L26",
+      "weight": 1.0
+    },
+    {
+      "source": "src_confidence_infrastructure_event_bus_eventpublisher",
+      "target": "src_confidence_infrastructure_event_bus_py_protocol",
+      "relation": "inherits",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/confidence/infrastructure/event_bus.py",
+      "source_location": "L21",
+      "weight": 1.0
+    },
+    {
+      "source": "src_confidence_infrastructure_event_bus_inmemoryeventpublisher",
+      "target": "src_confidence_infrastructure_event_bus_eventpublisher",
+      "relation": "inherits",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/confidence/infrastructure/event_bus.py",
+      "source_location": "L80",
+      "weight": 1.0
+    },
+    {
+      "source": "src_confidence_infrastructure_event_bus_kafkaeventpublisher",
+      "target": "src_confidence_infrastructure_event_bus_eventpublisher",
+      "relation": "inherits",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/confidence/infrastructure/event_bus.py",
+      "source_location": "L29",
+      "weight": 1.0
+    },
+    {
       "source": "src_confidence_infrastructure_persistence_databasepersistenceprovider",
       "target": "src_confidence_domain_ports_persistenceprovider",
       "relation": "inherits",
@@ -16816,6 +17579,138 @@
       "confidence_score": 1.0,
       "source_file": "src/confidence/domain/state.py",
       "source_location": "L33",
+      "weight": 1.0
+    },
+    {
+      "source": "src_confidence_infrastructure_dlq_deadletterqueue",
+      "target": "src_confidence_infrastructure_dlq_deadletterqueue_push",
+      "relation": "method",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/confidence/infrastructure/dlq.py",
+      "source_location": "L21",
+      "weight": 1.0
+    },
+    {
+      "source": "src_confidence_infrastructure_dlq_kafkadeadletterqueue",
+      "target": "src_confidence_infrastructure_dlq_kafkadeadletterqueue_init",
+      "relation": "method",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/confidence/infrastructure/dlq.py",
+      "source_location": "L29",
+      "weight": 1.0
+    },
+    {
+      "source": "src_confidence_infrastructure_dlq_kafkadeadletterqueue",
+      "target": "src_confidence_infrastructure_dlq_kafkadeadletterqueue_start",
+      "relation": "method",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/confidence/infrastructure/dlq.py",
+      "source_location": "L41",
+      "weight": 1.0
+    },
+    {
+      "source": "src_confidence_infrastructure_dlq_kafkadeadletterqueue",
+      "target": "src_confidence_infrastructure_dlq_kafkadeadletterqueue_stop",
+      "relation": "method",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/confidence/infrastructure/dlq.py",
+      "source_location": "L45",
+      "weight": 1.0
+    },
+    {
+      "source": "src_confidence_infrastructure_dlq_kafkadeadletterqueue",
+      "target": "src_confidence_infrastructure_dlq_kafkadeadletterqueue_push",
+      "relation": "method",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/confidence/infrastructure/dlq.py",
+      "source_location": "L49",
+      "weight": 1.0
+    },
+    {
+      "source": "src_confidence_infrastructure_event_bus_eventpublisher",
+      "target": "src_confidence_infrastructure_event_bus_eventpublisher_publish",
+      "relation": "method",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/confidence/infrastructure/event_bus.py",
+      "source_location": "L24",
+      "weight": 1.0
+    },
+    {
+      "source": "src_confidence_infrastructure_event_bus_inmemoryeventpublisher",
+      "target": "src_confidence_infrastructure_event_bus_inmemoryeventpublisher_init",
+      "relation": "method",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/confidence/infrastructure/event_bus.py",
+      "source_location": "L83",
+      "weight": 1.0
+    },
+    {
+      "source": "src_confidence_infrastructure_event_bus_inmemoryeventpublisher",
+      "target": "src_confidence_infrastructure_event_bus_inmemoryeventpublisher_publish",
+      "relation": "method",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/confidence/infrastructure/event_bus.py",
+      "source_location": "L86",
+      "weight": 1.0
+    },
+    {
+      "source": "src_confidence_infrastructure_event_bus_kafkaeventpublisher",
+      "target": "src_confidence_infrastructure_event_bus_kafkaeventpublisher_init",
+      "relation": "method",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/confidence/infrastructure/event_bus.py",
+      "source_location": "L32",
+      "weight": 1.0
+    },
+    {
+      "source": "src_confidence_infrastructure_event_bus_kafkaeventpublisher",
+      "target": "src_confidence_infrastructure_event_bus_kafkaeventpublisher_start",
+      "relation": "method",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/confidence/infrastructure/event_bus.py",
+      "source_location": "L37",
+      "weight": 1.0
+    },
+    {
+      "source": "src_confidence_infrastructure_event_bus_kafkaeventpublisher",
+      "target": "src_confidence_infrastructure_event_bus_kafkaeventpublisher_stop",
+      "relation": "method",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/confidence/infrastructure/event_bus.py",
+      "source_location": "L48",
+      "weight": 1.0
+    },
+    {
+      "source": "src_confidence_infrastructure_event_bus_kafkaeventpublisher",
+      "target": "src_confidence_infrastructure_event_bus_kafkaeventpublisher_publish",
+      "relation": "method",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/confidence/infrastructure/event_bus.py",
+      "source_location": "L55",
       "weight": 1.0
     },
     {
@@ -19206,6 +20101,160 @@
       "weight": 1.0
     },
     {
+      "source": "src_confidence_infrastructure_dlq_rationale_1",
+      "target": "src_confidence_infrastructure_dlq",
+      "relation": "rationale_for",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/confidence/infrastructure/dlq.py",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "src_confidence_infrastructure_dlq_rationale_19",
+      "target": "src_confidence_infrastructure_dlq_deadletterqueue",
+      "relation": "rationale_for",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/confidence/infrastructure/dlq.py",
+      "source_location": "L19",
+      "weight": 1.0
+    },
+    {
+      "source": "src_confidence_infrastructure_dlq_rationale_22",
+      "target": "src_confidence_infrastructure_dlq_deadletterqueue_push",
+      "relation": "rationale_for",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/confidence/infrastructure/dlq.py",
+      "source_location": "L22",
+      "weight": 1.0
+    },
+    {
+      "source": "src_confidence_infrastructure_dlq_rationale_27",
+      "target": "src_confidence_infrastructure_dlq_kafkadeadletterqueue",
+      "relation": "rationale_for",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/confidence/infrastructure/dlq.py",
+      "source_location": "L27",
+      "weight": 1.0
+    },
+    {
+      "source": "src_confidence_infrastructure_dlq_rationale_42",
+      "target": "src_confidence_infrastructure_dlq_kafkadeadletterqueue_start",
+      "relation": "rationale_for",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/confidence/infrastructure/dlq.py",
+      "source_location": "L42",
+      "weight": 1.0
+    },
+    {
+      "source": "src_confidence_infrastructure_dlq_rationale_46",
+      "target": "src_confidence_infrastructure_dlq_kafkadeadletterqueue_stop",
+      "relation": "rationale_for",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/confidence/infrastructure/dlq.py",
+      "source_location": "L46",
+      "weight": 1.0
+    },
+    {
+      "source": "src_confidence_infrastructure_dlq_rationale_50",
+      "target": "src_confidence_infrastructure_dlq_kafkadeadletterqueue_push",
+      "relation": "rationale_for",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/confidence/infrastructure/dlq.py",
+      "source_location": "L50",
+      "weight": 1.0
+    },
+    {
+      "source": "src_confidence_infrastructure_event_bus_rationale_1",
+      "target": "src_confidence_infrastructure_event_bus",
+      "relation": "rationale_for",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/confidence/infrastructure/event_bus.py",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "src_confidence_infrastructure_event_bus_rationale_22",
+      "target": "src_confidence_infrastructure_event_bus_eventpublisher",
+      "relation": "rationale_for",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/confidence/infrastructure/event_bus.py",
+      "source_location": "L22",
+      "weight": 1.0
+    },
+    {
+      "source": "src_confidence_infrastructure_event_bus_rationale_25",
+      "target": "src_confidence_infrastructure_event_bus_eventpublisher_publish",
+      "relation": "rationale_for",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/confidence/infrastructure/event_bus.py",
+      "source_location": "L25",
+      "weight": 1.0
+    },
+    {
+      "source": "src_confidence_infrastructure_event_bus_rationale_30",
+      "target": "src_confidence_infrastructure_event_bus_kafkaeventpublisher",
+      "relation": "rationale_for",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/confidence/infrastructure/event_bus.py",
+      "source_location": "L30",
+      "weight": 1.0
+    },
+    {
+      "source": "src_confidence_infrastructure_event_bus_rationale_38",
+      "target": "src_confidence_infrastructure_event_bus_kafkaeventpublisher_start",
+      "relation": "rationale_for",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/confidence/infrastructure/event_bus.py",
+      "source_location": "L38",
+      "weight": 1.0
+    },
+    {
+      "source": "src_confidence_infrastructure_event_bus_rationale_49",
+      "target": "src_confidence_infrastructure_event_bus_kafkaeventpublisher_stop",
+      "relation": "rationale_for",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/confidence/infrastructure/event_bus.py",
+      "source_location": "L49",
+      "weight": 1.0
+    },
+    {
+      "source": "src_confidence_infrastructure_event_bus_rationale_81",
+      "target": "src_confidence_infrastructure_event_bus_inmemoryeventpublisher",
+      "relation": "rationale_for",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/confidence/infrastructure/event_bus.py",
+      "source_location": "L81",
+      "weight": 1.0
+    },
+    {
       "source": "src_confidence_infrastructure_persistence_rationale_1",
       "target": "src_confidence_infrastructure_persistence",
       "relation": "rationale_for",
@@ -19577,6 +20626,17 @@
       "confidence_score": 1.0,
       "source_file": "tests/test_engine.py",
       "source_location": "L87",
+      "weight": 1.0
+    },
+    {
+      "source": "tests_test_event_bus_rationale_1",
+      "target": "tests_test_event_bus",
+      "relation": "rationale_for",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "tests/test_event_bus.py",
+      "source_location": "L1",
       "weight": 1.0
     },
     {
@@ -20985,6 +22045,17 @@
       "weight": 0.8
     },
     {
+      "source": "tests_test_event_bus_test_in_memory_event_publisher",
+      "target": "src_confidence_infrastructure_event_bus_inmemoryeventpublisher",
+      "relation": "uses",
+      "_origin": "ast",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "tests/test_event_bus.py",
+      "source_location": "L15",
+      "weight": 0.8
+    },
+    {
       "source": "tests_test_event_contracts_testconfidenceevent",
       "target": "src_confidence_domain_event_contracts_confidenceevent",
       "relation": "uses",
@@ -21008,5 +22079,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "8fa481834797b77dc770817e4967ee9529a513e9"
+  "built_at_commit": "88b0280a1211f007203e8328cdf822b71b9594cd"
 }
