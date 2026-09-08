@@ -30,9 +30,9 @@
     "semantic_hash": ""
   },
   "src/confidence/api/dependencies.py": {
-    "mtime": 1788498816.3773837,
-    "seen": 1788499431.8573494,
-    "ast_hash": "21f6b14fe4fee9e77eef8803f148b25e",
+    "mtime": 1788500266.7781749,
+    "seen": 1788500354.1434975,
+    "ast_hash": "bfb31840bda364a5d15783cee9dcfe2d",
     "semantic_hash": ""
   },
   "src/confidence/api/models.py": {
@@ -366,8 +366,8 @@
     "semantic_hash": ""
   },
   "src/confidence/ui/index.html": {
-    "mtime": 1788456429.5716364,
-    "seen": 1788498000.6107388,
+    "mtime": 1788500301.1439545,
+    "seen": 1788500354.143569,
     "ast_hash": "1dab70a0c74baf39b49986f02aca7ccf",
     "semantic_hash": ""
   },
@@ -402,9 +402,9 @@
     "semantic_hash": ""
   },
   "test_ui_api.py": {
-    "mtime": 1788498271.2066102,
-    "seen": 1788498328.824839,
-    "ast_hash": "d517043e0ca20abb83feb6f75ed57fb6",
+    "mtime": 1788500336.8754616,
+    "seen": 1788500354.1435316,
+    "ast_hash": "e6e16a4bbed609c8ea3ab9433bb3bde0",
     "semantic_hash": ""
   },
   "tests/test_event_bus.py": {
@@ -597,6 +597,36 @@
     "mtime": 1788500205.2746503,
     "seen": 1788500241.4034865,
     "ast_hash": "11f58779b9bc288d48d0928d06d87a66",
+    "semantic_hash": ""
+  },
+  "fix_step16.py": {
+    "mtime": 1788500266.7371747,
+    "seen": 1788500354.143485,
+    "ast_hash": "738af5696c24f2a5e8e67dc378649811",
+    "semantic_hash": ""
+  },
+  "fix_test_ui.py": {
+    "mtime": 1788500318.6036913,
+    "seen": 1788500354.143492,
+    "ast_hash": "a38144bc3f8ba9abf1fc35e0c199c37a",
+    "semantic_hash": ""
+  },
+  "fix_ui_auth.py": {
+    "mtime": 1788500301.1293874,
+    "seen": 1788500354.1434932,
+    "ast_hash": "e827b0e66f9f78ff57193252afb26a56",
+    "semantic_hash": ""
+  },
+  "src/confidence/demo/__init__.py": {
+    "mtime": 1788500266.748965,
+    "seen": 1788500354.1435075,
+    "ast_hash": "70bdbd6c1edf3699e6494aa27639a7c3",
+    "semantic_hash": ""
+  },
+  "src/confidence/demo/providers.py": {
+    "mtime": 1788500266.7661748,
+    "seen": 1788500354.1435082,
+    "ast_hash": "5269a27837119aacd01485a3aaa37e3f",
     "semantic_hash": ""
   }
 }
