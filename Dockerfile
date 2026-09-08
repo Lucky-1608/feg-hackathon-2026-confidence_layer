@@ -14,7 +14,7 @@ RUN python -m venv /opt/venv
 ENV PATH="/opt/venv/bin:$PATH"
 
 # Install dependencies from pyproject.toml
-COPY pyproject.toml .
+COPY pyproject.toml README.md ./
 RUN mkdir -p src/confidence && touch src/confidence/__init__.py && \
     pip install --no-cache-dir --upgrade pip && \
     pip install --no-cache-dir .
@@ -36,7 +36,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 COPY --from=builder /opt/venv /opt/venv
 
 # Copy application source and project definition
-COPY pyproject.toml .
+COPY pyproject.toml README.md ./
 COPY src/ ./src/
 COPY alembic/ ./alembic/
 COPY alembic.ini .

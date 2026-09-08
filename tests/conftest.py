@@ -202,3 +202,9 @@ def action_registry() -> ActionRegistry:
 def safety_contract() -> SafetyContract:
     """The default safety contract."""
     return SafetyContract()
+
+
+@pytest.fixture(autouse=True)
+def isolated_rate_limits(monkeypatch):
+    # Unit API transports deliberately omit app lifespan; rate middleware has dedicated integration tests.
+    monkeypatch.setenv("RATE_LIMIT_ENABLED", "false")

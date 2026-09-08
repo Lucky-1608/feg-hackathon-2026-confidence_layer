@@ -45,7 +45,7 @@ class RedisSessionStore:
             return None
         return Session.model_validate_json(data)
 
-    async def update_interaction(self, session_id: UUID, updates: dict[str, Any]) -> InteractionContext:
+    async def update_interaction(self, session_id: UUID, updates: dict[str, Any], event_id: UUID | None = None) -> InteractionContext:
         """Safely update interaction context using optimistic locking."""
         key = self._interaction_key(session_id)
 
@@ -53,6 +53,8 @@ class RedisSessionStore:
             while True:
                 try:
                     await pipe.watch(key)
+                    if event_id is not None and await pipe.hexists(f"processed:{session_id}", str(event_id)):
+                        return await self.get_interaction(session_id) or InteractionContext()
                     data = await pipe.get(key)
 
                     from typing import cast
@@ -71,6 +73,9 @@ class RedisSessionStore:
 
                     cast(Any, pipe).multi()
                     pipe.set(key, updated_json, ex=self.ttl)
+                    if event_id is not None:
+                        pipe.hset(f"processed:{session_id}", str(event_id), "1")
+                        pipe.expire(f"processed:{session_id}", self.ttl)
                     await pipe.execute()
 
                     return InteractionContext.model_validate(current)
@@ -124,3 +129,13 @@ class RedisIdempotencyStore:
         from typing import cast
 
         return cast(dict[str, Any], json.loads(data))
+
+
+class RedisSessionStateProvider:
+    """Adapt the shared Redis session store to the domain port."""
+
+    def __init__(self, store: RedisSessionStore) -> None:
+        self.store = store
+
+    async def get_interaction_state(self, session_id: UUID) -> InteractionContext | None:
+        return await self.store.get_interaction(session_id)

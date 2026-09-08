@@ -25,11 +25,14 @@ dist/
 .mypy_cache/
 .ruff_cache/
 .pytest_cache/
+.hypothesis/
+.cache/
 
 # Coverage and testing
 htmlcov/
 .coverage
 .coverage.*
+coverage.xml
 
 # Database files
 *.db
@@ -38,6 +41,8 @@ htmlcov/
 # IDE and editor files
 .idea/
 .vscode/
+*.swp
+*.swo
 
 # Alembic compiled migrations
 alembic/versions/*.pyc
@@ -45,4 +50,6 @@ alembic/versions/*.pyc
 # OS files
 .DS_Store
 Thumbs.db
+
+# Local generated knowledge graph
 graphify-out/

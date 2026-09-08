@@ -77,6 +77,9 @@ class NoInterventionReason(StrEnum):
     NO_UNCERTAINTY_DETECTED = "NO_UNCERTAINTY_DETECTED"
     MODEL_FAILURE = "MODEL_FAILURE"
     TIMEOUT = "TIMEOUT"
+    KILL_SWITCH = "KILL_SWITCH"
+    SHADOW_MODE = "shadow_mode"
+    HOLDOUT = "holdout"
 
 
 class ActionId(StrEnum):

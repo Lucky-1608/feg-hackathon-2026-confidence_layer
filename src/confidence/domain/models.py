@@ -12,7 +12,7 @@ from decimal import Decimal
 from typing import Any
 from uuid import UUID
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, ConfigDict, Field
 
 from confidence.domain.enums import (
     ActionId,
@@ -98,6 +98,44 @@ class HarmIndicators(BaseModel):
         return self.rapid_loss_chasing or self.escalating_stakes or self.session_duration_extreme or self.loss_recovery_pattern
 
 
+class EnhancedHarmIndicators(BaseModel):
+    model_config = ConfigDict(allow_inf_nan=False)
+    rapid_loss_chasing: float = Field(default=0, ge=0, le=1)
+    escalating_stakes: float = Field(default=0, ge=0, le=1)
+    session_duration_extreme: float = Field(default=0, ge=0, le=1)
+    loss_recovery_pattern: float = Field(default=0, ge=0, le=1)
+    composite_harm_score: float = Field(default=0, ge=0, le=1)
+    evidence: list[str] = Field(default_factory=list)
+
+    def has_any(self, threshold: float = 0.3) -> bool:
+        return (
+            max(
+                self.rapid_loss_chasing,
+                self.escalating_stakes,
+                self.session_duration_extreme,
+                self.loss_recovery_pattern,
+                self.composite_harm_score,
+            )
+            >= threshold
+        )
+
+
+class SessionSummary(BaseModel):
+    model_config = ConfigDict(allow_inf_nan=False)
+    session_id: UUID
+    started_at: datetime
+    ended_at: datetime | None = None
+    total_stake: float = Field(default=0, ge=0)
+    total_return: float | None = Field(default=None, ge=0)
+    net_result: float | None = None
+    bet_count: int = Field(default=0, ge=0)
+    market_types: list[str] = Field(default_factory=list)
+    deposit_count: int | None = Field(default=None, ge=0)
+    mean_bet_interval_seconds: float | None = Field(default=None, ge=0)
+    mean_selection_complexity: float | None = Field(default=None, ge=0)
+    financial_data_complete: bool = False
+
+
 class SafetyContext(BaseModel):
     """Safety-relevant state, sourced from authoritative server-side systems.
 
@@ -107,7 +145,7 @@ class SafetyContext(BaseModel):
 
     is_self_excluded: bool = False
     has_protective_restrictions: bool = False
-    harm_indicators: HarmIndicators = Field(default_factory=HarmIndicators)
+    harm_indicators: HarmIndicators | EnhancedHarmIndicators = Field(default_factory=HarmIndicators)
     data_freshness: datetime | None = None
 
 
@@ -210,6 +248,8 @@ class Decision(BaseModel):
     action_registry_version: str
     facts_version: str | None = None
     reason: str
+    shadow_mode: bool = False
+    policy_metadata: dict[str, Any] = Field(default_factory=dict)
     response_text: str | None = None
 
 
@@ -227,6 +267,7 @@ class Outcome(BaseModel):
     session_id: UUID
     timestamp: datetime
     outcome_type: OutcomeType
+    time_to_action_ms: int | None = Field(default=None, ge=0)
     metadata: dict[str, Any] = Field(default_factory=dict)
     schema_version: str = "1"
 

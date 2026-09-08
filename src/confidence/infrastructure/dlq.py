@@ -11,6 +11,7 @@ from typing import Protocol
 from uuid import UUID
 
 from confidence.log import get_logger
+from confidence.observability.metrics import DLQ_MESSAGES
 
 logger = get_logger("confidence.dlq")
 
@@ -48,29 +49,28 @@ class KafkaDeadLetterQueue(DeadLetterQueue):
 
     async def push(self, raw_message: str | bytes, error_reason: str, session_id: UUID | None = None) -> None:
         """Push a failed message to DLQ."""
-        try:
-            if isinstance(raw_message, bytes):
-                try:
-                    msg_str = raw_message.decode("utf-8")
-                except UnicodeDecodeError:
-                    msg_str = raw_message.hex()
-            else:
-                msg_str = raw_message
+        if isinstance(raw_message, bytes):
+            try:
+                msg_str = raw_message.decode("utf-8")
+            except UnicodeDecodeError:
+                msg_str = raw_message.hex()
+        else:
+            msg_str = raw_message
 
-            payload = {
-                "failed_at": datetime.now(UTC).isoformat(),
-                "error_reason": error_reason,
-                "raw_message": msg_str,
-            }
+        payload = {
+            "failed_at": datetime.now(UTC).isoformat(),
+            "error_reason": error_reason,
+            "raw_message": msg_str,
+        }
 
-            key = str(session_id) if session_id else "unknown"
+        key = str(session_id) if session_id else "unknown"
 
-            await self.producer.send_and_wait(
-                topic=self.topic,
-                key=key,
-                value=payload,
-            )
-            logger.info("dlq_pushed", error_reason=error_reason)
-        except Exception as e:
-            # We can't let DLQ failures crash the app
-            logger.error("dlq_push_failed", error=str(e))
+        await self.producer.send_and_wait(
+            topic=self.topic,
+            key=key,
+            value=payload,
+        )
+        DLQ_MESSAGES.labels(
+            reason=error_reason if error_reason in {"sequence_gap", "validation_error", "processing_error"} else "other"
+        ).inc()
+        logger.info("dlq_pushed", error_reason=error_reason)

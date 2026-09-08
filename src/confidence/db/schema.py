@@ -131,6 +131,7 @@ decisions = Table(
     Column("facts_version", String(20), nullable=True),
     Column("reason", Text, nullable=False),
     Column("response_text", Text, nullable=True),
+    Column("shadow_mode", Boolean, nullable=False, server_default="false"),
     Column("created_at", DateTime(timezone=True), nullable=False),
     Index("ix_decisions_session", "session_id"),
     Index("ix_decisions_timestamp", "timestamp"),
@@ -229,8 +230,54 @@ audit_log = Table(
     Column("facts_version", String(20), nullable=True),
     Column("reason", Text, nullable=False),
     Column("response_text", Text, nullable=True),
+    Column("shadow_mode", Boolean, nullable=False, server_default="false"),
     Column("outcome", JSON, nullable=True),
     Column("created_at", DateTime(timezone=True), nullable=False),
     Index("ix_audit_log_decision", "decision_id"),
     Index("ix_audit_log_timestamp", "timestamp"),
+)
+
+
+session_quality_scores = Table(
+    "session_quality_scores",
+    metadata,
+    Column("score_id", Uuid, primary_key=True),
+    Column("session_id", Uuid, ForeignKey("sessions.session_id"), nullable=False),
+    Column("decision_id", Uuid, ForeignKey("decisions.decision_id"), nullable=False),
+    Column("outcome_id", Uuid, ForeignKey("outcomes.outcome_id"), nullable=False, unique=True),
+    *[
+        Column(name, Float, nullable=False)
+        for name in ("raw_score", "clamped_score", "action_value", "discovery_efficiency", "harm_indicator_load")
+    ],
+    Column("sqs_config_version", String(20), nullable=False),
+    Column("computed_at", DateTime(timezone=True), nullable=False),
+    Index("ix_sqs_session", "session_id"),
+    Index("ix_sqs_decision", "decision_id"),
+    Index("ix_sqs_computed", "computed_at"),
+)
+
+Index("ix_sessions_actor", sessions.c.anonymous_actor_id)
+
+
+experiment_assignments = Table(
+    "experiment_assignments",
+    metadata,
+    Column("experiment_id", Uuid, ForeignKey("experiments.experiment_id"), primary_key=True),
+    Column("session_id", Uuid, ForeignKey("sessions.session_id"), primary_key=True),
+    Column("assignment", String(20), nullable=False),
+    Column("assigned_at", DateTime(timezone=True), nullable=False),
+    Index("ix_experiment_assignments_group", "experiment_id", "assignment"),
+)
+
+
+outbox = Table(
+    "outbox",
+    metadata,
+    Column("message_id", Uuid, primary_key=True),
+    Column("topic", String(100), primary_key=True),
+    Column("partition_key", String(255), nullable=False),
+    Column("payload", JSON, nullable=False),
+    Column("created_at", DateTime(timezone=True), nullable=False),
+    Column("delivered", Boolean, nullable=False, server_default="false"),
+    Index("ix_outbox_delivery", "delivered", "created_at"),
 )

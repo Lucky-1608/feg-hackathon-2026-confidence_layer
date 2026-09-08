@@ -1,0 +1,56 @@
+name: Bug report
+description: Report reproducible incorrect behavior
+title: "[Bug] "
+body:
+  - type: markdown
+    attributes:
+      value: Do not include secrets, real customer data, or vulnerability details. Use SECURITY.md for suspected vulnerabilities.
+  - type: textarea
+    id: description
+    attributes:
+      label: What happened?
+      description: Describe the observed behavior and its impact.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Reproduction steps
+      description: Provide the smallest repeatable example using synthetic data.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+    validations:
+      required: true
+  - type: dropdown
+    id: boundary
+    attributes:
+      label: Affected area
+      options:
+        - Domain or safety
+        - API or application
+        - Database, Redis, or messaging
+        - Demo UI
+        - Build, CI, or deployment
+        - Documentation
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: Include revision, Python version, operating system, and relevant local services.
+    validations:
+      required: true
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Submission checks
+      options:
+        - label: I used synthetic data and removed credentials or private information.
+          required: true
+        - label: This report does not disclose a security vulnerability publicly.
+          required: true

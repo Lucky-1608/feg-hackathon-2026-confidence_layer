@@ -12,9 +12,12 @@ from uuid import UUID
 from confidence.domain.models import (
     Decision,
     DecisionContext,
+    InteractionContext,
     MarketContext,
+    Outcome,
     SafetyContext,
     Session,
+    SessionSummary,
     SlipContext,
 )
 
@@ -62,3 +65,21 @@ class PersistenceProvider(Protocol):
     async def persist_decision(self, decision: Decision, context: DecisionContext) -> None:
         """Persist a decision and its audit log to the database."""
         ...
+
+
+@runtime_checkable
+class SessionStateProvider(Protocol):
+    """Accumulated interaction signals from the event stream."""
+
+    async def get_interaction_state(self, session_id: UUID) -> InteractionContext | None: ...
+
+
+class OutcomePersistenceProvider(PersistenceProvider, Protocol):
+    async def get_decision(self, decision_id: UUID) -> Decision | None: ...
+    async def get_context(self, decision_id: UUID) -> DecisionContext | None: ...
+    async def persist_outcome(self, outcome: Outcome) -> None: ...
+    async def record_reward_join(self, outcome_id: UUID, latency_ms: int, is_late: bool) -> None: ...
+
+
+class SessionHistoryProvider(Protocol):
+    async def get_recent_sessions(self, anonymous_actor_id: str, lookback_days: int = 30) -> list[SessionSummary]: ...

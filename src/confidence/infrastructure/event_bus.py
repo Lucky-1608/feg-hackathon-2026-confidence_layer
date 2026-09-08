@@ -8,7 +8,7 @@ implementation for production.
 from __future__ import annotations
 
 import json
-from typing import Protocol
+from typing import Any, Protocol
 
 from aiokafka import AIOKafkaProducer
 
@@ -28,6 +28,11 @@ class EventPublisher(Protocol):
     async def stop(self) -> None:
         """Stop the publisher."""
         ...
+
+    async def publish_message(self, topic: str, key: str, value: dict[str, Any]) -> None: ...
+
+    async def is_ready(self) -> bool:
+        return True
 
     async def publish(self, event: ConfidenceEvent) -> None:
         """Publish a domain event to the message broker."""
@@ -60,6 +65,14 @@ class KafkaEventPublisher(EventPublisher):
             self.producer = None
             logger.info("kafka_producer_stopped")
 
+    async def publish_message(self, topic: str, key: str, value: dict[str, Any]) -> None:
+        if self.producer is None:
+            raise RuntimeError("Producer is not started")
+        await self.producer.send_and_wait(topic=topic, key=key, value=value)
+
+    async def is_ready(self) -> bool:
+        return self.producer is not None and bool(await self.producer.partitions_for(self.topic))
+
     async def publish(self, event: ConfidenceEvent) -> None:
         """Publish an event."""
         if self.producer is None:
@@ -90,12 +103,19 @@ class InMemoryEventPublisher(EventPublisher):
 
     def __init__(self) -> None:
         self.published_events: list[ConfidenceEvent] = []
+        self.messages: list[tuple[str, str, dict[str, Any]]] = []
+
+    async def publish_message(self, topic: str, key: str, value: dict[str, Any]) -> None:
+        self.messages.append((topic, key, value))
 
     async def start(self) -> None:
         pass
 
     async def stop(self) -> None:
         pass
+
+    async def is_ready(self) -> bool:
+        return True
 
     async def publish(self, event: ConfidenceEvent) -> None:
         self.published_events.append(event)

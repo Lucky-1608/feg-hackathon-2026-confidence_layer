@@ -10,19 +10,30 @@ The schema is authoritative; these tests verify structural completeness.
 
 from __future__ import annotations
 
+from collections.abc import Iterator
+
+import pytest
 from sqlalchemy import create_engine, inspect
+from sqlalchemy.engine import Engine
 
 from confidence.db.schema import metadata
+
+
+@pytest.fixture
+def schema_engine() -> Iterator[Engine]:
+    """Create and dispose an isolated schema for each test."""
+    engine = create_engine("sqlite:///:memory:")
+    metadata.create_all(engine)
+    yield engine
+    engine.dispose()
 
 
 class TestSchemaCreation:
     """Verify all tables can be created and have correct structure."""
 
-    def test_all_tables_created(self) -> None:
+    def test_all_tables_created(self, schema_engine: Engine) -> None:
         """All 9 required tables must be created."""
-        engine = create_engine("sqlite:///:memory:")
-        metadata.create_all(engine)
-        inspector = inspect(engine)
+        inspector = inspect(schema_engine)
         tables = set(inspector.get_table_names())
 
         expected_tables = {
@@ -38,10 +49,8 @@ class TestSchemaCreation:
         }
         assert expected_tables.issubset(tables), f"Missing tables: {expected_tables - tables}"
 
-    def test_sessions_columns(self) -> None:
-        engine = create_engine("sqlite:///:memory:")
-        metadata.create_all(engine)
-        inspector = inspect(engine)
+    def test_sessions_columns(self, schema_engine: Engine) -> None:
+        inspector = inspect(schema_engine)
         columns = {c["name"] for c in inspector.get_columns("sessions")}
         assert "session_id" in columns
         assert "anonymous_actor_id" in columns
@@ -49,10 +58,8 @@ class TestSchemaCreation:
         assert "client_version" in columns
         assert "created_at" in columns
 
-    def test_events_columns(self) -> None:
-        engine = create_engine("sqlite:///:memory:")
-        metadata.create_all(engine)
-        inspector = inspect(engine)
+    def test_events_columns(self, schema_engine: Engine) -> None:
+        inspector = inspect(schema_engine)
         columns = {c["name"] for c in inspector.get_columns("events")}
         expected = {
             "event_id",
@@ -69,18 +76,14 @@ class TestSchemaCreation:
         }
         assert expected.issubset(columns)
 
-    def test_events_foreign_key_to_sessions(self) -> None:
-        engine = create_engine("sqlite:///:memory:")
-        metadata.create_all(engine)
-        inspector = inspect(engine)
+    def test_events_foreign_key_to_sessions(self, schema_engine: Engine) -> None:
+        inspector = inspect(schema_engine)
         fks = inspector.get_foreign_keys("events")
         referred_tables = {fk["referred_table"] for fk in fks}
         assert "sessions" in referred_tables
 
-    def test_decisions_columns(self) -> None:
-        engine = create_engine("sqlite:///:memory:")
-        metadata.create_all(engine)
-        inspector = inspect(engine)
+    def test_decisions_columns(self, schema_engine: Engine) -> None:
+        inspector = inspect(schema_engine)
         columns = {c["name"] for c in inspector.get_columns("decisions")}
         expected = {
             "decision_id",
@@ -103,35 +106,27 @@ class TestSchemaCreation:
         }
         assert expected.issubset(columns)
 
-    def test_decisions_foreign_key_to_sessions(self) -> None:
-        engine = create_engine("sqlite:///:memory:")
-        metadata.create_all(engine)
-        inspector = inspect(engine)
+    def test_decisions_foreign_key_to_sessions(self, schema_engine: Engine) -> None:
+        inspector = inspect(schema_engine)
         fks = inspector.get_foreign_keys("decisions")
         referred_tables = {fk["referred_table"] for fk in fks}
         assert "sessions" in referred_tables
 
-    def test_outcomes_foreign_keys(self) -> None:
-        engine = create_engine("sqlite:///:memory:")
-        metadata.create_all(engine)
-        inspector = inspect(engine)
+    def test_outcomes_foreign_keys(self, schema_engine: Engine) -> None:
+        inspector = inspect(schema_engine)
         fks = inspector.get_foreign_keys("outcomes")
         referred_tables = {fk["referred_table"] for fk in fks}
         assert "decisions" in referred_tables
         assert "sessions" in referred_tables
 
-    def test_audit_log_foreign_key_to_decisions(self) -> None:
-        engine = create_engine("sqlite:///:memory:")
-        metadata.create_all(engine)
-        inspector = inspect(engine)
+    def test_audit_log_foreign_key_to_decisions(self, schema_engine: Engine) -> None:
+        inspector = inspect(schema_engine)
         fks = inspector.get_foreign_keys("audit_log")
         referred_tables = {fk["referred_table"] for fk in fks}
         assert "decisions" in referred_tables
 
-    def test_audit_log_columns(self) -> None:
-        engine = create_engine("sqlite:///:memory:")
-        metadata.create_all(engine)
-        inspector = inspect(engine)
+    def test_audit_log_columns(self, schema_engine: Engine) -> None:
+        inspector = inspect(schema_engine)
         columns = {c["name"] for c in inspector.get_columns("audit_log")}
         expected = {
             "audit_id",
@@ -154,10 +149,8 @@ class TestSchemaCreation:
         }
         assert expected.issubset(columns)
 
-    def test_action_registry_columns(self) -> None:
-        engine = create_engine("sqlite:///:memory:")
-        metadata.create_all(engine)
-        inspector = inspect(engine)
+    def test_action_registry_columns(self, schema_engine: Engine) -> None:
+        inspector = inspect(schema_engine)
         columns = {c["name"] for c in inspector.get_columns("action_registry")}
         expected = {
             "id",
@@ -174,11 +167,9 @@ class TestSchemaCreation:
         }
         assert expected.issubset(columns)
 
-    def test_schema_is_idempotent(self) -> None:
+    def test_schema_is_idempotent(self, schema_engine: Engine) -> None:
         """create_all should be safe to call multiple times."""
-        engine = create_engine("sqlite:///:memory:")
-        metadata.create_all(engine)
-        metadata.create_all(engine)  # Should not raise
-        inspector = inspect(engine)
+        metadata.create_all(schema_engine)  # Should not raise
+        inspector = inspect(schema_engine)
         tables = inspector.get_table_names()
         assert len(tables) >= 9

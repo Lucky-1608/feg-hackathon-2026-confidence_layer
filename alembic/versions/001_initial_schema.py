@@ -5,17 +5,18 @@ Revises: None
 Create Date: 2026-09-03
 """
 
-from typing import Sequence, Union
+from collections.abc import Sequence
 
 import sqlalchemy as sa
-from alembic import op
 from sqlalchemy import JSON, Uuid
+
+from alembic import op
 
 # revision identifiers, used by Alembic.
 revision: str = "001"
-down_revision: Union[str, None] = None
-branch_labels: Union[str, Sequence[str], None] = None
-depends_on: Union[str, Sequence[str], None] = None
+down_revision: str | None = None
+branch_labels: str | Sequence[str] | None = None
+depends_on: str | Sequence[str] | None = None
 
 
 def upgrade() -> None:
@@ -44,25 +45,15 @@ def upgrade() -> None:
         sa.Column("timestamp", sa.DateTime(timezone=True), nullable=False),
         sa.Column("sequence_number", sa.Integer, nullable=False),
         sa.Column("client_version", sa.String(50), nullable=False),
-        sa.Column(
-            "schema_version", sa.String(10), nullable=False, server_default="1"
-        ),
+        sa.Column("schema_version", sa.String(10), nullable=False, server_default="1"),
         sa.Column("context", JSON, nullable=False, server_default="{}"),
         sa.Column("payload", JSON, nullable=False, server_default="{}"),
         sa.Column("created_at", sa.DateTime(timezone=True), nullable=False),
-        sa.UniqueConstraint(
-            "session_id", "sequence_number", name="uq_events_session_seq"
-        ),
+        sa.UniqueConstraint("session_id", "sequence_number", name="uq_events_session_seq"),
     )
-    op.create_index(
-        "ix_events_session_timestamp", "events", ["session_id", "timestamp"]
-    )
-    op.create_index(
-        "ix_events_session_sequence", "events", ["session_id", "sequence_number"]
-    )
-    op.create_index(
-        "ix_events_type_timestamp", "events", ["event_type", "timestamp"]
-    )
+    op.create_index("ix_events_session_timestamp", "events", ["session_id", "timestamp"])
+    op.create_index("ix_events_session_sequence", "events", ["session_id", "sequence_number"])
+    op.create_index("ix_events_type_timestamp", "events", ["event_type", "timestamp"])
 
     # Decision Contexts
     op.create_table(
@@ -74,15 +65,11 @@ def upgrade() -> None:
             sa.ForeignKey("sessions.session_id"),
             nullable=False,
         ),
-        sa.Column(
-            "context_version", sa.String(10), nullable=False, server_default="1"
-        ),
+        sa.Column("context_version", sa.String(10), nullable=False, server_default="1"),
         sa.Column("context_data", JSON, nullable=False),
         sa.Column("created_at", sa.DateTime(timezone=True), nullable=False),
     )
-    op.create_index(
-        "ix_decision_contexts_session", "decision_contexts", ["session_id"]
-    )
+    op.create_index("ix_decision_contexts_session", "decision_contexts", ["session_id"])
 
     # Decisions
     op.create_table(
@@ -98,9 +85,7 @@ def upgrade() -> None:
         sa.Column("state", sa.String(50), nullable=False),
         sa.Column("state_confidence", sa.Float, nullable=False),
         sa.Column("safety_status", sa.String(20), nullable=False),
-        sa.Column(
-            "safety_block_reasons", JSON, nullable=False, server_default="[]"
-        ),
+        sa.Column("safety_block_reasons", JSON, nullable=False, server_default="[]"),
         sa.Column("candidate_actions", JSON, nullable=False),
         sa.Column("selected_action", sa.String(50), nullable=False),
         sa.Column("no_intervention_reason", sa.String(50), nullable=True),
@@ -134,9 +119,7 @@ def upgrade() -> None:
         sa.Column("timestamp", sa.DateTime(timezone=True), nullable=False),
         sa.Column("outcome_type", sa.String(50), nullable=False),
         sa.Column("metadata_", JSON, nullable=False, server_default="{}"),
-        sa.Column(
-            "schema_version", sa.String(10), nullable=False, server_default="1"
-        ),
+        sa.Column("schema_version", sa.String(10), nullable=False, server_default="1"),
         sa.Column("created_at", sa.DateTime(timezone=True), nullable=False),
     )
     op.create_index("ix_outcomes_decision", "outcomes", ["decision_id"])
@@ -149,9 +132,7 @@ def upgrade() -> None:
         sa.Column("policy_version", sa.String(20), nullable=False, unique=True),
         sa.Column("policy_type", sa.String(50), nullable=False),
         sa.Column("policy_config", JSON, nullable=False),
-        sa.Column(
-            "is_active", sa.Boolean, nullable=False, server_default="true"
-        ),
+        sa.Column("is_active", sa.Boolean, nullable=False, server_default="true"),
         sa.Column("created_at", sa.DateTime(timezone=True), nullable=False),
     )
 
@@ -163,13 +144,9 @@ def upgrade() -> None:
         sa.Column("category", sa.String(50), nullable=False),
         sa.Column("allowed_states", JSON, nullable=False),
         sa.Column("required_data", JSON, nullable=False, server_default="[]"),
-        sa.Column(
-            "prohibited_states", JSON, nullable=False, server_default="[]"
-        ),
+        sa.Column("prohibited_states", JSON, nullable=False, server_default="[]"),
         sa.Column("copy_template", sa.Text, nullable=True),
-        sa.Column(
-            "enabled", sa.Boolean, nullable=False, server_default="true"
-        ),
+        sa.Column("enabled", sa.Boolean, nullable=False, server_default="true"),
         sa.Column("version", sa.String(20), nullable=False),
         sa.Column("registry_version", sa.String(20), nullable=False),
         sa.Column("created_at", sa.DateTime(timezone=True), nullable=False),
@@ -188,9 +165,7 @@ def upgrade() -> None:
         sa.Column("description", sa.Text, nullable=True),
         sa.Column("experiment_type", sa.String(50), nullable=False),
         sa.Column("config", JSON, nullable=False),
-        sa.Column(
-            "is_active", sa.Boolean, nullable=False, server_default="false"
-        ),
+        sa.Column("is_active", sa.Boolean, nullable=False, server_default="false"),
         sa.Column("created_at", sa.DateTime(timezone=True), nullable=False),
     )
 

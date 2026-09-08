@@ -1,17 +1,33 @@
-.PHONY: install test lint format typecheck check db-up db-down db-migrate db-revision \
-       clean docker-up docker-down venv infra-up infra-down run run-worker \
-       test-unit test-integration test-adversarial test-load all-checks
+.DEFAULT_GOAL := help
+
+.PHONY: help venv install test test-unit test-adversarial test-load lint format \
+	typecheck quality check all-checks compose-check db-up db-down db-migrate \
+	db-revision infra-up infra-down run run-worker docker-up docker-down clean
 
 VENV := .venv
+BOOTSTRAP_PYTHON ?= python3
 PYTHON := $(VENV)/bin/python
 PIP := $(VENV)/bin/pip
 PYTEST := $(VENV)/bin/pytest
 RUFF := $(VENV)/bin/ruff
 MYPY := $(VENV)/bin/mypy
 ALEMBIC := $(VENV)/bin/alembic
+LOCUST := $(VENV)/bin/locust
+PYTHON_PATHS := src tests alembic
+
+help:
+	@echo "Confidence Layer development commands"
+	@echo "  make venv           Create the virtual environment and install dev dependencies"
+	@echo "  make check          Run lint, formatting, type checks, and tests"
+	@echo "  make format         Apply Ruff fixes and formatting"
+	@echo "  make infra-up       Start local dependencies and apply migrations"
+	@echo "  make run            Start the local API and demo UI"
+	@echo "  make docker-up      Build and start the full Compose stack"
+	@echo "  make clean          Remove generated Python and test caches"
 
 venv:
-	python3 -m venv $(VENV)
+	$(BOOTSTRAP_PYTHON) -m venv $(VENV)
+	$(PIP) install --upgrade pip
 	$(PIP) install -e ".[dev]"
 
 install:
@@ -20,37 +36,41 @@ install:
 # --- Testing ---
 
 test:
-	$(PYTEST) tests/ -v --tb=short --ignore=tests/load -q
+	$(PYTEST) tests -q --tb=short --ignore=tests/load --cov=confidence \
+		--cov-branch --cov-report=term-missing:skip-covered --cov-report=xml \
+		--cov-fail-under=75
 
 test-unit:
-	$(PYTEST) tests/test_engine.py tests/test_safety_contract.py tests/test_domain.py \
-	          tests/test_actions.py tests/test_event_contracts.py tests/test_schema.py -v
+	$(PYTEST) tests -q --tb=short --ignore=tests/load
 
 test-adversarial:
 	$(PYTEST) tests/test_adversarial.py tests/test_failure_injection.py \
-	          tests/test_properties.py -v --tb=long
+		tests/test_properties.py -q --tb=long
 
 test-load:
-	$(VENV)/bin/locust -f tests/load/locustfile.py --headless -u 50 -r 10 \
-	          --run-time 30s --host http://localhost:8000
+	$(LOCUST) -f tests/load/locustfile.py --headless -u 50 -r 10 \
+		--run-time 30s --host http://localhost:8000
 
-# --- Code Quality ---
+# --- Code quality ---
 
 lint:
-	$(RUFF) check src/ tests/
-	$(RUFF) format --check src/ tests/
+	$(RUFF) check $(PYTHON_PATHS)
+	$(RUFF) format --check $(PYTHON_PATHS)
 
 format:
-	$(RUFF) format src/ tests/
+	$(RUFF) check $(PYTHON_PATHS) --fix
+	$(RUFF) format $(PYTHON_PATHS)
 
 typecheck:
-	$(MYPY) src/ --ignore-missing-imports
+	$(MYPY) src --ignore-missing-imports
 
-check: lint typecheck test
+quality: lint typecheck
 
-all-checks: lint typecheck test test-adversarial
+check: quality test
 
-# --- Database ---
+all-checks: check
+
+# --- Database and infrastructure ---
 
 db-up:
 	docker compose up -d postgres
@@ -64,11 +84,12 @@ db-migrate:
 db-revision:
 	$(ALEMBIC) revision --autogenerate -m "$(msg)"
 
-# --- Infrastructure ---
+compose-check:
+	docker compose config --quiet
 
 infra-up:
 	docker compose up -d postgres redis redpanda
-	@echo "Waiting for services to be healthy..."
+	@echo "Waiting for local services..."
 	@sleep 5
 	docker compose run --build --rm migrate
 
@@ -86,7 +107,7 @@ run-worker:
 # --- Docker ---
 
 docker-up:
-	docker compose up -d
+	docker compose up -d --build
 
 docker-down:
 	docker compose down
@@ -94,6 +115,7 @@ docker-down:
 # --- Cleanup ---
 
 clean:
-	find . -type f -name "*.pyc" -delete
-	find . -type d -name "__pycache__" -delete
-	rm -rf .mypy_cache .ruff_cache .pytest_cache build dist *.egg-info
+	find src tests alembic -type f -name "*.py[co]" -delete
+	find src tests alembic -type d -name "__pycache__" -empty -delete
+	rm -rf .hypothesis .mypy_cache .pytest_cache .ruff_cache htmlcov .coverage coverage.xml build dist
+	find . -maxdepth 1 -type d -name "*.egg-info" -exec rm -rf {} +

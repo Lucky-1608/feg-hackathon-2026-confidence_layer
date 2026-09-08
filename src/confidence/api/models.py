@@ -7,11 +7,12 @@ to evolve independently of the core decision engine.
 
 from __future__ import annotations
 
+from typing import Any
 from uuid import UUID
 
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
-from confidence.domain.enums import ActionId, SafetyStatus, UncertaintyState
+from confidence.domain.enums import ActionId, OutcomeType, SafetyStatus, UncertaintyState
 
 
 class InteractionDataPayload(BaseModel):
@@ -51,3 +52,18 @@ class DecisionResponse(BaseModel):
     model_version: str
     action_registry_version: str
     safety_status: SafetyStatus
+
+
+class CreateOutcomeRequest(BaseModel):
+    outcome_id: UUID | None = None
+    decision_id: UUID
+    session_id: UUID
+    outcome_type: OutcomeType
+    time_to_action_ms: int | None = Field(default=None, ge=0)
+    metadata: dict[str, Any] = Field(default_factory=dict)
+
+
+class OutcomeResponse(BaseModel):
+    outcome_id: UUID
+    decision_id: UUID
+    status: str = "recorded"

@@ -4,19 +4,29 @@ from __future__ import annotations
 
 import json
 import time
+from datetime import UTC, datetime
+from typing import Any, Literal
+from uuid import uuid4
 
-from fastapi import APIRouter, Depends, Header, HTTPException, Request, status
+from fastapi import APIRouter, Depends, Header, HTTPException, Query, Request, status
 from fastapi.responses import JSONResponse
 from pydantic import ValidationError
 
-from confidence.api.dependencies import get_decision_engine, get_event_publisher
-from confidence.api.models import CreateDecisionRequest, DecisionResponse
+from confidence.api.dependencies import get_decision_engine, get_event_publisher, get_persistence_provider
+from confidence.api.models import CreateDecisionRequest, CreateOutcomeRequest, DecisionResponse, OutcomeResponse
 from confidence.application.context_builder import DecisionRequest
 from confidence.application.engine import DecisionEngine
+from confidence.application.reward_join import RewardJoinService
 from confidence.config import load_config
+from confidence.domain.enums import SafetyStatus
 from confidence.domain.event_contracts import ConfidenceEvent
-from confidence.infrastructure.auth import verify_token
+from confidence.domain.models import Outcome
+from confidence.domain.sqs import SQSCalculator
+from confidence.infrastructure.auth import AuthenticatedUser, bind_session, verify_token
 from confidence.infrastructure.event_bus import EventPublisher
+from confidence.infrastructure.kill_switch import KillSwitch
+from confidence.infrastructure.outbox import OutboxDispatcher
+from confidence.infrastructure.persistence import DatabasePersistenceProvider
 from confidence.infrastructure.session_state import RedisIdempotencyStore
 from confidence.log import get_logger
 from confidence.observability.metrics import DECISION_LATENCY, DECISION_REQUESTS, EVENT_INGESTION
@@ -25,15 +35,8 @@ logger = get_logger("confidence.api.routes")
 router = APIRouter()
 
 
-# We need a dependency to get the idempotency store
-def get_idempotency_store() -> RedisIdempotencyStore:
-    # Hacky way to inject it using the existing redis client from dependencies
-    # In a real app we'd attach it to app.state
-    config = load_config()
-    from redis.asyncio import Redis
-
-    redis_client = Redis.from_url(config.redis.url, decode_responses=False)
-    return RedisIdempotencyStore(redis_client)
+def get_idempotency_store(request: Request) -> RedisIdempotencyStore:
+    return RedisIdempotencyStore(request.app.state.redis)
 
 
 @router.post(
@@ -45,12 +48,18 @@ def get_idempotency_store() -> RedisIdempotencyStore:
 )
 async def create_decision(
     request: CreateDecisionRequest,
+    http_request: Request,
     idempotency_key: str | None = Header(None, alias="Idempotency-Key"),
     engine: DecisionEngine = Depends(get_decision_engine),  # noqa: B008
     idemp_store: RedisIdempotencyStore = Depends(get_idempotency_store),  # noqa: B008
-    user_id: str = Depends(verify_token),
+    user_id: AuthenticatedUser = Depends(verify_token),  # noqa: B008
 ) -> DecisionResponse | JSONResponse:
     """Handle a decision request."""
+    actor_id = await bind_session(http_request, user_id, request.anonymous_actor_id, request.session_id, "decisions:write")
+    if idempotency_key:
+        import hashlib
+
+        idempotency_key = user_id.actor_id + ":" + hashlib.sha256(idempotency_key.encode()).hexdigest()
     # 1. Idempotency Check
     start_time = time.time()
     if idempotency_key:
@@ -73,10 +82,10 @@ async def create_decision(
 
         app_request = DecisionRequest(
             session_id=request.session_id,
-            anonymous_actor_id=request.anonymous_actor_id,
+            anonymous_actor_id=actor_id,
             client_version=request.client_version,
             slip_id=request.slip_id,
-            interaction=InteractionContext(**request.interaction.model_dump()),
+            interaction=InteractionContext(**request.interaction.model_dump(exclude_unset=True)),
         )
 
         result = await engine.decide(app_request)
@@ -129,8 +138,10 @@ async def ingest_event(
     event: ConfidenceEvent,
     req: Request,
     publisher: EventPublisher = Depends(get_event_publisher),  # noqa: B008
-    user_id: str = Depends(verify_token),
+    user_id: AuthenticatedUser = Depends(verify_token),  # noqa: B008
 ) -> dict[str, str]:
+    actor_id = await bind_session(req, user_id, event.anonymous_actor_id, event.session_id, "events:write")
+    event = event.model_copy(update={"anonymous_actor_id": actor_id})
     try:
         await publisher.publish(event)
         EVENT_INGESTION.labels(event_type=event.event_type.value).inc()
@@ -148,14 +159,75 @@ async def ingest_event(
         ) from e
 
 
-@router.get("/health", status_code=200, summary="Liveness Probe")
-async def health_check() -> dict[str, str]:
-    """Basic liveness probe for Kubernetes."""
-    return {"status": "ok"}
+@router.post("/v1/outcomes", response_model=OutcomeResponse, status_code=201)
+async def create_outcome(
+    request: CreateOutcomeRequest,
+    persistence: DatabasePersistenceProvider = Depends(get_persistence_provider),  # noqa: B008
+    publisher: EventPublisher = Depends(get_event_publisher),  # noqa: B008
+    user_id: AuthenticatedUser = Depends(verify_token),  # noqa: B008
+) -> OutcomeResponse:
+    user_id.require_scope("outcomes:write")
+    decision = await persistence.get_decision(request.decision_id)
+    if decision is None or decision.session_id != request.session_id:
+        raise HTTPException(status_code=404, detail="Decision not found")
+    owned_context = await persistence.get_context(request.decision_id)
+    if owned_context is None or (not user_id.is_demo and owned_context.session.anonymous_actor_id != user_id.actor_id):
+        raise HTTPException(status_code=404, detail="Decision not found")
+    now = datetime.now(UTC)
+    latency = max(0, int((now - decision.timestamp).total_seconds() * 1000))
+    late = latency > 300000
+    outcome = Outcome(
+        outcome_id=request.outcome_id or uuid4(),
+        timestamp=now,
+        **request.model_dump(exclude={"outcome_id", "metadata"}),
+        metadata={**request.metadata, "join_latency_ms": latency, "is_late_join": late},
+    )
+    calculator = SQSCalculator(load_config().sqs)
+    try:
+        score = calculator.compute_sqs(decision, outcome, owned_context.safety, await persistence.get_events(outcome.session_id))
+        messages = [("confidence.outcomes", outcome.model_dump(mode="json"))]
+        if not late and not decision.shadow_mode and decision.safety_status == SafetyStatus.SAFE:
+            reward = RewardJoinService.build_signal(decision, outcome, owned_context, latency)
+            messages.append(("confidence.rewards", reward.model_dump(mode="json")))
+        await persistence.record_outcome_bundle(outcome, score, calculator.config.version, messages)
+    except ValueError as exc:
+        raise HTTPException(status_code=409, detail="Outcome ID already used") from exc
+    except Exception as exc:
+        logger.error("outcome_ingestion_failed", outcome_id=str(outcome.outcome_id))
+        raise HTTPException(status_code=503, detail="Outcome ingestion unavailable") from exc
+    # Eager delivery is bounded. A durable outbox worker retries broker failures.
+    try:
+        import asyncio
+
+        async with asyncio.timeout(0.1):
+            await OutboxDispatcher(persistence, publisher).flush()
+    except Exception:
+        logger.warning("outcome_delivery_deferred")
+
+    return OutcomeResponse(outcome_id=outcome.outcome_id, decision_id=outcome.decision_id)
 
 
-@router.get("/ready", status_code=200, summary="Readiness Probe")
-async def readiness_check() -> dict[str, str]:
-    """Check if the service is ready to receive traffic (DB/Redis reachable)."""
-    # In a real app we would ping Postgres, Redis, and Kafka here
-    return {"status": "ready"}
+@router.get("/v1/metrics/sqs")
+async def sqs_metrics(
+    window: str = Query(default="24h", pattern=r"^[1-9][0-9]{0,2}h$"),
+    persistence: DatabasePersistenceProvider = Depends(get_persistence_provider),  # noqa: B008
+    user_id: AuthenticatedUser = Depends(verify_token),  # noqa: B008
+) -> dict[str, Any]:
+    user_id.require_scope("metrics:read")
+    return await persistence.sqs_metrics(int(window[:-1]), actor_id=None if user_id.is_demo else user_id.actor_id)
+
+
+@router.post("/v1/admin/kill-switch")
+async def toggle_kill_switch(
+    request: Request,
+    action: Literal["activate", "deactivate"],
+    reason: str = "",
+    user: AuthenticatedUser = Depends(verify_token),  # noqa: B008
+) -> dict[str, bool]:
+    user.require_scope("admin:global")
+    switch = KillSwitch(request.app.state.redis)
+    if action == "activate":
+        await switch.activate(reason, user.actor_id)
+    else:
+        await switch.deactivate()
+    return {"active": await switch.is_active()}

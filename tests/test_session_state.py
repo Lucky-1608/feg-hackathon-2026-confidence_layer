@@ -16,7 +16,7 @@ async def redis():
     """Provide a FakeRedis connection."""
     client = fakeredis.aioredis.FakeRedis()
     yield client
-    await client.close()
+    await client.aclose()
 
 
 @pytest.mark.asyncio

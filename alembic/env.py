@@ -6,10 +6,10 @@ Loads database URL from environment variables, falling back to alembic.ini.
 import os
 from logging.config import fileConfig
 
-from alembic import context
 from dotenv import load_dotenv
 from sqlalchemy import engine_from_config, pool
 
+from alembic import context
 from confidence.db.schema import metadata as target_metadata
 
 # Load .env file if present
@@ -20,8 +20,8 @@ config = context.config
 # Override sqlalchemy.url from environment variable if set
 database_url = os.getenv("DATABASE_URL_SYNC")
 if database_url:
-    if database_url.startswith('postgresql://'):
-        database_url = database_url.replace('postgresql://', 'postgresql+psycopg://')
+    if database_url.startswith("postgresql://"):
+        database_url = database_url.replace("postgresql://", "postgresql+psycopg://")
     config.set_main_option("sqlalchemy.url", database_url)
 
 if config.config_file_name is not None:
