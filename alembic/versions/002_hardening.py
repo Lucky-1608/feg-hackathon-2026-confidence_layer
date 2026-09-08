@@ -21,7 +21,6 @@ depends_on: Union[str, Sequence[str], None] = None
 def upgrade() -> None:
     # Add indexes for frequent queries
     op.create_index(op.f('ix_decisions_session_id'), 'decisions', ['session_id'], unique=False)
-    op.create_index(op.f('ix_interaction_states_session_id'), 'interaction_states', ['session_id'], unique=True)
     
     # In Step 1 we added missing columns directly to schema.py
     # If this was a real database we'd do:
@@ -31,5 +30,4 @@ def upgrade() -> None:
 
 
 def downgrade() -> None:
-    op.drop_index(op.f('ix_interaction_states_session_id'), table_name='interaction_states')
     op.drop_index(op.f('ix_decisions_session_id'), table_name='decisions')
