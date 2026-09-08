@@ -3,197 +3,393 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Confidence Layer - Phase 3 Prototype</title>
+    <title>Confidence Layer - PSK Demo</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        .glow-safe { box-shadow: 0 0 15px rgba(34, 197, 94, 0.3); }
-        .glow-blocked { box-shadow: 0 0 15px rgba(239, 68, 68, 0.3); }
-        .glow-action { box-shadow: 0 0 15px rgba(59, 130, 246, 0.3); }
+        body { font-family: 'Inter', sans-serif; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        
+        /* Toggle Switch CSS */
+        .toggle-checkbox:checked { right: 0; border-color: #3b82f6; }
+        .toggle-checkbox:checked + .toggle-label { background-color: #3b82f6; }
+        .toggle-checkbox { right: 0; z-index: 1; border-color: #e5e7eb; transition: all 0.3s; }
+        .toggle-label { background-color: #374151; transition: all 0.3s; }
     </style>
 </head>
-<body class="bg-slate-900 text-slate-200 h-screen flex flex-col font-sans">
-    
-    <header class="bg-slate-800 border-b border-slate-700 p-4 flex justify-between items-center">
-        <div>
-            <h1 class="text-xl font-bold text-white tracking-wide">Confidence Layer</h1>
-            <p class="text-xs text-slate-400">Phase 3 Demonstration Prototype (Synthetic Data)</p>
-        </div>
-        <div class="flex gap-4">
-            <div class="text-right">
-                <span class="text-xs text-slate-400 block">Session ID</span>
-                <span class="text-sm font-mono text-slate-300" id="header-session-id"></span>
-            </div>
-        </div>
-    </header>
+<body class="bg-black text-slate-300 h-screen overflow-hidden flex flex-col md:flex-row">
 
-    <main class="flex-1 overflow-hidden flex">
+    <!-- LEFT PANEL: PSK Mobile App Clone -->
+    <div class="w-full md:w-[420px] h-full flex flex-col bg-[#f1f3f6] relative shadow-2xl z-10 shrink-0">
         
-        <!-- LEFT PANEL: The Mock Betslip -->
-        <section class="w-1/3 border-r border-slate-700 bg-slate-800/50 p-6 flex flex-col gap-6 overflow-y-auto">
-            <h2 class="text-lg font-semibold text-white mb-2 flex items-center gap-2">
-                <svg class="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path></svg>
-                Betslip
-            </h2>
-            
-            <div class="bg-white rounded-lg p-4 text-slate-900 shadow-lg relative">
-                <div class="flex justify-between items-start mb-4">
-                    <div>
-                        <span class="font-bold block">Match Winner</span>
-                        <span class="text-sm text-slate-600">Demo Match</span>
-                    </div>
-                    <div class="text-right">
-                        <span class="text-sm text-slate-500 line-through block hidden" id="old-odds-display">2.30</span>
-                        <span class="font-bold text-lg text-blue-600" id="current-odds-display">2.50</span>
-                    </div>
+        <!-- Header -->
+        <div class="bg-[#0f2c59] text-white pt-5 pb-0 px-4 shrink-0">
+            <div class="flex justify-between items-center mb-5">
+                <div class="flex items-center gap-2 font-bold text-xl tracking-tight cursor-pointer">
+                    <span class="w-2 h-2 rounded-full bg-yellow-400"></span> PSK
                 </div>
-                
-                <div class="border-t border-slate-200 pt-4 mb-4">
-                    <label class="text-xs text-slate-500 uppercase font-semibold mb-1 block">Stake</label>
-                    <div class="flex items-center border border-slate-300 rounded overflow-hidden">
-                        <span class="px-3 bg-slate-100 text-slate-500 border-r border-slate-300">$</span>
-                        <input type="number" id="stake-input" value="10.00" class="w-full p-2 outline-none font-mono" onchange="markInteracted()">
-                    </div>
-                </div>
-
-                <!-- Injection overlay for intervention -->
-                <div id="intervention-overlay" class="hidden mt-4 bg-blue-50 border border-blue-200 rounded-md p-3">
-                    <div class="flex gap-2">
-                        <svg class="w-5 h-5 text-blue-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                        <p class="text-sm text-blue-800" id="intervention-text"></p>
-                    </div>
-                </div>
-
-                <button id="btn-place-bet" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded transition-colors mt-6">
-                    Place Bet
-                </button>
-            </div>
-            
-            <div class="mt-4 border-t border-slate-700 pt-4">
-                <h3 class="text-sm font-semibold text-slate-300 mb-3">Client Telemetry (Mutable)</h3>
-                <div class="grid grid-cols-2 gap-3 text-sm">
-                    <div class="bg-slate-900 p-2 rounded border border-slate-700">
-                        <span class="text-slate-500 text-xs block">Dwell Time</span>
-                        <span class="font-mono text-amber-400" id="dwell-display">0.0s</span>
-                    </div>
-                    <div class="bg-slate-900 p-2 rounded border border-slate-700">
-                        <span class="text-slate-500 text-xs block">Backtracks</span>
-                        <span class="font-mono text-amber-400" id="backtracks-display">0</span>
-                    </div>
-                    <div class="bg-slate-900 p-2 rounded border border-slate-700">
-                        <span class="text-slate-500 text-xs block">Stake Changes</span>
-                        <span class="font-mono text-amber-400" id="stake-changes-display">0</span>
-                    </div>
-                    <div class="bg-slate-900 p-2 rounded border border-slate-700">
-                        <span class="text-slate-500 text-xs block">Odds Changed?</span>
-                        <span class="font-mono text-amber-400" id="odds-changed-display">False</span>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="mt-auto">
-                <button onclick="resetTelemetry()" class="text-xs text-slate-400 hover:text-white underline">Reset Telemetry</button>
-            </div>
-        </section>
-
-        <!-- MIDDLE PANEL: Scenario Controls -->
-        <section class="w-1/4 border-r border-slate-700 p-6 flex flex-col gap-6 overflow-y-auto bg-slate-900">
-            <h2 class="text-lg font-semibold text-white mb-2 flex items-center gap-2">
-                <svg class="w-5 h-5 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"></path></svg>
-                Scenario Controls
-            </h2>
-            <p class="text-xs text-slate-400 mb-2">Simulate real-world conditions for the decision engine.</p>
-            
-            <div class="space-y-4">
-                
-                <div class="bg-slate-800 p-3 rounded border border-slate-700">
-                    <h3 class="text-sm font-bold text-blue-400 mb-2">Client Signals</h3>
-                    <button onclick="triggerOddsChange()" class="w-full text-left px-3 py-2 text-sm bg-slate-700 hover:bg-slate-600 rounded mb-2 transition-colors">
-                        📉 Trigger Odds Change
+                <div class="flex items-center gap-3">
+                    <div class="bg-white/10 px-3 py-1 rounded-full text-sm font-semibold text-emerald-400">250,00 €</div>
+                    <button class="bg-white/10 p-2 rounded-full hover:bg-white/20 transition">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
                     </button>
-                    <button onclick="triggerBacktrack()" class="w-full text-left px-3 py-2 text-sm bg-slate-700 hover:bg-slate-600 rounded transition-colors">
-                        🔄 User changed mind (Backtrack)
+                    <button class="bg-white/10 p-2 rounded-full hover:bg-white/20 transition">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
                     </button>
                 </div>
+            </div>
+            
+            <!-- Sport Tabs -->
+            <div class="flex gap-5 overflow-x-auto text-sm font-semibold text-white/70 no-scrollbar border-b border-white/10">
+                <div class="pb-3 text-white border-b-2 border-yellow-400 whitespace-nowrap cursor-pointer">Nogomet</div>
+                <div class="pb-3 whitespace-nowrap cursor-pointer hover:text-white">Košarka</div>
+                <div class="pb-3 whitespace-nowrap cursor-pointer hover:text-white">Tenis</div>
+                <div class="pb-3 whitespace-nowrap cursor-pointer hover:text-white">Hokej</div>
+                <div class="pb-3 whitespace-nowrap cursor-pointer hover:text-white">Rukomet</div>
+                <div class="pb-3 whitespace-nowrap cursor-pointer hover:text-white">eSport</div>
+            </div>
+        </div>
 
-                <div class="bg-slate-800 p-3 rounded border border-slate-700">
-                    <h3 class="text-sm font-bold text-red-400 mb-2">Safety State (Authoritative)</h3>
-                    <select id="actor-override" class="w-full bg-slate-900 border border-slate-600 rounded p-2 text-sm outline-none">
-                        <option value="actor-normal">🟢 Normal User</option>
-                        <option value="actor-harm">🔴 Harmful Play (Loss Chasing)</option>
-                        <option value="actor-self-excluded">🔴 Self-Excluded</option>
-                        <option value="actor-safety-down">⚠️ Safety Service Down</option>
-                    </select>
+        <!-- Scrollable Content -->
+        <div class="flex-1 overflow-y-auto pb-24 px-3" id="app-content">
+            
+            <!-- UZIVO -->
+            <div class="flex justify-between items-center mt-5 mb-3">
+                <h2 class="text-xs font-bold text-gray-500 uppercase tracking-wider">Uživo</h2>
+                <a href="#" class="text-xs text-blue-700 font-bold hover:underline">Sve ></a>
+            </div>
+            
+            <div class="flex gap-3 overflow-x-auto no-scrollbar mb-6">
+                <!-- Live Card 1 -->
+                <div class="bg-white rounded-xl p-4 min-w-[150px] shadow-sm shrink-0 border border-gray-100 cursor-pointer">
+                    <div class="text-[10px] font-bold text-orange-600 flex items-center gap-1 mb-3 tracking-wider">
+                        <span class="w-1.5 h-1.5 rounded-full bg-orange-600 animate-pulse"></span> 63' - SERIE A
+                    </div>
+                    <div class="text-sm font-semibold text-gray-800 leading-tight">Napoli<br>Roma</div>
+                    <div class="text-xl font-extrabold text-[#0f2c59] mt-3">1 : 0</div>
+                </div>
+                <!-- Live Card 2 -->
+                <div class="bg-white rounded-xl p-4 min-w-[150px] shadow-sm shrink-0 border border-gray-100 cursor-pointer">
+                    <div class="text-[10px] font-bold text-orange-600 flex items-center gap-1 mb-3 tracking-wider">
+                        <span class="w-1.5 h-1.5 rounded-full bg-orange-600 animate-pulse"></span> 71' - LA LIGA
+                    </div>
+                    <div class="text-sm font-semibold text-gray-800 leading-tight">Sevilla<br>Betis</div>
+                    <div class="text-xl font-extrabold text-[#0f2c59] mt-3">2 : 2</div>
+                </div>
+            </div>
+
+            <!-- NAJPOPULARNIJE -->
+            <div class="flex justify-between items-center mb-3">
+                <h2 class="text-xs font-bold text-gray-500 uppercase tracking-wider">Najpopularnije</h2>
+                <a href="#" class="text-xs text-blue-700 font-bold hover:underline">Sve lige ></a>
+            </div>
+            
+            <div class="bg-white rounded-xl shadow-sm overflow-hidden mb-6 border border-gray-100">
+                <div class="flex justify-between items-center px-4 py-3 border-b border-gray-100 bg-gray-50/50">
+                    <div class="flex items-center gap-2 font-bold text-sm text-[#0f2c59]">
+                        <span>🇭🇷</span> SuperSport HNL
+                    </div>
+                    <div class="text-[11px] font-semibold text-gray-400">9. kolo</div>
+                </div>
+                
+                <!-- Match Row 1 -->
+                <div class="px-3 py-4 border-b border-gray-100 flex justify-between items-center hover:bg-blue-50/30 transition">
+                    <div class="flex flex-col w-12 text-center">
+                        <span class="text-xs font-bold text-gray-400 uppercase">Sub</span>
+                        <span class="text-xs font-bold text-gray-500">18:00</span>
+                    </div>
+                    <div class="flex-1 px-2">
+                        <div class="text-sm font-bold text-[#0f2c59] leading-tight">Dinamo Zagreb</div>
+                        <div class="text-sm font-bold text-[#0f2c59] leading-tight mt-1">Slaven Belupo</div>
+                        <div class="text-[10px] font-semibold text-gray-400 mt-1">Osnovna ponuda</div>
+                    </div>
+                    <div class="flex gap-1.5">
+                        <button onclick="toggleSelection(this)" class="bg-gray-100 rounded-lg p-2 flex flex-col items-center min-w-[48px] hover:bg-gray-200 transition-colors">
+                            <span class="text-[10px] font-bold text-gray-500">1</span>
+                            <span class="text-sm font-extrabold text-[#0f2c59]">1,45</span>
+                        </button>
+                        <button onclick="toggleSelection(this)" class="bg-gray-100 rounded-lg p-2 flex flex-col items-center min-w-[48px] hover:bg-gray-200 transition-colors">
+                            <span class="text-[10px] font-bold text-gray-500">X</span>
+                            <span class="text-sm font-extrabold text-[#0f2c59]">4,20</span>
+                        </button>
+                        <button onclick="toggleSelection(this)" class="bg-gray-100 rounded-lg p-2 flex flex-col items-center min-w-[48px] hover:bg-gray-200 transition-colors">
+                            <span class="text-[10px] font-bold text-gray-500">2</span>
+                            <span class="text-sm font-extrabold text-[#0f2c59]">6,50</span>
+                        </button>
+                    </div>
                 </div>
 
-                <div class="bg-slate-800 p-3 rounded border border-slate-700">
-                    <h3 class="text-sm font-bold text-purple-400 mb-2">Market State (Authoritative)</h3>
-                    <select id="slip-override" class="w-full bg-slate-900 border border-slate-600 rounded p-2 text-sm outline-none">
-                        <option value="slip-normal">🟢 Normal Slip</option>
-                        <option value="slip-missing-odds">⚠️ Missing Odds History</option>
-                        <option value="slip-down">⚠️ Market Service Down</option>
-                    </select>
+                <!-- Match Row 2 -->
+                <div class="px-3 py-4 border-b border-gray-100 flex justify-between items-center hover:bg-blue-50/30 transition">
+                    <div class="flex flex-col w-12 text-center">
+                        <span class="text-xs font-bold text-gray-400 uppercase">Sub</span>
+                        <span class="text-xs font-bold text-gray-500">20:15</span>
+                    </div>
+                    <div class="flex-1 px-2">
+                        <div class="text-sm font-bold text-[#0f2c59] leading-tight">Hajduk Split</div>
+                        <div class="text-sm font-bold text-[#0f2c59] leading-tight mt-1">Varaždin</div>
+                        <div class="text-[10px] font-semibold text-gray-400 mt-1">Osnovna ponuda</div>
+                    </div>
+                    <div class="flex gap-1.5">
+                        <button onclick="toggleSelection(this)" class="bg-gray-100 rounded-lg p-2 flex flex-col items-center min-w-[48px] hover:bg-gray-200 transition-colors">
+                            <span class="text-[10px] font-bold text-gray-500">1</span>
+                            <span class="text-sm font-extrabold text-[#0f2c59]">1,75</span>
+                        </button>
+                        <button onclick="toggleSelection(this)" class="bg-gray-100 rounded-lg p-2 flex flex-col items-center min-w-[48px] hover:bg-gray-200 transition-colors">
+                            <span class="text-[10px] font-bold text-gray-500">X</span>
+                            <span class="text-sm font-extrabold text-[#0f2c59]">3,60</span>
+                        </button>
+                        <button onclick="toggleSelection(this)" class="bg-gray-100 rounded-lg p-2 flex flex-col items-center min-w-[48px] hover:bg-gray-200 transition-colors">
+                            <span class="text-[10px] font-bold text-gray-500">2</span>
+                            <span class="text-sm font-extrabold text-[#0f2c59]">4,40</span>
+                        </button>
+                    </div>
                 </div>
-
-                <button onclick="evaluateDecision()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 px-4 rounded shadow-lg shadow-emerald-900/50 transition-colors mt-4 flex items-center justify-center gap-2">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
-                    Evaluate Decision
+                
+                <!-- Match Row 3 -->
+                <div class="px-3 py-4 border-b border-gray-100 flex justify-between items-center hover:bg-blue-50/30 transition">
+                    <div class="flex flex-col w-12 text-center">
+                        <span class="text-xs font-bold text-gray-400 uppercase">Ned</span>
+                        <span class="text-xs font-bold text-gray-500">15:00</span>
+                    </div>
+                    <div class="flex-1 px-2">
+                        <div class="text-sm font-bold text-[#0f2c59] leading-tight">Rijeka</div>
+                        <div class="text-sm font-bold text-[#0f2c59] leading-tight mt-1">Lokomotiva</div>
+                        <div class="text-[10px] font-semibold text-gray-400 mt-1">Osnovna ponuda</div>
+                    </div>
+                    <div class="flex gap-1.5">
+                        <button onclick="toggleSelection(this)" class="bg-gray-100 rounded-lg p-2 flex flex-col items-center min-w-[48px] hover:bg-gray-200 transition-colors">
+                            <span class="text-[10px] font-bold text-gray-500">1</span>
+                            <span class="text-sm font-extrabold text-[#0f2c59]">1,90</span>
+                        </button>
+                        <button onclick="toggleSelection(this)" class="bg-gray-100 rounded-lg p-2 flex flex-col items-center min-w-[48px] hover:bg-gray-200 transition-colors">
+                            <span class="text-[10px] font-bold text-gray-500">X</span>
+                            <span class="text-sm font-extrabold text-[#0f2c59]">3,50</span>
+                        </button>
+                        <button onclick="toggleSelection(this)" class="bg-gray-100 rounded-lg p-2 flex flex-col items-center min-w-[48px] hover:bg-gray-200 transition-colors">
+                            <span class="text-[10px] font-bold text-gray-500">2</span>
+                            <span class="text-sm font-extrabold text-[#0f2c59]">3,90</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- BETSLIP POPUP -->
+            <div id="betslip-popup" class="hidden bg-white rounded-t-2xl shadow-[0_-10px_40px_rgba(0,0,0,0.1)] border-t border-gray-200 p-4 pb-20 sticky bottom-0 z-20 transition-all">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="font-bold text-[#0f2c59]">Listić (1)</h3>
+                    <button class="text-gray-400 hover:text-gray-600" onclick="closeBetslip()">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                    </button>
+                </div>
+                
+                <div class="bg-gray-50 rounded-lg p-3 mb-4 border border-gray-200">
+                    <div class="text-xs font-bold text-gray-500 mb-1">Dinamo Zagreb - Slaven Belupo</div>
+                    <div class="flex justify-between items-center">
+                        <span class="font-bold text-[#0f2c59]">1 (Osnovna ponuda)</span>
+                        <span class="font-extrabold text-[#0f2c59] bg-yellow-100 px-2 py-1 rounded" id="slip-odds">1,45</span>
+                    </div>
+                </div>
+                
+                <div class="flex justify-between items-center mb-4">
+                    <span class="font-bold text-gray-500 text-sm">Uplata:</span>
+                    <input type="text" value="10,00 €" class="font-bold text-right text-lg text-[#0f2c59] bg-transparent w-24 border-b-2 border-gray-300 focus:border-blue-500 outline-none" readonly>
+                </div>
+                
+                <!-- CONFIDENCE LAYER INTERVENTION AREA -->
+                <div id="intervention-container" class="hidden mb-4 overflow-hidden rounded-lg transition-all">
+                    <!-- Injected by JS -->
+                </div>
+                
+                <button id="btn-confirm" onclick="evaluateDecision()" class="w-full bg-[#0f2c59] hover:bg-blue-900 text-white font-bold py-3 rounded-xl shadow-lg transition-colors flex justify-center items-center gap-2">
+                    <span id="btn-confirm-text">UPLATI (10,00 €)</span>
+                    <div id="btn-spinner" class="hidden animate-spin rounded-full h-4 w-4 border-2 border-white border-t-transparent"></div>
                 </button>
             </div>
-        </section>
 
-        <!-- RIGHT PANEL: Decision Pipeline Visualization -->
-        <section class="flex-1 p-6 flex flex-col gap-4 overflow-y-auto bg-slate-950 relative">
-            <h2 class="text-lg font-semibold text-white mb-2 flex items-center gap-2">
-                <svg class="w-5 h-5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
-                Decision Pipeline
-            </h2>
-            
-            <div id="loading-overlay" class="hidden absolute inset-0 bg-slate-950/80 flex items-center justify-center z-10">
-                <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-emerald-500"></div>
+        </div>
+
+        <!-- Bottom Nav -->
+        <div class="absolute bottom-0 w-full bg-white border-t border-gray-200 flex justify-around items-center pt-3 pb-8 px-2 text-[10px] font-bold text-gray-400 z-30">
+            <div class="flex flex-col items-center gap-1 cursor-pointer hover:text-blue-800 transition">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
+                <span>Naslovna</span>
             </div>
+            <div class="flex flex-col items-center gap-1 cursor-pointer hover:text-blue-800 transition">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                <span>Uživo</span>
+            </div>
+            <div class="flex flex-col items-center gap-1 text-[#0f2c59] cursor-pointer">
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"></path></svg>
+                <span>Sport</span>
+            </div>
+            <div class="flex flex-col items-center gap-1 cursor-pointer hover:text-blue-800 transition relative" onclick="openBetslip()">
+                <div class="absolute -top-2 -right-1 bg-red-500 text-white text-[9px] w-4 h-4 flex items-center justify-center rounded-full font-bold shadow-sm" id="slip-badge">0</div>
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path></svg>
+                <span>Listići</span>
+            </div>
+            <div class="flex flex-col items-center gap-1 cursor-pointer hover:text-blue-800 transition">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
+                <span>Casino</span>
+            </div>
+        </div>
+    </div>
 
-            <!-- Visual Pipeline -->
-            <div class="flex flex-col gap-3 flex-1">
+    <!-- RIGHT PANEL: Judge Panel -->
+    <div class="flex-1 bg-[#111318] text-slate-300 p-6 flex flex-col h-full overflow-y-auto">
+        
+        <!-- Header -->
+        <div class="mb-4">
+            <h1 class="text-xl font-bold text-white tracking-tight">Confidence Layer — kontrolna ploča</h1>
+            <p class="text-sm text-slate-500">Judge panel · not part of the customer app</p>
+        </div>
+        
+        <!-- Status Banner -->
+        <div class="bg-amber-100 text-amber-800 px-4 py-3 rounded-lg mb-8 text-sm font-semibold flex items-center gap-2 border border-amber-200 shadow-sm" id="connection-status">
+            <span class="w-2.5 h-2.5 rounded-full bg-amber-500"></span> Backend unreachable — embedded rules engine
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <!-- Left Column: Controls -->
+            <div class="space-y-8">
                 
-                <div id="pipe-safety" class="bg-slate-800 p-4 rounded border border-slate-700 transition-all opacity-50">
-                    <div class="flex justify-between items-center mb-1">
-                        <span class="font-mono text-sm text-slate-400">1. Safety Authority</span>
-                        <span id="res-safety-status" class="text-sm font-bold">-</span>
+                <!-- Player State -->
+                <div>
+                    <h3 class="text-[11px] font-bold text-slate-500 uppercase tracking-widest mb-4">Player State · Server-Side Truth</h3>
+                    <div class="space-y-4">
+                        <label class="flex items-center justify-between cursor-pointer group">
+                            <span class="text-sm text-slate-300 group-hover:text-white transition">Self-excluded (register)</span>
+                            <div class="relative inline-block w-10 h-5 align-middle select-none transition duration-200 ease-in">
+                                <input type="checkbox" id="toggle-self-excluded" class="toggle-checkbox absolute block w-5 h-5 rounded-full bg-white border-4 appearance-none cursor-pointer" onchange="updateSafetyState()"/>
+                                <label class="toggle-label block overflow-hidden h-5 rounded-full bg-slate-700 cursor-pointer"></label>
+                            </div>
+                        </label>
+                        <label class="flex items-center justify-between cursor-pointer group">
+                            <span class="text-sm text-slate-300 group-hover:text-white transition">Protective limits set</span>
+                            <div class="relative inline-block w-10 h-5 align-middle select-none transition duration-200 ease-in">
+                                <input type="checkbox" id="toggle-limits" class="toggle-checkbox absolute block w-5 h-5 rounded-full bg-white border-4 appearance-none cursor-pointer" onchange="updateSafetyState()"/>
+                                <label class="toggle-label block overflow-hidden h-5 rounded-full bg-slate-700 cursor-pointer"></label>
+                            </div>
+                        </label>
+                        <label class="flex items-center justify-between cursor-pointer group">
+                            <span class="text-sm text-slate-300 group-hover:text-white transition">Harm marker · loss chasing</span>
+                            <div class="relative inline-block w-10 h-5 align-middle select-none transition duration-200 ease-in">
+                                <input type="checkbox" id="toggle-chasing" class="toggle-checkbox absolute block w-5 h-5 rounded-full bg-white border-4 appearance-none cursor-pointer" onchange="updateSafetyState()"/>
+                                <label class="toggle-label block overflow-hidden h-5 rounded-full bg-slate-700 cursor-pointer"></label>
+                            </div>
+                        </label>
+                        <label class="flex items-center justify-between cursor-pointer group">
+                            <span class="text-sm text-slate-300 group-hover:text-white transition">Harm marker · escalating stakes</span>
+                            <div class="relative inline-block w-10 h-5 align-middle select-none transition duration-200 ease-in">
+                                <input type="checkbox" id="toggle-escalating" class="toggle-checkbox absolute block w-5 h-5 rounded-full bg-white border-4 appearance-none cursor-pointer" onchange="updateSafetyState()"/>
+                                <label class="toggle-label block overflow-hidden h-5 rounded-full bg-slate-700 cursor-pointer"></label>
+                            </div>
+                        </label>
+                        <label class="flex items-center justify-between cursor-pointer group">
+                            <span class="text-sm text-slate-300 group-hover:text-white transition">Safety data stale (>300s)</span>
+                            <div class="relative inline-block w-10 h-5 align-middle select-none transition duration-200 ease-in">
+                                <input type="checkbox" id="toggle-stale" class="toggle-checkbox absolute block w-5 h-5 rounded-full bg-white border-4 appearance-none cursor-pointer" onchange="updateSafetyState()"/>
+                                <label class="toggle-label block overflow-hidden h-5 rounded-full bg-slate-700 cursor-pointer"></label>
+                            </div>
+                        </label>
                     </div>
                 </div>
 
-                <div class="flex justify-center -my-3 z-0"><div class="h-6 w-px bg-slate-700"></div></div>
-
-                <div id="pipe-state" class="bg-slate-800 p-4 rounded border border-slate-700 transition-all opacity-50">
-                    <div class="flex justify-between items-center mb-1">
-                        <span class="font-mono text-sm text-slate-400">2. State Authority</span>
-                        <span id="res-state" class="text-sm font-bold text-white">-</span>
+                <!-- Live Simulation -->
+                <div>
+                    <h3 class="text-[11px] font-bold text-slate-500 uppercase tracking-widest mb-4">Live Simulation</h3>
+                    <div class="space-y-3">
+                        <button onclick="triggerOddsChange()" class="w-full bg-[#f1f3f6] hover:bg-white text-[#0f2c59] font-bold py-2.5 px-4 rounded text-sm transition-colors text-center border border-transparent shadow-sm">
+                            Move the odds on a selection
+                        </button>
+                        <button onclick="simulateHesitation()" class="w-full bg-[#f1f3f6] hover:bg-white text-[#0f2c59] font-bold py-2.5 px-4 rounded text-sm transition-colors text-center border border-transparent shadow-sm">
+                            Simulate hesitation (dwell 20s)
+                        </button>
+                        <button onclick="resetTelemetry()" class="w-full bg-[#f1f3f6] hover:bg-white text-[#0f2c59] font-bold py-2.5 px-4 rounded text-sm transition-colors text-center border border-transparent shadow-sm">
+                            Reset session
+                        </button>
                     </div>
-                    <div class="text-xs text-slate-500 mt-2">Confidence: <span id="res-confidence" class="text-slate-300">-</span></div>
                 </div>
-
-                <div class="flex justify-center -my-3 z-0"><div class="h-6 w-px bg-slate-700"></div></div>
-
-                <div id="pipe-policy" class="bg-slate-800 p-4 rounded border border-slate-700 transition-all opacity-50">
-                    <div class="flex justify-between items-center mb-1">
-                        <span class="font-mono text-sm text-slate-400">3. Policy Selector & Final Check</span>
-                        <span id="res-action" class="text-sm font-bold text-white">-</span>
-                    </div>
-                    <div class="text-xs text-slate-500 mt-2">Reason: <span id="res-reason" class="text-slate-300">-</span></div>
-                </div>
-
             </div>
 
-            <!-- Audit Log JSON -->
-            <div class="mt-6 border-t border-slate-800 pt-4">
-                <h3 class="text-sm font-semibold text-slate-400 mb-2">Audit Record (JSON)</h3>
-                <div class="bg-slate-900 border border-slate-800 rounded p-3 overflow-x-auto">
-                    <pre id="audit-json" class="text-[11px] text-emerald-400 font-mono whitespace-pre-wrap">Awaiting decision...</pre>
+            <!-- Right Column: Data -->
+            <div class="space-y-8">
+                
+                <!-- Telemetry -->
+                <div>
+                    <h3 class="text-[11px] font-bold text-slate-500 uppercase tracking-widest mb-4 flex justify-between">
+                        <span>Live Telemetry → POST /V1/DECISIONS</span>
+                    </h3>
+                    <div class="font-mono text-[13px] space-y-2.5 text-slate-400">
+                        <div class="flex justify-between border-b border-slate-800 pb-1">
+                            <span>session age seconds</span>
+                            <span class="text-white font-semibold" id="val-session-age">0.000</span>
+                        </div>
+                        <div class="flex justify-between border-b border-slate-800 pb-1">
+                            <span>recent backtracks</span>
+                            <span class="text-white font-semibold" id="val-backtracks">0</span>
+                        </div>
+                        <div class="flex justify-between border-b border-slate-800 pb-1">
+                            <span>dwell time seconds</span>
+                            <span class="text-white font-semibold" id="val-dwell">0.0</span>
+                        </div>
+                        <div class="flex justify-between border-b border-slate-800 pb-1">
+                            <span>selection changes</span>
+                            <span class="text-white font-semibold" id="val-sel-changes">0</span>
+                        </div>
+                        <div class="flex justify-between border-b border-slate-800 pb-1">
+                            <span>stake changes</span>
+                            <span class="text-white font-semibold" id="val-stake-changes">0</span>
+                        </div>
+                        <div class="flex justify-between border-b border-slate-800 pb-1">
+                            <span>odds changed</span>
+                            <span class="text-white font-semibold" id="val-odds-changed">false</span>
+                        </div>
+                        <div class="flex justify-between border-b border-slate-800 pb-1">
+                            <span>time since slip creation seconds</span>
+                            <span class="text-white font-semibold" id="val-slip-age">0</span>
+                        </div>
+                        <div class="flex justify-between border-b border-slate-800 pb-1">
+                            <span>confirmation attempts</span>
+                            <span class="text-white font-semibold" id="val-attempts">0</span>
+                        </div>
+                        <div class="flex justify-between pb-1">
+                            <span>interaction velocity</span>
+                            <span class="text-white font-semibold" id="val-velocity">0</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Last Decision -->
+                <div>
+                    <h3 class="text-[11px] font-bold text-slate-500 uppercase tracking-widest mb-4">Last Decision</h3>
+                    <div class="font-mono text-sm" id="last-decision-status">
+                        <span class="text-slate-500">— no decision yet</span>
+                    </div>
+                </div>
+
+                <!-- Pipeline -->
+                <div>
+                    <h3 class="text-[11px] font-bold text-slate-500 uppercase tracking-widest mb-4">Pipeline</h3>
+                    <div id="pipeline-visualization" class="space-y-3 font-mono text-[11px] hidden">
+                        <div class="bg-slate-800/50 p-3 rounded border border-slate-700">
+                            <span class="text-emerald-400 font-bold block mb-1">1. Safety Authority</span>
+                            <span id="pipe-safety-res" class="text-slate-300"></span>
+                        </div>
+                        <div class="bg-slate-800/50 p-3 rounded border border-slate-700">
+                            <span class="text-blue-400 font-bold block mb-1">2. State Authority</span>
+                            <span id="pipe-state-res" class="text-slate-300"></span>
+                        </div>
+                        <div class="bg-slate-800/50 p-3 rounded border border-slate-700 border-l-2 border-l-purple-500">
+                            <span class="text-purple-400 font-bold block mb-1">3. Policy Selector</span>
+                            <span id="pipe-policy-res" class="text-white font-bold"></span>
+                        </div>
+                    </div>
                 </div>
             </div>
-
-        </section>
-    </main>
+        </div>
+    </div>
 
     <script src="/ui/app.js"></script>
 </body>

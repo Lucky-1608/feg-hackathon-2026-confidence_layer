@@ -1,85 +1,134 @@
-// State for Client Telemetry
+// State
 let telemetry = {
-    dwell_time_seconds: 0.0,
+    sessionAge: 0.0,
     backtracks: 0,
-    stake_changes: 0,
-    odds_changed: false
+    dwellTime: 0.0,
+    selectionChanges: 0,
+    stakeChanges: 0,
+    oddsChanged: false,
+    slipAge: 0.0,
+    attempts: 0,
+    velocity: 0.0
 };
-
-// Generate a random session ID
 const sessionId = crypto.randomUUID();
-document.getElementById('header-session-id').textContent = sessionId.substring(0, 8) + '...';
 
-// Timer for dwell time
-let dwellTimer = setInterval(() => {
-    telemetry.dwell_time_seconds += 0.5;
-    document.getElementById('dwell-display').textContent = telemetry.dwell_time_seconds.toFixed(1) + 's';
-}, 500);
+// Check Backend Connection
+fetch('/docs')
+    .then(r => {
+        if(r.ok) {
+            const banner = document.getElementById('connection-status');
+            banner.className = 'bg-emerald-100 text-emerald-800 px-4 py-3 rounded-lg mb-8 text-sm font-semibold flex items-center gap-2 border border-emerald-200 shadow-sm';
+            banner.innerHTML = '<span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span> Backend Connected — AI pipeline active';
+        }
+    }).catch(e => { console.warn("Backend unreachable."); });
 
-// UI Actions
-function markInteracted() {
-    telemetry.stake_changes += 1;
-    document.getElementById('stake-changes-display').textContent = telemetry.stake_changes;
+// Timer
+setInterval(() => {
+    telemetry.sessionAge += 0.1;
+    // Decay velocity
+    if (telemetry.velocity > 0) telemetry.velocity *= 0.95;
+    
+    if (document.getElementById('betslip-popup').classList.contains('hidden') === false) {
+        telemetry.dwellTime += 0.1;
+        telemetry.slipAge += 0.1;
+    }
+    updateTelemetryUI();
+}, 100);
+
+function updateTelemetryUI() {
+    document.getElementById('val-session-age').textContent = telemetry.sessionAge.toFixed(3);
+    document.getElementById('val-dwell').textContent = telemetry.dwellTime.toFixed(1);
+    document.getElementById('val-slip-age').textContent = telemetry.slipAge.toFixed(1);
+    document.getElementById('val-backtracks').textContent = telemetry.backtracks;
+    document.getElementById('val-sel-changes').textContent = telemetry.selectionChanges;
+    document.getElementById('val-stake-changes').textContent = telemetry.stakeChanges;
+    document.getElementById('val-odds-changed').textContent = telemetry.oddsChanged;
+    document.getElementById('val-attempts').textContent = telemetry.attempts;
+    document.getElementById('val-velocity').textContent = telemetry.velocity.toFixed(1);
+}
+
+// UI Controls
+function toggleSelection(btn) {
+    telemetry.selectionChanges += 1;
+    telemetry.velocity += 2.0;
+    updateTelemetryUI();
+    
+    const isSelected = btn.classList.contains('bg-yellow-300');
+    if (isSelected) {
+        btn.classList.remove('bg-yellow-300');
+        btn.classList.add('bg-gray-100');
+    } else {
+        btn.classList.add('bg-yellow-300');
+        btn.classList.remove('bg-gray-100');
+        openBetslip();
+    }
+}
+
+function openBetslip() {
+    document.getElementById('betslip-popup').classList.remove('hidden');
+    document.getElementById('slip-badge').textContent = '1';
+}
+
+function closeBetslip() {
+    document.getElementById('betslip-popup').classList.add('hidden');
+    document.getElementById('slip-badge').textContent = '0';
+    telemetry.backtracks += 1;
+    updateTelemetryUI();
 }
 
 function triggerOddsChange() {
-    telemetry.odds_changed = true;
-    document.getElementById('odds-changed-display').textContent = 'True';
-    document.getElementById('old-odds-display').classList.remove('hidden');
-    document.getElementById('current-odds-display').textContent = '2.50';
-    document.getElementById('old-odds-display').textContent = '2.30';
-    
-    // Animate odds change
-    const el = document.getElementById('current-odds-display');
-    el.classList.add('text-red-500');
-    setTimeout(() => el.classList.remove('text-red-500'), 1000);
+    telemetry.oddsChanged = true;
+    updateTelemetryUI();
+    const slipOdds = document.getElementById('slip-odds');
+    slipOdds.textContent = '1,20'; // changed from 1,45
+    slipOdds.classList.add('bg-red-200', 'text-red-700');
+    setTimeout(() => { slipOdds.classList.remove('bg-red-200', 'text-red-700'); }, 1000);
 }
 
-function triggerBacktrack() {
-    telemetry.backtracks += 1;
-    document.getElementById('backtracks-display').textContent = telemetry.backtracks;
+function simulateHesitation() {
+    telemetry.dwellTime += 20.0;
+    telemetry.slipAge += 20.0;
+    updateTelemetryUI();
 }
 
 function resetTelemetry() {
     telemetry = {
-        dwell_time_seconds: 0.0,
+        sessionAge: 0.0,
         backtracks: 0,
-        stake_changes: 0,
-        odds_changed: false
+        dwellTime: 0.0,
+        selectionChanges: 0,
+        stakeChanges: 0,
+        oddsChanged: false,
+        slipAge: 0.0,
+        attempts: 0,
+        velocity: 0.0
     };
-    document.getElementById('dwell-display').textContent = '0.0s';
-    document.getElementById('backtracks-display').textContent = '0';
-    document.getElementById('stake-changes-display').textContent = '0';
-    document.getElementById('odds-changed-display').textContent = 'False';
-    document.getElementById('old-odds-display').classList.add('hidden');
-    
-    // Hide intervention
-    document.getElementById('intervention-overlay').classList.add('hidden');
-    
-    // Reset Pipeline Visuals
-    ['pipe-safety', 'pipe-state', 'pipe-policy'].forEach(id => {
-        const el = document.getElementById(id);
-        el.className = 'bg-slate-800 p-4 rounded border border-slate-700 transition-all opacity-50';
-    });
-    document.getElementById('res-safety-status').textContent = '-';
-    document.getElementById('res-state').textContent = '-';
-    document.getElementById('res-confidence').textContent = '-';
-    document.getElementById('res-action').textContent = '-';
-    document.getElementById('res-reason').textContent = '-';
-    document.getElementById('audit-json').textContent = 'Awaiting decision...';
+    updateTelemetryUI();
+    document.getElementById('intervention-container').classList.add('hidden');
+    document.getElementById('pipeline-visualization').classList.add('hidden');
+    document.getElementById('last-decision-status').innerHTML = '<span class="text-slate-500">— no decision yet</span>';
+    const slipOdds = document.getElementById('slip-odds');
+    slipOdds.textContent = '1,45';
 }
 
-// Evaluate Decision against FastAPI backend
+// Dummy mapping function (normally this would be real server state, but we mock it here for the demo)
+function updateSafetyState() {
+    // Triggers automatically via element change events in HTML
+    document.getElementById('pipeline-visualization').classList.add('hidden');
+}
+
 async function evaluateDecision() {
-    const loading = document.getElementById('loading-overlay');
-    loading.classList.remove('hidden');
+    telemetry.attempts += 1;
+    telemetry.velocity += 5.0;
     
-    // Hide previous intervention
-    document.getElementById('intervention-overlay').classList.add('hidden');
+    // Determine mock IDs based on toggles
+    let actorId = "actor-normal";
+    if (document.getElementById('toggle-self-excluded').checked) actorId = "actor-self-excluded";
+    else if (document.getElementById('toggle-chasing').checked) actorId = "actor-harm";
+    else if (document.getElementById('toggle-stale').checked) actorId = "actor-safety-down";
+    else if (document.getElementById('toggle-escalating').checked) actorId = "actor-harm";
     
-    // Gather state
-    const actorId = document.getElementById('actor-override').value;
-    const slipId = document.getElementById('slip-override').value;
+    let slipId = "slip-normal";
     
     const payload = {
         session_id: sessionId,
@@ -87,16 +136,21 @@ async function evaluateDecision() {
         client_version: "1.0.0-web",
         slip_id: slipId,
         interaction: {
-            selection_changes: telemetry.backtracks, // map backtracks to selection_changes for the API
-            stake_changes: telemetry.stake_changes,
-            odds_changed: telemetry.odds_changed,
-            time_since_slip_creation_seconds: telemetry.dwell_time_seconds,
-            confirmation_attempts: 0,
-            interaction_velocity: 0.0,
+            selection_changes: telemetry.selectionChanges,
+            stake_changes: telemetry.stakeChanges,
+            odds_changed: telemetry.oddsChanged,
+            time_since_slip_creation_seconds: telemetry.slipAge,
+            confirmation_attempts: telemetry.attempts,
+            interaction_velocity: telemetry.velocity,
             recent_backtracks: telemetry.backtracks,
-            dwell_time_seconds: telemetry.dwell_time_seconds
+            dwell_time_seconds: telemetry.dwellTime
         }
     };
+    
+    // UI Loading state
+    document.getElementById('btn-confirm-text').classList.add('opacity-50');
+    document.getElementById('btn-spinner').classList.remove('hidden');
+    document.getElementById('intervention-container').classList.add('hidden');
     
     try {
         const response = await fetch('/v1/decisions', {
@@ -104,68 +158,55 @@ async function evaluateDecision() {
             headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer demo-token' },
             body: JSON.stringify(payload)
         });
-        
         const data = await response.json();
         
-        // Show Audit
-        document.getElementById('audit-json').textContent = JSON.stringify(data, null, 2);
-        
-        // Update Pipeline UI
-        updatePipeline(data);
-        
-        // Show Intervention if applicable
+        // Show Intervention on Betslip if any
         if (data.action !== 'NO_INTERVENTION' && data.response_text) {
-            document.getElementById('intervention-text').textContent = data.response_text;
-            document.getElementById('intervention-overlay').classList.remove('hidden');
+            const container = document.getElementById('intervention-container');
+            container.innerHTML = `
+                <div class="bg-blue-50 border border-blue-200 rounded-lg p-3 flex items-start gap-3">
+                    <div class="text-blue-500 mt-0.5">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    </div>
+                    <div class="text-sm text-blue-900 font-semibold">${data.response_text}</div>
+                </div>
+            `;
+            container.classList.remove('hidden');
+        } else if (data.safety_status !== 'SAFE') {
+            const container = document.getElementById('intervention-container');
+            container.innerHTML = `
+                <div class="bg-red-50 border border-red-200 rounded-lg p-3 flex items-start gap-3">
+                    <div class="text-red-500 mt-0.5">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+                    </div>
+                    <div class="text-sm text-red-900 font-semibold">Action blocked by Safety Authority. Code: ${data.safety_status}</div>
+                </div>
+            `;
+            container.classList.remove('hidden');
+        }
+
+        // Update Judge Panel
+        document.getElementById('last-decision-status').innerHTML = `<span class="text-white font-bold bg-blue-900/50 px-2 py-1 rounded">${data.action}</span>`;
+        
+        // Update Pipeline View
+        document.getElementById('pipeline-visualization').classList.remove('hidden');
+        document.getElementById('pipe-safety-res').textContent = data.safety_status;
+        
+        if (data.safety_status === 'SAFE') {
+            document.getElementById('pipe-safety-res').className = 'text-emerald-400';
+            document.getElementById('pipe-state-res').textContent = `${data.state} (Conf: ${data.confidence ? data.confidence.toFixed(2) : 'N/A'})`;
+            document.getElementById('pipe-policy-res').textContent = `${data.action} - ${data.reason}`;
+        } else {
+            document.getElementById('pipe-safety-res').className = 'text-red-400 font-bold';
+            document.getElementById('pipe-state-res').textContent = `SKIPPED (Blocked by Safety Gate)`;
+            document.getElementById('pipe-policy-res').textContent = `SKIPPED (Blocked by Safety Gate)`;
         }
         
     } catch (e) {
-        document.getElementById('audit-json').textContent = 'Error: ' + e.message;
+        console.error(e);
+        document.getElementById('last-decision-status').innerHTML = `<span class="text-red-500 font-bold">Error connecting to API</span>`;
     } finally {
-        loading.classList.add('hidden');
+        document.getElementById('btn-confirm-text').classList.remove('opacity-50');
+        document.getElementById('btn-spinner').classList.add('hidden');
     }
 }
-
-function updatePipeline(data) {
-    // 1. Safety
-    const pipeSafety = document.getElementById('pipe-safety');
-    const resSafety = document.getElementById('res-safety-status');
-    pipeSafety.classList.remove('opacity-50');
-    if (data.safety_status === 'SAFE') {
-        pipeSafety.classList.add('border-green-500', 'glow-safe');
-        resSafety.textContent = 'SAFE';
-        resSafety.className = 'text-sm font-bold text-green-400';
-    } else {
-        pipeSafety.classList.add('border-red-500', 'glow-blocked');
-        resSafety.textContent = data.safety_status || 'BLOCKED';
-        resSafety.className = 'text-sm font-bold text-red-400';
-    }
-    
-    // 2. State
-    const pipeState = document.getElementById('pipe-state');
-    pipeState.classList.remove('opacity-50');
-    pipeState.classList.add('border-blue-500');
-    document.getElementById('res-state').textContent = data.state;
-    document.getElementById('res-confidence').textContent = data.confidence ? data.confidence.toFixed(2) : 'N/A';
-    
-    // 3. Policy
-    const pipePolicy = document.getElementById('pipe-policy');
-    const resAction = document.getElementById('res-action');
-    pipePolicy.classList.remove('opacity-50');
-    
-    resAction.textContent = data.action;
-    document.getElementById('res-reason').textContent = data.reason || 'Pipeline complete';
-    
-    if (data.action === 'NO_INTERVENTION') {
-        pipePolicy.classList.add('border-slate-500');
-        resAction.className = 'text-sm font-bold text-slate-300';
-    } else {
-        pipePolicy.classList.add('border-blue-500', 'glow-action');
-        resAction.className = 'text-sm font-bold text-blue-400';
-    }
-}
-
-// Attach place bet listener
-document.getElementById('btn-place-bet').addEventListener('click', () => {
-    evaluateDecision();
-});
