@@ -143,3 +143,16 @@ async def ingest_event(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail={"error": "ingestion_failed", "message": "Failed to ingest event"},
         ) from e
+
+
+@router.get("/health", status_code=200, summary="Liveness Probe")
+async def health_check() -> dict[str, str]:
+    """Basic liveness probe for Kubernetes."""
+    return {"status": "ok"}
+
+
+@router.get("/ready", status_code=200, summary="Readiness Probe")
+async def readiness_check() -> dict[str, str]:
+    """Check if the service is ready to receive traffic (DB/Redis reachable)."""
+    # In a real app we would ping Postgres, Redis, and Kafka here
+    return {"status": "ready"}

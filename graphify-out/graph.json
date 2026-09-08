@@ -244,24 +244,50 @@
       "_callable_class": true,
       "_origin": "ast",
       "community": 11,
-      "community_name": "enums.py",
+      "community_name": "ActionId",
       "file_type": "code",
       "norm_label": "actioncategory",
       "source_file": "src/confidence/domain/enums.py",
       "source_location": "L97"
     },
     {
-      "id": "src_confidence_domain_enums_safetyclass",
-      "label": "SafetyClass",
+      "id": "src_confidence_domain_enums_actionid",
+      "label": "ActionId",
       "_callable": true,
       "_callable_class": true,
       "_origin": "ast",
       "community": 11,
-      "community_name": "enums.py",
+      "community_name": "ActionId",
       "file_type": "code",
-      "norm_label": "safetyclass",
+      "norm_label": "actionid",
       "source_file": "src/confidence/domain/enums.py",
-      "source_location": "L131"
+      "source_location": "L82"
+    },
+    {
+      "id": "src_confidence_domain_enums_uncertaintystate",
+      "label": "UncertaintyState",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 11,
+      "community_name": "ActionId",
+      "file_type": "code",
+      "norm_label": "uncertaintystate",
+      "source_file": "src/confidence/domain/enums.py",
+      "source_location": "L10"
+    },
+    {
+      "id": "src_confidence_domain_policy_policyselector",
+      "label": "PolicySelector",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 11,
+      "community_name": "ActionId",
+      "file_type": "code",
+      "norm_label": "policyselector",
+      "source_file": "src/confidence/domain/policy.py",
+      "source_location": "L14"
     },
     {
       "id": "src_confidence_infrastructure_resilience_circuitbreaker",
@@ -556,7 +582,7 @@
       "_callable_class": true,
       "_origin": "ast",
       "community": 37,
-      "community_name": "log.py",
+      "community_name": "ContextBuilder",
       "file_type": "code",
       "norm_label": "contextbuilder",
       "source_file": "src/confidence/application/context_builder.py",
@@ -569,7 +595,7 @@
       "_callable_class": true,
       "_origin": "ast",
       "community": 37,
-      "community_name": "log.py",
+      "community_name": "ContextBuilder",
       "file_type": "code",
       "norm_label": "resilienceconfig",
       "source_file": "src/confidence/infrastructure/resilience.py",
@@ -582,11 +608,24 @@
       "_callable_class": true,
       "_origin": "ast",
       "community": 4,
-      "community_name": "DecisionContext",
+      "community_name": "StateEstimate",
       "file_type": "code",
       "norm_label": "decisioncontext",
       "source_file": "src/confidence/domain/models.py",
       "source_location": "L146"
+    },
+    {
+      "id": "src_confidence_domain_models_stateestimate",
+      "label": "StateEstimate",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "StateEstimate",
+      "file_type": "code",
+      "norm_label": "stateestimate",
+      "source_file": "src/confidence/domain/models.py",
+      "source_location": "L176"
     },
     {
       "id": "src_confidence_domain_enums_nointerventionreason",
@@ -665,19 +704,6 @@
       "norm_label": "decision",
       "source_file": "src/confidence/domain/models.py",
       "source_location": "L192"
-    },
-    {
-      "id": "src_confidence_domain_models_outcome",
-      "label": "Outcome",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 49,
-      "community_name": "domain/models.py",
-      "file_type": "code",
-      "norm_label": "outcome",
-      "source_file": "src/confidence/domain/models.py",
-      "source_location": "L219"
     },
     {
       "id": "src_confidence_domain_models_harmindicators",
@@ -842,7 +868,7 @@
       "_callable_class": true,
       "_origin": "ast",
       "community": 54,
-      "community_name": "UncertaintyState",
+      "community_name": "api/models.py",
       "file_type": "code",
       "norm_label": "createdecisionrequest",
       "source_file": "src/confidence/api/models.py",
@@ -855,7 +881,7 @@
       "_callable_class": true,
       "_origin": "ast",
       "community": 54,
-      "community_name": "UncertaintyState",
+      "community_name": "api/models.py",
       "file_type": "code",
       "norm_label": "decisionresponse",
       "source_file": "src/confidence/api/models.py",
@@ -868,24 +894,11 @@
       "_callable_class": true,
       "_origin": "ast",
       "community": 54,
-      "community_name": "UncertaintyState",
+      "community_name": "api/models.py",
       "file_type": "code",
       "norm_label": "interactiondatapayload",
       "source_file": "src/confidence/api/models.py",
       "source_location": "L17"
-    },
-    {
-      "id": "src_confidence_domain_enums_uncertaintystate",
-      "label": "UncertaintyState",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 54,
-      "community_name": "UncertaintyState",
-      "file_type": "code",
-      "norm_label": "uncertaintystate",
-      "source_file": "src/confidence/domain/enums.py",
-      "source_location": "L10"
     },
     {
       "id": "src_confidence_domain_actions_actiondefinition",
@@ -894,37 +907,24 @@
       "_callable_class": true,
       "_origin": "ast",
       "community": 55,
-      "community_name": "ActionId",
+      "community_name": "ActionDefinition",
       "file_type": "code",
       "norm_label": "actiondefinition",
       "source_file": "src/confidence/domain/actions.py",
       "source_location": "L21"
     },
     {
-      "id": "src_confidence_domain_enums_actionid",
-      "label": "ActionId",
+      "id": "src_confidence_domain_enums_safetyclass",
+      "label": "SafetyClass",
       "_callable": true,
       "_callable_class": true,
       "_origin": "ast",
       "community": 55,
-      "community_name": "ActionId",
+      "community_name": "ActionDefinition",
       "file_type": "code",
-      "norm_label": "actionid",
+      "norm_label": "safetyclass",
       "source_file": "src/confidence/domain/enums.py",
-      "source_location": "L82"
-    },
-    {
-      "id": "src_confidence_domain_policy_policyselector",
-      "label": "PolicySelector",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 55,
-      "community_name": "ActionId",
-      "file_type": "code",
-      "norm_label": "policyselector",
-      "source_file": "src/confidence/domain/policy.py",
-      "source_location": "L14"
+      "source_location": "L131"
     },
     {
       "id": "src_confidence_application_context_builder_decisionrequest",
@@ -1135,6 +1135,19 @@
       "source_location": "L60"
     },
     {
+      "id": "src_confidence_domain_models_outcome",
+      "label": "Outcome",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 9,
+      "community_name": "test_domain.py",
+      "file_type": "code",
+      "norm_label": "outcome",
+      "source_file": "src/confidence/domain/models.py",
+      "source_location": "L219"
+    },
+    {
       "id": "src_confidence_domain_models_safetyresult",
       "label": "SafetyResult",
       "_callable": true,
@@ -1159,19 +1172,6 @@
       "norm_label": "selection",
       "source_file": "src/confidence/domain/models.py",
       "source_location": "L46"
-    },
-    {
-      "id": "src_confidence_domain_models_stateestimate",
-      "label": "StateEstimate",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 9,
-      "community_name": "test_domain.py",
-      "file_type": "code",
-      "norm_label": "stateestimate",
-      "source_file": "src/confidence/domain/models.py",
-      "source_location": "L176"
     },
     {
       "id": "tests_test_domain_testauditrecord",
@@ -1976,6 +1976,66 @@
       "norm_label": "updatepipeline()",
       "source_file": "src/confidence/ui/app.js",
       "source_location": "L129"
+    },
+    {
+      "id": "src_confidence_observability_tracing_get_tracer",
+      "label": "get_tracer()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 101,
+      "community_name": "tracing.py",
+      "file_type": "code",
+      "norm_label": "get_tracer()",
+      "source_file": "src/confidence/observability/tracing.py",
+      "source_location": "L17"
+    },
+    {
+      "id": "src_confidence_observability_tracing_setup_tracing",
+      "label": "setup_tracing()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 101,
+      "community_name": "tracing.py",
+      "file_type": "code",
+      "norm_label": "setup_tracing()",
+      "source_file": "src/confidence/observability/tracing.py",
+      "source_location": "L8"
+    },
+    {
+      "id": "src_confidence_domain_policy_policyselector_init",
+      "label": ".__init__()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 11,
+      "community_name": "ActionId",
+      "file_type": "code",
+      "norm_label": ".__init__()",
+      "source_file": "src/confidence/domain/policy.py",
+      "source_location": "L27"
+    },
+    {
+      "id": "tests_test_policy_test_policy_respects_safety_class",
+      "label": "test_policy_respects_safety_class()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 11,
+      "community_name": "ActionId",
+      "file_type": "code",
+      "norm_label": "test_policy_respects_safety_class()",
+      "source_file": "tests/test_policy.py",
+      "source_location": "L34"
+    },
+    {
+      "id": "tests_test_policy_test_policy_selects_preferred_action",
+      "label": "test_policy_selects_preferred_action()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 11,
+      "community_name": "ActionId",
+      "file_type": "code",
+      "norm_label": "test_policy_selects_preferred_action()",
+      "source_file": "tests/test_policy.py",
+      "source_location": "L22"
     },
     {
       "id": "alembic_versions_001_initial_schema_downgrade",
@@ -2931,7 +2991,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 37,
-      "community_name": "log.py",
+      "community_name": "ContextBuilder",
       "file_type": "code",
       "norm_label": ".build()",
       "source_file": "src/confidence/application/context_builder.py",
@@ -2943,7 +3003,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 37,
-      "community_name": "log.py",
+      "community_name": "ContextBuilder",
       "file_type": "code",
       "norm_label": "execute_with_resilience()",
       "source_file": "src/confidence/infrastructure/resilience.py",
@@ -2955,7 +3015,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 37,
-      "community_name": "log.py",
+      "community_name": "ContextBuilder",
       "file_type": "code",
       "norm_label": "test_execute_with_resilience_success()",
       "source_file": "tests/test_resilience.py",
@@ -2967,11 +3027,23 @@
       "_callable": true,
       "_origin": "ast",
       "community": 37,
-      "community_name": "log.py",
+      "community_name": "ContextBuilder",
       "file_type": "code",
       "norm_label": "test_execute_with_resilience_timeout()",
       "source_file": "tests/test_resilience.py",
       "source_location": "L45"
+    },
+    {
+      "id": "src_confidence_domain_policy_policyselector_select_action",
+      "label": ".select_action()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "StateEstimate",
+      "file_type": "code",
+      "norm_label": ".select_action()",
+      "source_file": "src/confidence/domain/policy.py",
+      "source_location": "L36"
     },
     {
       "id": "src_confidence_domain_response_responsegenerator_generate",
@@ -2979,11 +3051,23 @@
       "_callable": true,
       "_origin": "ast",
       "community": 4,
-      "community_name": "DecisionContext",
+      "community_name": "StateEstimate",
       "file_type": "code",
       "norm_label": ".generate()",
       "source_file": "src/confidence/domain/response.py",
       "source_location": "L19"
+    },
+    {
+      "id": "src_confidence_domain_state_stateestimator_estimate_state",
+      "label": ".estimate_state()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "StateEstimate",
+      "file_type": "code",
+      "norm_label": ".estimate_state()",
+      "source_file": "src/confidence/domain/state.py",
+      "source_location": "L33"
     },
     {
       "id": "src_confidence_domain_enums_safetystatus_requires_fail_closed",
@@ -3466,28 +3550,28 @@
       "source_location": "L25"
     },
     {
-      "id": "src_confidence_domain_actions_actionregistry_get_eligible_for_state",
-      "label": ".get_eligible_for_state()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 54,
-      "community_name": "UncertaintyState",
-      "file_type": "code",
-      "norm_label": ".get_eligible_for_state()",
-      "source_file": "src/confidence/domain/actions.py",
-      "source_location": "L77"
-    },
-    {
       "id": "src_confidence_domain_actions_actionregistry_get",
       "label": ".get()",
       "_callable": true,
       "_origin": "ast",
       "community": 55,
-      "community_name": "ActionId",
+      "community_name": "ActionDefinition",
       "file_type": "code",
       "norm_label": ".get()",
       "source_file": "src/confidence/domain/actions.py",
       "source_location": "L65"
+    },
+    {
+      "id": "src_confidence_domain_actions_actionregistry_get_eligible_for_state",
+      "label": ".get_eligible_for_state()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 55,
+      "community_name": "ActionDefinition",
+      "file_type": "code",
+      "norm_label": ".get_eligible_for_state()",
+      "source_file": "src/confidence/domain/actions.py",
+      "source_location": "L77"
     },
     {
       "id": "src_confidence_domain_actions_actionregistry_init",
@@ -3495,35 +3579,11 @@
       "_callable": true,
       "_origin": "ast",
       "community": 55,
-      "community_name": "ActionId",
+      "community_name": "ActionDefinition",
       "file_type": "code",
       "norm_label": ".__init__()",
       "source_file": "src/confidence/domain/actions.py",
       "source_location": "L54"
-    },
-    {
-      "id": "src_confidence_domain_policy_policyselector_init",
-      "label": ".__init__()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 55,
-      "community_name": "ActionId",
-      "file_type": "code",
-      "norm_label": ".__init__()",
-      "source_file": "src/confidence/domain/policy.py",
-      "source_location": "L27"
-    },
-    {
-      "id": "src_confidence_domain_policy_policyselector_select_action",
-      "label": ".select_action()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 55,
-      "community_name": "ActionId",
-      "file_type": "code",
-      "norm_label": ".select_action()",
-      "source_file": "src/confidence/domain/policy.py",
-      "source_location": "L36"
     },
     {
       "id": "src_confidence_domain_safety_safetycontract_final_safety_check",
@@ -3531,35 +3591,11 @@
       "_callable": true,
       "_origin": "ast",
       "community": 55,
-      "community_name": "ActionId",
+      "community_name": "ActionDefinition",
       "file_type": "code",
       "norm_label": ".final_safety_check()",
       "source_file": "src/confidence/domain/safety.py",
       "source_location": "L164"
-    },
-    {
-      "id": "tests_test_policy_test_policy_respects_safety_class",
-      "label": "test_policy_respects_safety_class()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 55,
-      "community_name": "ActionId",
-      "file_type": "code",
-      "norm_label": "test_policy_respects_safety_class()",
-      "source_file": "tests/test_policy.py",
-      "source_location": "L34"
-    },
-    {
-      "id": "tests_test_policy_test_policy_selects_preferred_action",
-      "label": "test_policy_selects_preferred_action()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 55,
-      "community_name": "ActionId",
-      "file_type": "code",
-      "norm_label": "test_policy_selects_preferred_action()",
-      "source_file": "tests/test_policy.py",
-      "source_location": "L22"
     },
     {
       "id": "src_confidence_api_routes_create_decision",
@@ -3571,7 +3607,7 @@
       "file_type": "code",
       "norm_label": "create_decision()",
       "source_file": "src/confidence/api/routes.py",
-      "source_location": "L43"
+      "source_location": "L45"
     },
     {
       "id": "src_confidence_api_routes_get_idempotency_store",
@@ -3583,7 +3619,7 @@
       "file_type": "code",
       "norm_label": "get_idempotency_store()",
       "source_file": "src/confidence/api/routes.py",
-      "source_location": "L26"
+      "source_location": "L28"
     },
     {
       "id": "src_confidence_api_routes_ingest_event",
@@ -3595,7 +3631,7 @@
       "file_type": "code",
       "norm_label": "ingest_event()",
       "source_file": "src/confidence/api/routes.py",
-      "source_location": "L113"
+      "source_location": "L126"
     },
     {
       "id": "src_confidence_application_engine_decisionengine_build_failure_decision",
@@ -4184,18 +4220,6 @@
       "norm_label": ".get_slip_context()",
       "source_file": "src/confidence/api/dependencies.py",
       "source_location": "L63"
-    },
-    {
-      "id": "src_confidence_domain_state_stateestimator_estimate_state",
-      "label": ".estimate_state()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 9,
-      "community_name": "test_domain.py",
-      "file_type": "code",
-      "norm_label": ".estimate_state()",
-      "source_file": "src/confidence/domain/state.py",
-      "source_location": "L33"
     },
     {
       "id": "tests_test_domain_testauditrecord_test_audit_contains_full_provenance",
@@ -4860,11 +4884,154 @@
       "source_location": "L1"
     },
     {
+      "id": "src_confidence_observability_tracing",
+      "label": "tracing.py",
+      "_origin": "ast",
+      "community": 101,
+      "community_name": "tracing.py",
+      "file_type": "code",
+      "norm_label": "tracing.py",
+      "source_file": "src/confidence/observability/tracing.py",
+      "source_location": "L1"
+    },
+    {
+      "id": "tracer",
+      "label": "Tracer",
+      "_origin": "ast",
+      "community": 101,
+      "community_name": "tracing.py",
+      "file_type": "code",
+      "norm_label": "tracer",
+      "source_file": "",
+      "source_location": ""
+    },
+    {
+      "id": "src_confidence_observability_tracing_rationale_1",
+      "label": "OpenTelemetry tracing setup.",
+      "_origin": "ast",
+      "community": 101,
+      "community_name": "tracing.py",
+      "file_type": "rationale",
+      "norm_label": "opentelemetry tracing setup.",
+      "source_file": "src/confidence/observability/tracing.py",
+      "source_location": "L1"
+    },
+    {
+      "id": "src_confidence_observability_tracing_rationale_9",
+      "label": "Initialize OpenTelemetry tracing.",
+      "_origin": "ast",
+      "community": 101,
+      "community_name": "tracing.py",
+      "file_type": "rationale",
+      "norm_label": "initialize opentelemetry tracing.",
+      "source_file": "src/confidence/observability/tracing.py",
+      "source_location": "L9"
+    },
+    {
+      "id": "src_confidence_application_engine",
+      "label": "engine.py",
+      "_origin": "ast",
+      "community": 102,
+      "community_name": "log.py",
+      "file_type": "code",
+      "norm_label": "engine.py",
+      "source_file": "src/confidence/application/engine.py",
+      "source_location": "L1"
+    },
+    {
+      "id": "src_confidence_log",
+      "label": "log.py",
+      "_origin": "ast",
+      "community": 102,
+      "community_name": "log.py",
+      "file_type": "code",
+      "norm_label": "log.py",
+      "source_file": "src/confidence/log.py",
+      "source_location": "L1"
+    },
+    {
+      "id": "src_confidence_application_engine_rationale_1",
+      "label": "Decision Engine Orchestrator. Coordinates the complete end-to-end pipeline: 1.\u2026",
+      "_origin": "ast",
+      "community": 102,
+      "community_name": "log.py",
+      "file_type": "rationale",
+      "norm_label": "decision engine orchestrator. coordinates the complete end-to-end pipeline: 1....",
+      "source_file": "src/confidence/application/engine.py",
+      "source_location": "L1"
+    },
+    {
+      "id": "src_confidence_log_rationale_1",
+      "label": "Structured logging for the Confidence Layer. Uses structlog for JSON-formatted,\u2026",
+      "_origin": "ast",
+      "community": 102,
+      "community_name": "log.py",
+      "file_type": "rationale",
+      "norm_label": "structured logging for the confidence layer. uses structlog for json-formatted,...",
+      "source_file": "src/confidence/log.py",
+      "source_location": "L1"
+    },
+    {
+      "id": "src_confidence_observability_init",
+      "label": "observability/__init__.py",
+      "_origin": "ast",
+      "community": 103,
+      "community_name": "observability/__init__.py",
+      "file_type": "code",
+      "norm_label": "observability/__init__.py",
+      "source_file": "src/confidence/observability/__init__.py",
+      "source_location": "L1"
+    },
+    {
+      "id": "src_confidence_observability_init_rationale_1",
+      "label": "Observability module.",
+      "_origin": "ast",
+      "community": 103,
+      "community_name": "observability/__init__.py",
+      "file_type": "rationale",
+      "norm_label": "observability module.",
+      "source_file": "src/confidence/observability/__init__.py",
+      "source_location": "L1"
+    },
+    {
+      "id": "fix_step12",
+      "label": "fix_step12.py",
+      "_origin": "ast",
+      "community": 104,
+      "community_name": "fix_step12.py",
+      "file_type": "code",
+      "norm_label": "fix_step12.py",
+      "source_file": "fix_step12.py",
+      "source_location": "L1"
+    },
+    {
+      "id": "fix_step12_retry",
+      "label": "fix_step12_retry.py",
+      "_origin": "ast",
+      "community": 105,
+      "community_name": "fix_step12_retry.py",
+      "file_type": "code",
+      "norm_label": "fix_step12_retry.py",
+      "source_file": "fix_step12_retry.py",
+      "source_location": "L1"
+    },
+    {
+      "id": "fix_task",
+      "label": "fix_task.py",
+      "_origin": "ast",
+      "community": 106,
+      "community_name": "fix_task.py",
+      "file_type": "code",
+      "norm_label": "fix_task.py",
+      "source_file": "fix_task.py",
+      "source_location": "L1"
+    },
+    {
       "id": "src_confidence_domain_actions",
       "label": "actions.py",
       "_origin": "ast",
       "community": 11,
-      "community_name": "enums.py",
+      "community_name": "ActionId",
       "file_type": "code",
       "norm_label": "actions.py",
       "source_file": "src/confidence/domain/actions.py",
@@ -4875,7 +5042,7 @@
       "label": "enums.py",
       "_origin": "ast",
       "community": 11,
-      "community_name": "enums.py",
+      "community_name": "ActionId",
       "file_type": "code",
       "norm_label": "enums.py",
       "source_file": "src/confidence/domain/enums.py",
@@ -4886,7 +5053,7 @@
       "label": "policy.py",
       "_origin": "ast",
       "community": 11,
-      "community_name": "enums.py",
+      "community_name": "ActionId",
       "file_type": "code",
       "norm_label": "policy.py",
       "source_file": "src/confidence/domain/policy.py",
@@ -4897,21 +5064,21 @@
       "label": "response.py",
       "_origin": "ast",
       "community": 11,
-      "community_name": "enums.py",
+      "community_name": "ActionId",
       "file_type": "code",
       "norm_label": "response.py",
       "source_file": "src/confidence/domain/response.py",
       "source_location": "L1"
     },
     {
-      "id": "src_confidence_domain_safety",
-      "label": "safety.py",
+      "id": "tests_test_policy",
+      "label": "test_policy.py",
       "_origin": "ast",
       "community": 11,
-      "community_name": "enums.py",
+      "community_name": "ActionId",
       "file_type": "code",
-      "norm_label": "safety.py",
-      "source_file": "src/confidence/domain/safety.py",
+      "norm_label": "test_policy.py",
+      "source_file": "tests/test_policy.py",
       "source_location": "L1"
     },
     {
@@ -4919,7 +5086,7 @@
       "label": "Versioned Action Registry for the Confidence Layer. The Action Registry is the\u2026",
       "_origin": "ast",
       "community": 11,
-      "community_name": "enums.py",
+      "community_name": "ActionId",
       "file_type": "rationale",
       "norm_label": "versioned action registry for the confidence layer. the action registry is the...",
       "source_file": "src/confidence/domain/actions.py",
@@ -4930,29 +5097,40 @@
       "label": "Domain enumerations for the Confidence Layer. All domain-level enum types are\u2026",
       "_origin": "ast",
       "community": 11,
-      "community_name": "enums.py",
+      "community_name": "ActionId",
       "file_type": "rationale",
       "norm_label": "domain enumerations for the confidence layer. all domain-level enum types are...",
       "source_file": "src/confidence/domain/enums.py",
       "source_location": "L1"
     },
     {
-      "id": "src_confidence_domain_enums_rationale_132",
-      "label": "Safety classification of an action.",
+      "id": "src_confidence_domain_enums_rationale_11",
+      "label": "Possible states of user uncertainty during betslip confirmation. The State\u2026",
       "_origin": "ast",
       "community": 11,
-      "community_name": "enums.py",
+      "community_name": "ActionId",
       "file_type": "rationale",
-      "norm_label": "safety classification of an action.",
+      "norm_label": "possible states of user uncertainty during betslip confirmation. the state...",
       "source_file": "src/confidence/domain/enums.py",
-      "source_location": "L132"
+      "source_location": "L11"
+    },
+    {
+      "id": "src_confidence_domain_enums_rationale_83",
+      "label": "Registered action identifiers. The policy can only select from these registered\u2026",
+      "_origin": "ast",
+      "community": 11,
+      "community_name": "ActionId",
+      "file_type": "rationale",
+      "norm_label": "registered action identifiers. the policy can only select from these registered...",
+      "source_file": "src/confidence/domain/enums.py",
+      "source_location": "L83"
     },
     {
       "id": "src_confidence_domain_enums_rationale_98",
       "label": "Semantic categories for actions.",
       "_origin": "ast",
       "community": 11,
-      "community_name": "enums.py",
+      "community_name": "ActionId",
       "file_type": "rationale",
       "norm_label": "semantic categories for actions.",
       "source_file": "src/confidence/domain/enums.py",
@@ -4963,32 +5141,43 @@
       "label": "Policy Authority. Selects the best action from a set of safe and eligible\u2026",
       "_origin": "ast",
       "community": 11,
-      "community_name": "enums.py",
+      "community_name": "ActionId",
       "file_type": "rationale",
       "norm_label": "policy authority. selects the best action from a set of safe and eligible...",
       "source_file": "src/confidence/domain/policy.py",
       "source_location": "L1"
     },
     {
+      "id": "src_confidence_domain_policy_rationale_15",
+      "label": "Deterministic policy selector. Selects an action based on explicit\u2026",
+      "_origin": "ast",
+      "community": 11,
+      "community_name": "ActionId",
+      "file_type": "rationale",
+      "norm_label": "deterministic policy selector. selects an action based on explicit...",
+      "source_file": "src/confidence/domain/policy.py",
+      "source_location": "L15"
+    },
+    {
       "id": "src_confidence_domain_response_rationale_1",
       "label": "Response Generator. Deterministically formats the final response using approved\u2026",
       "_origin": "ast",
       "community": 11,
-      "community_name": "enums.py",
+      "community_name": "ActionId",
       "file_type": "rationale",
       "norm_label": "response generator. deterministically formats the final response using approved...",
       "source_file": "src/confidence/domain/response.py",
       "source_location": "L1"
     },
     {
-      "id": "src_confidence_domain_safety_rationale_1",
-      "label": "Safety Contract for the Confidence Layer. Encodes system invariants S1\u2013S17 as\u2026",
+      "id": "tests_test_policy_rationale_1",
+      "label": "Tests for Policy Authority.",
       "_origin": "ast",
       "community": 11,
-      "community_name": "enums.py",
+      "community_name": "ActionId",
       "file_type": "rationale",
-      "norm_label": "safety contract for the confidence layer. encodes system invariants s1\u2013s17 as...",
-      "source_file": "src/confidence/domain/safety.py",
+      "norm_label": "tests for policy authority.",
+      "source_file": "tests/test_policy.py",
       "source_location": "L1"
     },
     {
@@ -6683,17 +6872,6 @@
       "source_location": "L1"
     },
     {
-      "id": "tests_test_resilience",
-      "label": "test_resilience.py",
-      "_origin": "ast",
-      "community": 3,
-      "community_name": "asyncio",
-      "file_type": "code",
-      "norm_label": "test_resilience.py",
-      "source_file": "tests/test_resilience.py",
-      "source_location": "L1"
-    },
-    {
       "id": "tests_test_session_state",
       "label": "test_session_state.py",
       "_origin": "ast",
@@ -6747,17 +6925,6 @@
       "norm_label": "\u2200 selected informational actions: required_data \u2286 available_authoritative_data",
       "source_file": "tests/test_engine.py",
       "source_location": "L382"
-    },
-    {
-      "id": "tests_test_resilience_rationale_1",
-      "label": "Tests for resilience patterns.",
-      "_origin": "ast",
-      "community": 3,
-      "community_name": "asyncio",
-      "file_type": "rationale",
-      "norm_label": "tests for resilience patterns.",
-      "source_file": "tests/test_resilience.py",
-      "source_location": "L1"
     },
     {
       "id": "tests_test_session_state_rationale_1",
@@ -7146,21 +7313,10 @@
       "label": "context_builder.py",
       "_origin": "ast",
       "community": 37,
-      "community_name": "log.py",
+      "community_name": "ContextBuilder",
       "file_type": "code",
       "norm_label": "context_builder.py",
       "source_file": "src/confidence/application/context_builder.py",
-      "source_location": "L1"
-    },
-    {
-      "id": "src_confidence_application_engine",
-      "label": "engine.py",
-      "_origin": "ast",
-      "community": 37,
-      "community_name": "log.py",
-      "file_type": "code",
-      "norm_label": "engine.py",
-      "source_file": "src/confidence/application/engine.py",
       "source_location": "L1"
     },
     {
@@ -7168,21 +7324,10 @@
       "label": "resilience.py",
       "_origin": "ast",
       "community": 37,
-      "community_name": "log.py",
+      "community_name": "ContextBuilder",
       "file_type": "code",
       "norm_label": "resilience.py",
       "source_file": "src/confidence/infrastructure/resilience.py",
-      "source_location": "L1"
-    },
-    {
-      "id": "src_confidence_log",
-      "label": "log.py",
-      "_origin": "ast",
-      "community": 37,
-      "community_name": "log.py",
-      "file_type": "code",
-      "norm_label": "log.py",
-      "source_file": "src/confidence/log.py",
       "source_location": "L1"
     },
     {
@@ -7190,18 +7335,29 @@
       "label": "T",
       "_origin": "ast",
       "community": 37,
-      "community_name": "log.py",
+      "community_name": "ContextBuilder",
       "file_type": "code",
       "norm_label": "t",
       "source_file": "",
       "source_location": ""
     },
     {
+      "id": "tests_test_resilience",
+      "label": "test_resilience.py",
+      "_origin": "ast",
+      "community": 37,
+      "community_name": "ContextBuilder",
+      "file_type": "code",
+      "norm_label": "test_resilience.py",
+      "source_file": "tests/test_resilience.py",
+      "source_location": "L1"
+    },
+    {
       "id": "src_confidence_application_context_builder_rationale_1",
       "label": "Context Builder. Constructs the DecisionContext from the incoming request and\u2026",
       "_origin": "ast",
       "community": 37,
-      "community_name": "log.py",
+      "community_name": "ContextBuilder",
       "file_type": "rationale",
       "norm_label": "context builder. constructs the decisioncontext from the incoming request and...",
       "source_file": "src/confidence/application/context_builder.py",
@@ -7212,7 +7368,7 @@
       "label": "Builds a complete, trustworthy DecisionContext.",
       "_origin": "ast",
       "community": 37,
-      "community_name": "log.py",
+      "community_name": "ContextBuilder",
       "file_type": "rationale",
       "norm_label": "builds a complete, trustworthy decisioncontext.",
       "source_file": "src/confidence/application/context_builder.py",
@@ -7223,29 +7379,18 @@
       "label": "Construct the context safely.",
       "_origin": "ast",
       "community": 37,
-      "community_name": "log.py",
+      "community_name": "ContextBuilder",
       "file_type": "rationale",
       "norm_label": "construct the context safely.",
       "source_file": "src/confidence/application/context_builder.py",
       "source_location": "L43"
     },
     {
-      "id": "src_confidence_application_engine_rationale_1",
-      "label": "Decision Engine Orchestrator. Coordinates the complete end-to-end pipeline: 1.\u2026",
-      "_origin": "ast",
-      "community": 37,
-      "community_name": "log.py",
-      "file_type": "rationale",
-      "norm_label": "decision engine orchestrator. coordinates the complete end-to-end pipeline: 1....",
-      "source_file": "src/confidence/application/engine.py",
-      "source_location": "L1"
-    },
-    {
       "id": "src_confidence_infrastructure_resilience_rationale_1",
       "label": "Resilience patterns. Implements timeouts, circuit breakers, and retries for\u2026",
       "_origin": "ast",
       "community": 37,
-      "community_name": "log.py",
+      "community_name": "ContextBuilder",
       "file_type": "rationale",
       "norm_label": "resilience patterns. implements timeouts, circuit breakers, and retries for...",
       "source_file": "src/confidence/infrastructure/resilience.py",
@@ -7256,7 +7401,7 @@
       "label": "Configuration for resilience strategies.",
       "_origin": "ast",
       "community": 37,
-      "community_name": "log.py",
+      "community_name": "ContextBuilder",
       "file_type": "rationale",
       "norm_label": "configuration for resilience strategies.",
       "source_file": "src/confidence/infrastructure/resilience.py",
@@ -7267,21 +7412,21 @@
       "label": "Execute a function with timeout, retries, and circuit breaker.",
       "_origin": "ast",
       "community": 37,
-      "community_name": "log.py",
+      "community_name": "ContextBuilder",
       "file_type": "rationale",
       "norm_label": "execute a function with timeout, retries, and circuit breaker.",
       "source_file": "src/confidence/infrastructure/resilience.py",
       "source_location": "L74"
     },
     {
-      "id": "src_confidence_log_rationale_1",
-      "label": "Structured logging for the Confidence Layer. Uses structlog for JSON-formatted,\u2026",
+      "id": "tests_test_resilience_rationale_1",
+      "label": "Tests for resilience patterns.",
       "_origin": "ast",
       "community": 37,
-      "community_name": "log.py",
+      "community_name": "ContextBuilder",
       "file_type": "rationale",
-      "norm_label": "structured logging for the confidence layer. uses structlog for json-formatted,...",
-      "source_file": "src/confidence/log.py",
+      "norm_label": "tests for resilience patterns.",
+      "source_file": "tests/test_resilience.py",
       "source_location": "L1"
     },
     {
@@ -7361,7 +7506,7 @@
       "label": "state.py",
       "_origin": "ast",
       "community": 4,
-      "community_name": "DecisionContext",
+      "community_name": "StateEstimate",
       "file_type": "code",
       "norm_label": "state.py",
       "source_file": "src/confidence/domain/state.py",
@@ -7372,18 +7517,40 @@
       "label": "Complete context assembled by the Context Builder for a decision. This is the\u2026",
       "_origin": "ast",
       "community": 4,
-      "community_name": "DecisionContext",
+      "community_name": "StateEstimate",
       "file_type": "rationale",
       "norm_label": "complete context assembled by the context builder for a decision. this is the...",
       "source_file": "src/confidence/domain/models.py",
       "source_location": "L147"
     },
     {
+      "id": "src_confidence_domain_models_rationale_177",
+      "label": "Output of the State Authority. The State Authority answers: 'What is\u2026",
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "StateEstimate",
+      "file_type": "rationale",
+      "norm_label": "output of the state authority. the state authority answers: 'what is...",
+      "source_file": "src/confidence/domain/models.py",
+      "source_location": "L177"
+    },
+    {
+      "id": "src_confidence_domain_policy_rationale_42",
+      "label": "Select the best action from the eligible set.",
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "StateEstimate",
+      "file_type": "rationale",
+      "norm_label": "select the best action from the eligible set.",
+      "source_file": "src/confidence/domain/policy.py",
+      "source_location": "L42"
+    },
+    {
       "id": "src_confidence_domain_response_rationale_20",
       "label": "Generate response based on the selected action and available context.",
       "_origin": "ast",
       "community": 4,
-      "community_name": "DecisionContext",
+      "community_name": "StateEstimate",
       "file_type": "rationale",
       "norm_label": "generate response based on the selected action and available context.",
       "source_file": "src/confidence/domain/response.py",
@@ -7394,11 +7561,22 @@
       "label": "State Authority. Classifies user uncertainty during betslip confirmation into a\u2026",
       "_origin": "ast",
       "community": 4,
-      "community_name": "DecisionContext",
+      "community_name": "StateEstimate",
       "file_type": "rationale",
       "norm_label": "state authority. classifies user uncertainty during betslip confirmation into a...",
       "source_file": "src/confidence/domain/state.py",
       "source_location": "L1"
+    },
+    {
+      "id": "src_confidence_domain_state_rationale_34",
+      "label": "Evaluate context and return the highest priority state estimate.",
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "StateEstimate",
+      "file_type": "rationale",
+      "norm_label": "evaluate context and return the highest priority state estimate.",
+      "source_file": "src/confidence/domain/state.py",
+      "source_location": "L34"
     },
     {
       "id": "claude_skills_graphify_references_github_and_merge",
@@ -7669,6 +7847,17 @@
       "source_location": "L1"
     },
     {
+      "id": "src_confidence_domain_safety",
+      "label": "safety.py",
+      "_origin": "ast",
+      "community": 49,
+      "community_name": "domain/models.py",
+      "file_type": "code",
+      "norm_label": "safety.py",
+      "source_file": "src/confidence/domain/safety.py",
+      "source_location": "L1"
+    },
+    {
       "id": "strenum",
       "label": "StrEnum",
       "_origin": "ast",
@@ -7768,17 +7957,6 @@
       "source_location": "L193"
     },
     {
-      "id": "src_confidence_domain_models_rationale_220",
-      "label": "Recorded outcome following a decision. Outcomes are submitted via POST\u2026",
-      "_origin": "ast",
-      "community": 49,
-      "community_name": "domain/models.py",
-      "file_type": "rationale",
-      "norm_label": "recorded outcome following a decision. outcomes are submitted via post...",
-      "source_file": "src/confidence/domain/models.py",
-      "source_location": "L220"
-    },
-    {
       "id": "src_confidence_domain_models_rationale_238",
       "label": "Complete audit trail entry for a decision. Stores everything needed to\u2026",
       "_origin": "ast",
@@ -7788,6 +7966,17 @@
       "norm_label": "complete audit trail entry for a decision. stores everything needed to...",
       "source_file": "src/confidence/domain/models.py",
       "source_location": "L238"
+    },
+    {
+      "id": "src_confidence_domain_safety_rationale_1",
+      "label": "Safety Contract for the Confidence Layer. Encodes system invariants S1\u2013S17 as\u2026",
+      "_origin": "ast",
+      "community": 49,
+      "community_name": "domain/models.py",
+      "file_type": "rationale",
+      "norm_label": "safety contract for the confidence layer. encodes system invariants s1\u2013s17 as...",
+      "source_file": "src/confidence/domain/safety.py",
+      "source_location": "L1"
     },
     {
       "id": "src_confidence_domain_safety_rationale_201",
@@ -8443,7 +8632,7 @@
       "label": "api/models.py",
       "_origin": "ast",
       "community": 54,
-      "community_name": "UncertaintyState",
+      "community_name": "api/models.py",
       "file_type": "code",
       "norm_label": "api/models.py",
       "source_file": "src/confidence/api/models.py",
@@ -8454,7 +8643,7 @@
       "label": "BaseModel",
       "_origin": "ast",
       "community": 54,
-      "community_name": "UncertaintyState",
+      "community_name": "api/models.py",
       "file_type": "code",
       "norm_label": "basemodel",
       "source_file": "",
@@ -8465,7 +8654,7 @@
       "label": "API Data Models. Defines the external API request and response schemas. These\u2026",
       "_origin": "ast",
       "community": 54,
-      "community_name": "UncertaintyState",
+      "community_name": "api/models.py",
       "file_type": "rationale",
       "norm_label": "api data models. defines the external api request and response schemas. these...",
       "source_file": "src/confidence/api/models.py",
@@ -8476,7 +8665,7 @@
       "label": "Interaction payload from the client.",
       "_origin": "ast",
       "community": 54,
-      "community_name": "UncertaintyState",
+      "community_name": "api/models.py",
       "file_type": "rationale",
       "norm_label": "interaction payload from the client.",
       "source_file": "src/confidence/api/models.py",
@@ -8487,7 +8676,7 @@
       "label": "External request payload for a new decision.",
       "_origin": "ast",
       "community": 54,
-      "community_name": "UncertaintyState",
+      "community_name": "api/models.py",
       "file_type": "rationale",
       "norm_label": "external request payload for a new decision.",
       "source_file": "src/confidence/api/models.py",
@@ -8498,62 +8687,29 @@
       "label": "External response payload.",
       "_origin": "ast",
       "community": 54,
-      "community_name": "UncertaintyState",
+      "community_name": "api/models.py",
       "file_type": "rationale",
       "norm_label": "external response payload.",
       "source_file": "src/confidence/api/models.py",
       "source_location": "L42"
     },
     {
-      "id": "src_confidence_domain_actions_rationale_82",
-      "label": "Return actions eligible for a given state and available data. An action is\u2026",
-      "_origin": "ast",
-      "community": 54,
-      "community_name": "UncertaintyState",
-      "file_type": "rationale",
-      "norm_label": "return actions eligible for a given state and available data. an action is...",
-      "source_file": "src/confidence/domain/actions.py",
-      "source_location": "L82"
-    },
-    {
-      "id": "src_confidence_domain_enums_rationale_11",
-      "label": "Possible states of user uncertainty during betslip confirmation. The State\u2026",
-      "_origin": "ast",
-      "community": 54,
-      "community_name": "UncertaintyState",
-      "file_type": "rationale",
-      "norm_label": "possible states of user uncertainty during betslip confirmation. the state...",
-      "source_file": "src/confidence/domain/enums.py",
-      "source_location": "L11"
-    },
-    {
       "id": "basemodel",
       "label": "BaseModel",
       "_origin": "ast",
       "community": 55,
-      "community_name": "ActionId",
+      "community_name": "ActionDefinition",
       "file_type": "code",
       "norm_label": "basemodel",
       "source_file": "",
       "source_location": ""
     },
     {
-      "id": "tests_test_policy",
-      "label": "test_policy.py",
-      "_origin": "ast",
-      "community": 55,
-      "community_name": "ActionId",
-      "file_type": "code",
-      "norm_label": "test_policy.py",
-      "source_file": "tests/test_policy.py",
-      "source_location": "L1"
-    },
-    {
       "id": "src_confidence_domain_actions_rationale_22",
       "label": "Definition of a single registered action. Each action declares: - which\u2026",
       "_origin": "ast",
       "community": 55,
-      "community_name": "ActionId",
+      "community_name": "ActionDefinition",
       "file_type": "rationale",
       "norm_label": "definition of a single registered action. each action declares: - which...",
       "source_file": "src/confidence/domain/actions.py",
@@ -8564,66 +8720,44 @@
       "label": "Get an action definition by ID.",
       "_origin": "ast",
       "community": 55,
-      "community_name": "ActionId",
+      "community_name": "ActionDefinition",
       "file_type": "rationale",
       "norm_label": "get an action definition by id.",
       "source_file": "src/confidence/domain/actions.py",
       "source_location": "L66"
     },
     {
-      "id": "src_confidence_domain_enums_rationale_83",
-      "label": "Registered action identifiers. The policy can only select from these registered\u2026",
+      "id": "src_confidence_domain_actions_rationale_82",
+      "label": "Return actions eligible for a given state and available data. An action is\u2026",
       "_origin": "ast",
       "community": 55,
-      "community_name": "ActionId",
+      "community_name": "ActionDefinition",
       "file_type": "rationale",
-      "norm_label": "registered action identifiers. the policy can only select from these registered...",
+      "norm_label": "return actions eligible for a given state and available data. an action is...",
+      "source_file": "src/confidence/domain/actions.py",
+      "source_location": "L82"
+    },
+    {
+      "id": "src_confidence_domain_enums_rationale_132",
+      "label": "Safety classification of an action.",
+      "_origin": "ast",
+      "community": 55,
+      "community_name": "ActionDefinition",
+      "file_type": "rationale",
+      "norm_label": "safety classification of an action.",
       "source_file": "src/confidence/domain/enums.py",
-      "source_location": "L83"
-    },
-    {
-      "id": "src_confidence_domain_policy_rationale_15",
-      "label": "Deterministic policy selector. Selects an action based on explicit\u2026",
-      "_origin": "ast",
-      "community": 55,
-      "community_name": "ActionId",
-      "file_type": "rationale",
-      "norm_label": "deterministic policy selector. selects an action based on explicit...",
-      "source_file": "src/confidence/domain/policy.py",
-      "source_location": "L15"
-    },
-    {
-      "id": "src_confidence_domain_policy_rationale_42",
-      "label": "Select the best action from the eligible set.",
-      "_origin": "ast",
-      "community": 55,
-      "community_name": "ActionId",
-      "file_type": "rationale",
-      "norm_label": "select the best action from the eligible set.",
-      "source_file": "src/confidence/domain/policy.py",
-      "source_location": "L42"
+      "source_location": "L132"
     },
     {
       "id": "src_confidence_domain_safety_rationale_171",
       "label": "Final safety check before response generation. This is the last gate in the\u2026",
       "_origin": "ast",
       "community": 55,
-      "community_name": "ActionId",
+      "community_name": "ActionDefinition",
       "file_type": "rationale",
       "norm_label": "final safety check before response generation. this is the last gate in the...",
       "source_file": "src/confidence/domain/safety.py",
       "source_location": "L171"
-    },
-    {
-      "id": "tests_test_policy_rationale_1",
-      "label": "Tests for Policy Authority.",
-      "_origin": "ast",
-      "community": 55,
-      "community_name": "ActionId",
-      "file_type": "rationale",
-      "norm_label": "tests for policy authority.",
-      "source_file": "tests/test_policy.py",
-      "source_location": "L1"
     },
     {
       "id": "confidenceevent",
@@ -8725,6 +8859,17 @@
       "source_location": "L1"
     },
     {
+      "id": "src_confidence_observability_metrics",
+      "label": "metrics.py",
+      "_origin": "ast",
+      "community": 56,
+      "community_name": "create_decision",
+      "file_type": "code",
+      "norm_label": "metrics.py",
+      "source_file": "src/confidence/observability/metrics.py",
+      "source_location": "L1"
+    },
+    {
       "id": "src_confidence_api_routes_rationale_1",
       "label": "API routes for the Confidence Layer.",
       "_origin": "ast",
@@ -8736,7 +8881,7 @@
       "source_location": "L1"
     },
     {
-      "id": "src_confidence_api_routes_rationale_49",
+      "id": "src_confidence_api_routes_rationale_51",
       "label": "Handle a decision request.",
       "_origin": "ast",
       "community": 56,
@@ -8744,7 +8889,7 @@
       "file_type": "rationale",
       "norm_label": "handle a decision request.",
       "source_file": "src/confidence/api/routes.py",
-      "source_location": "L49"
+      "source_location": "L51"
     },
     {
       "id": "nointerventionreason",
@@ -10045,15 +10190,15 @@
       "source_location": "L164"
     },
     {
-      "id": "src_confidence_domain_models_rationale_177",
-      "label": "Output of the State Authority. The State Authority answers: 'What is\u2026",
+      "id": "src_confidence_domain_models_rationale_220",
+      "label": "Recorded outcome following a decision. Outcomes are submitted via POST\u2026",
       "_origin": "ast",
       "community": 9,
       "community_name": "test_domain.py",
       "file_type": "rationale",
-      "norm_label": "output of the state authority. the state authority answers: 'what is...",
+      "norm_label": "recorded outcome following a decision. outcomes are submitted via post...",
       "source_file": "src/confidence/domain/models.py",
-      "source_location": "L177"
+      "source_location": "L220"
     },
     {
       "id": "src_confidence_domain_models_rationale_47",
@@ -10065,17 +10210,6 @@
       "norm_label": "a single selection within a betslip.",
       "source_file": "src/confidence/domain/models.py",
       "source_location": "L47"
-    },
-    {
-      "id": "src_confidence_domain_state_rationale_34",
-      "label": "Evaluate context and return the highest priority state estimate.",
-      "_origin": "ast",
-      "community": 9,
-      "community_name": "test_domain.py",
-      "file_type": "rationale",
-      "norm_label": "evaluate context and return the highest priority state estimate.",
-      "source_file": "src/confidence/domain/state.py",
-      "source_location": "L34"
     },
     {
       "id": "tests_test_domain_rationale_1",
@@ -10594,7 +10728,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/confidence/api/routes.py",
-      "source_location": "L55",
+      "source_location": "L60",
       "weight": 1.0
     },
     {
@@ -10606,7 +10740,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/confidence/api/routes.py",
-      "source_location": "L75",
+      "source_location": "L82",
       "weight": 1.0
     },
     {
@@ -10618,7 +10752,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/confidence/api/routes.py",
-      "source_location": "L33",
+      "source_location": "L35",
       "weight": 1.0
     },
     {
@@ -11674,7 +11808,7 @@
       "confidence_score": 1.0,
       "context": "decorator",
       "source_file": "src/confidence/api/routes.py",
-      "source_location": "L36",
+      "source_location": "L38",
       "weight": 1.0
     },
     {
@@ -11686,7 +11820,7 @@
       "confidence_score": 1.0,
       "context": "decorator",
       "source_file": "src/confidence/api/routes.py",
-      "source_location": "L107",
+      "source_location": "L120",
       "weight": 1.0
     },
     {
@@ -13282,7 +13416,7 @@
       "confidence_score": 1.0,
       "context": "import",
       "source_file": "src/confidence/api/routes.py",
-      "source_location": "L15",
+      "source_location": "L16",
       "weight": 1.0
     },
     {
@@ -13294,7 +13428,19 @@
       "confidence_score": 1.0,
       "context": "import",
       "source_file": "src/confidence/api/routes.py",
-      "source_location": "L19",
+      "source_location": "L20",
+      "weight": 1.0
+    },
+    {
+      "source": "src_confidence_api_routes",
+      "target": "src_confidence_observability_metrics",
+      "relation": "imports_from",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "src/confidence/api/routes.py",
+      "source_location": "L21",
       "weight": 1.0
     },
     {
@@ -13306,7 +13452,7 @@
       "confidence_score": 1.0,
       "context": "import",
       "source_file": "src/confidence/api/routes.py",
-      "source_location": "L7",
+      "source_location": "L8",
       "weight": 1.0
     },
     {
@@ -14230,7 +14376,7 @@
       "confidence_score": 1.0,
       "context": "parameter_type",
       "source_file": "src/confidence/api/routes.py",
-      "source_location": "L43",
+      "source_location": "L45",
       "weight": 1.0
     },
     {
@@ -14242,7 +14388,7 @@
       "confidence_score": 1.0,
       "context": "parameter_type",
       "source_file": "src/confidence/api/routes.py",
-      "source_location": "L43",
+      "source_location": "L45",
       "weight": 1.0
     },
     {
@@ -14254,7 +14400,7 @@
       "confidence_score": 1.0,
       "context": "parameter_type",
       "source_file": "src/confidence/api/routes.py",
-      "source_location": "L43",
+      "source_location": "L45",
       "weight": 1.0
     },
     {
@@ -14266,7 +14412,7 @@
       "confidence_score": 1.0,
       "context": "parameter_type",
       "source_file": "src/confidence/api/routes.py",
-      "source_location": "L113",
+      "source_location": "L126",
       "weight": 1.0
     },
     {
@@ -14278,7 +14424,7 @@
       "confidence_score": 1.0,
       "context": "parameter_type",
       "source_file": "src/confidence/api/routes.py",
-      "source_location": "L113",
+      "source_location": "L126",
       "weight": 1.0
     },
     {
@@ -14290,7 +14436,7 @@
       "confidence_score": 1.0,
       "context": "parameter_type",
       "source_file": "src/confidence/api/routes.py",
-      "source_location": "L113",
+      "source_location": "L126",
       "weight": 1.0
     },
     {
@@ -16862,6 +17008,18 @@
       "weight": 1.0
     },
     {
+      "source": "src_confidence_observability_tracing_get_tracer",
+      "target": "tracer",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "return_type",
+      "source_file": "src/confidence/observability/tracing.py",
+      "source_location": "L17",
+      "weight": 1.0
+    },
+    {
       "source": "agents_rules_graphify",
       "target": "agents_rules_graphify_graphify",
       "relation": "contains",
@@ -18277,7 +18435,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/confidence/api/routes.py",
-      "source_location": "L113",
+      "source_location": "L126",
       "weight": 1.0
     },
     {
@@ -18288,7 +18446,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/confidence/api/routes.py",
-      "source_location": "L26",
+      "source_location": "L28",
       "weight": 1.0
     },
     {
@@ -18299,7 +18457,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/confidence/api/routes.py",
-      "source_location": "L43",
+      "source_location": "L45",
       "weight": 1.0
     },
     {
@@ -19070,6 +19228,28 @@
       "confidence_score": 1.0,
       "source_file": "src/confidence/log.py",
       "source_location": "L49",
+      "weight": 1.0
+    },
+    {
+      "source": "src_confidence_observability_tracing",
+      "target": "src_confidence_observability_tracing_get_tracer",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/confidence/observability/tracing.py",
+      "source_location": "L17",
+      "weight": 1.0
+    },
+    {
+      "source": "src_confidence_observability_tracing",
+      "target": "src_confidence_observability_tracing_setup_tracing",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/confidence/observability/tracing.py",
+      "source_location": "L8",
       "weight": 1.0
     },
     {
@@ -22780,14 +22960,14 @@
       "weight": 1.0
     },
     {
-      "source": "src_confidence_api_routes_rationale_49",
+      "source": "src_confidence_api_routes_rationale_51",
       "target": "src_confidence_api_routes_create_decision",
       "relation": "rationale_for",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/confidence/api/routes.py",
-      "source_location": "L49",
+      "source_location": "L51",
       "weight": 1.0
     },
     {
@@ -24353,6 +24533,39 @@
       "weight": 1.0
     },
     {
+      "source": "src_confidence_observability_init_rationale_1",
+      "target": "src_confidence_observability_init",
+      "relation": "rationale_for",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/confidence/observability/__init__.py",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "src_confidence_observability_tracing_rationale_1",
+      "target": "src_confidence_observability_tracing",
+      "relation": "rationale_for",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/confidence/observability/tracing.py",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "src_confidence_observability_tracing_rationale_9",
+      "target": "src_confidence_observability_tracing_setup_tracing",
+      "relation": "rationale_for",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/confidence/observability/tracing.py",
+      "source_location": "L9",
+      "weight": 1.0
+    },
+    {
       "source": "src_confidence_workers_event_consumer_rationale_1",
       "target": "src_confidence_workers_event_consumer",
       "relation": "rationale_for",
@@ -25017,7 +25230,7 @@
       "confidence_score": 0.85,
       "context": "call",
       "source_file": "src/confidence/api/routes.py",
-      "source_location": "L65",
+      "source_location": "L72",
       "weight": 1.0
     },
     {
@@ -25029,7 +25242,7 @@
       "confidence_score": 0.85,
       "context": "call",
       "source_file": "src/confidence/api/routes.py",
-      "source_location": "L70",
+      "source_location": "L77",
       "weight": 1.0
     },
     {
@@ -25041,7 +25254,7 @@
       "confidence_score": 0.85,
       "context": "call",
       "source_file": "src/confidence/api/routes.py",
-      "source_location": "L29",
+      "source_location": "L31",
       "weight": 1.0
     },
     {
@@ -26575,5 +26788,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "cdfc33ea487cbe3067c1efeaab34594c5068912e"
+  "built_at_commit": "7273fb006ea395bfc15554d1ca3a0885f95bc8f9"
 }

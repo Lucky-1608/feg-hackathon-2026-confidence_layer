@@ -54,8 +54,8 @@
     "semantic_hash": ""
   },
   "src/confidence/application/engine.py": {
-    "mtime": 1788499707.3741386,
-    "seen": 1788499752.3219562,
+    "mtime": 1788499836.8331666,
+    "seen": 1788499904.422085,
     "ast_hash": "49f716a9b5c91d96b27c913550ac3705",
     "semantic_hash": ""
   },
@@ -501,6 +501,30 @@
     "mtime": 1788499728.6067765,
     "seen": 1788499752.321987,
     "ast_hash": "e05b573d19a586a462edc6839c987844",
+    "semantic_hash": ""
+  },
+  "fix_engine_audit.py": {
+    "mtime": 1788499836.8184743,
+    "seen": 1788499904.4220667,
+    "ast_hash": "af5a2457fda74d85ce5ec0448715a820",
+    "semantic_hash": ""
+  },
+  "fix_step11.py": {
+    "mtime": 1788499815.304972,
+    "seen": 1788499904.4220712,
+    "ast_hash": "5e1f81e3eeb232fe4d7c3acbec1fcc9f",
+    "semantic_hash": ""
+  },
+  "src/confidence/infrastructure/audit.py": {
+    "mtime": 1788499815.3273363,
+    "seen": 1788499904.4221106,
+    "ast_hash": "b5d1d05b866458244ff62e9d3f8f3145",
+    "semantic_hash": ""
+  },
+  "tests/test_audit.py": {
+    "mtime": 1788499815.3383365,
+    "seen": 1788499904.422129,
+    "ast_hash": "c45308d14ac2fa8f9372f8a86c4499a9",
     "semantic_hash": ""
   }
 }

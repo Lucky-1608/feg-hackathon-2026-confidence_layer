@@ -60,7 +60,7 @@ hr { border: none; border-top: 1px solid var(--border); margin: 40px 0; }
 <div class="container">
 
 <h1>Confidence — Complete Call Flow &amp; Architecture Documentation</h1>
-<p class="subtitle">Generated from graphify knowledge graph: 882 nodes, 1421 edges, 101 communities. Commit: cdfc33e</p>
+<p class="subtitle">Generated from graphify knowledge graph: 894 nodes, 1428 edges, 107 communities. Commit: 7273fb0</p>
 
 <div class="nav">
     <a href="#overview">Architecture Overview</a>
@@ -76,8 +76,8 @@ hr { border: none; border-top: 1px solid var(--border); margin: 40px 0; }
     <a href="#agents-skills-graphify-references-extraction-spe">.agents/skills/graphify/references/extraction-spec.md</a>
     <a href="#workflows-graphify-md">workflows/graphify.md</a>
     <a href="#fix-step11-py">fix_step11.py</a>
-    <a href="#database-module-init">Database Module Init</a>
-    <a href="#fix-step9-py">fix_step9.py</a>
+    <a href="#fix-step12-py">fix_step12.py</a>
+    <a href="#fix-step12-retry-py">fix_step12_retry.py</a>
     <a href="#other">Other</a>
 </div>
 
@@ -88,7 +88,7 @@ hr { border: none; border-top: 1px solid var(--border); margin: 40px 0; }
 
 %%{init: {"theme": "dark", "themeVariables": {"fontSize": "15.0px", "fontFamily": "Segoe UI, system-ui, sans-serif", "primaryColor": "#1e293b", "primaryTextColor": "#e2e8f0", "primaryBorderColor": "#38bdf8", "secondaryColor": "#0f172a", "tertiaryColor": "#334155", "lineColor": "#64748b", "textColor": "#e2e8f0"}, "flowchart": {"htmlLabels": true, "curve": "basis", "nodeSpacing": 48, "rankSpacing": 64, "padding": 14, "diagramPadding": 10, "useMaxWidth": true}}}%%
 flowchart LR
-    BUILD_GRAPH_321CBB04("Graph Build<br/><small>360 nodes</small>")
+    BUILD_GRAPH_321CBB04("Graph Build<br/><small>376 nodes</small>")
     class BUILD_GRAPH_321CBB04 module;
     ANALYSIS_CLUSTERING_C79796DA("Analysis &amp; Clustering<br/><small>12 nodes</small>")
     class ANALYSIS_CLUSTERING_C79796DA module;
@@ -98,9 +98,9 @@ flowchart LR
     class CLI_SKILLS_9964CBB8 module;
     INGEST_CACHE_UPDATE_FF457338("Ingestion &amp; Updates<br/><small>22 nodes</small>")
     class INGEST_CACHE_UPDATE_FF457338 module;
-    SERVE_API_35EC8E86("Serving API<br/><small>45 nodes</small>")
+    SERVE_API_35EC8E86("Serving API<br/><small>42 nodes</small>")
     class SERVE_API_35EC8E86 module;
-    TESTS_FIXTURES_B84B1DCC("Tests &amp; Fixtures<br/><small>310 nodes</small>")
+    TESTS_FIXTURES_B84B1DCC("Tests &amp; Fixtures<br/><small>306 nodes</small>")
     class TESTS_FIXTURES_B84B1DCC module;
     ENV_PY_CD49553B("env.py<br/><small>6 nodes</small>")
     class ENV_PY_CD49553B module;
@@ -112,17 +112,15 @@ flowchart LR
     class WORKFLOWS_GRAPHIFY_MD_C6A40BAC module;
     FIX_STEP11_PY_E9FE7C20("fix_step11.py<br/><small>1 nodes</small>")
     class FIX_STEP11_PY_E9FE7C20 module;
-    DATABASE_MODULE_INIT_1FA10838("Database Module Init<br/><small>1 nodes</small>")
-    class DATABASE_MODULE_INIT_1FA10838 module;
-    FIX_STEP9_PY_CC5AA79D("fix_step9.py<br/><small>1 nodes</small>")
-    class FIX_STEP9_PY_CC5AA79D module;
-    OTHER_D0941E68("Other<br/><small>36 nodes</small>")
+    FIX_STEP12_PY_67A958AE("fix_step12.py<br/><small>1 nodes</small>")
+    class FIX_STEP12_PY_67A958AE module;
+    FIX_STEP12_RETRY_PY_82ABFF8C("fix_step12_retry.py<br/><small>1 nodes</small>")
+    class FIX_STEP12_RETRY_PY_82ABFF8C module;
+    OTHER_D0941E68("Other<br/><small>39 nodes</small>")
     class OTHER_D0941E68 module;
-    TESTS_FIXTURES_B84B1DCC -->|uses x61| BUILD_GRAPH_321CBB04
-    BUILD_GRAPH_321CBB04 -->|contains x52| TESTS_FIXTURES_B84B1DCC
+    TESTS_FIXTURES_B84B1DCC -->|uses x67| BUILD_GRAPH_321CBB04
+    BUILD_GRAPH_321CBB04 -->|contains x51| TESTS_FIXTURES_B84B1DCC
     SERVE_API_35EC8E86 -->|imports x27| BUILD_GRAPH_321CBB04
-    BUILD_GRAPH_321CBB04 -->|imports x12| SERVE_API_35EC8E86
-    TESTS_FIXTURES_B84B1DCC -->|uses x5| SERVE_API_35EC8E86
     SERVE_API_35EC8E86 -->|references x4| TESTS_FIXTURES_B84B1DCC
     classDef entry fill:#422006,stroke:#fbbf24,color:#fde68a,stroke-width:1px;
     classDef api fill:#450a0a,stroke:#f87171,color:#fee2e2,stroke-width:1px;
@@ -140,19 +138,19 @@ flowchart LR
     <h4>Architecture Layers</h4>
     <table style="width:100%;font-size:0.85rem;">
       <tr><th>Layer</th><th>Nodes</th><th>Communities</th></tr>
-      <tr><td>Graph Build</td><td>360</td><td><code>52, 21, 84, 49, 57, 23, 37, 55, 27, 97, 6, 11, 86, 53, 85, 70, 10, 2, 69, 19, 4, 98, 12, 38, 40, 13, 48, 14</code></td></tr><tr><td>Analysis &amp; Clustering</td><td>12</td><td><code>28, 30</code></td></tr><tr><td>Outputs &amp; Docs</td><td>18</td><td><code>24, 25</code></td></tr><tr><td>CLI &amp; Skill Installers</td><td>64</td><td><code>17, 18, 32, 35, 45, 46, 47</code></td></tr><tr><td>Ingestion &amp; Updates</td><td>22</td><td><code>31, 33, 34, 36, 39, 41</code></td></tr><tr><td>Serving API</td><td>45</td><td><code>20, 56, 54</code></td></tr><tr><td>Tests &amp; Fixtures</td><td>310</td><td><code>0, 5, 9, 3, 1, 22, 8, 7, 16, 67</code></td></tr><tr><td>env.py</td><td>6</td><td><code>29</code></td></tr><tr><td>rules/graphify.md</td><td>2</td><td><code>42</code></td></tr><tr><td>.agents/skills/graphify/references/extraction-spec.md</td><td>2</td><td><code>43</code></td></tr><tr><td>workflows/graphify.md</td><td>2</td><td><code>44</code></td></tr><tr><td>fix_step11.py</td><td>1</td><td><code>100</code></td></tr><tr><td>Database Module Init</td><td>1</td><td><code>15</code></td></tr><tr><td>fix_step9.py</td><td>1</td><td><code>26</code></td></tr><tr><td>Other</td><td>36</td><td><code>50, 51, 58, 59, 60, 61, 62, 63, 64, 65, 66, 68, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 99</code></td></tr>
+      <tr><td>Graph Build</td><td>376</td><td><code>52, 21, 84, 49, 11, 57, 23, 27, 37, 97, 6, 86, 53, 4, 55, 85, 70, 10, 2, 69, 19, 101, 98, 102, 12, 38, 40, 103, 13, 48, 14</code></td></tr><tr><td>Analysis &amp; Clustering</td><td>12</td><td><code>28, 30</code></td></tr><tr><td>Outputs &amp; Docs</td><td>18</td><td><code>24, 25</code></td></tr><tr><td>CLI &amp; Skill Installers</td><td>64</td><td><code>17, 18, 32, 35, 45, 46, 47</code></td></tr><tr><td>Ingestion &amp; Updates</td><td>22</td><td><code>31, 33, 34, 36, 39, 41</code></td></tr><tr><td>Serving API</td><td>42</td><td><code>20, 56, 54</code></td></tr><tr><td>Tests &amp; Fixtures</td><td>306</td><td><code>0, 5, 9, 3, 1, 22, 8, 7, 16, 67</code></td></tr><tr><td>env.py</td><td>6</td><td><code>29</code></td></tr><tr><td>rules/graphify.md</td><td>2</td><td><code>42</code></td></tr><tr><td>.agents/skills/graphify/references/extraction-spec.md</td><td>2</td><td><code>43</code></td></tr><tr><td>workflows/graphify.md</td><td>2</td><td><code>44</code></td></tr><tr><td>fix_step11.py</td><td>1</td><td><code>100</code></td></tr><tr><td>fix_step12.py</td><td>1</td><td><code>104</code></td></tr><tr><td>fix_step12_retry.py</td><td>1</td><td><code>105</code></td></tr><tr><td>Other</td><td>39</td><td><code>106, 15, 26, 50, 51, 58, 59, 60, 61, 62, 63, 64, 65, 66, 68, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 99</code></td></tr>
     </table>
   </div>
   <div class="card">
     <h4>Core Flow</h4>
-    <div class="arrow-chain">Analysis &amp; Clustering -&gt; Graph Build -&gt; Tests &amp; Fixtures -&gt; Serving API -&gt; Outputs &amp; Docs -&gt; CLI &amp; Skill Installers -&gt; Ingestion &amp; Updates</div>
+    <div class="arrow-chain">Analysis &amp; Clustering -&gt; Graph Build -&gt; Tests &amp; Fixtures -&gt; Outputs &amp; Docs -&gt; CLI &amp; Skill Installers -&gt; Ingestion &amp; Updates -&gt; Serving API</div>
   </div>
 </div>
 <div class="grid">
   <div class="card">
     <h4>Graph Report Highlights</h4>
     <ul>
-      <li>882 nodes · 1421 edges · 101 communities (46 shown, 43 thin omitted)</li>
+      <li>894 nodes · 1428 edges · 107 communities (47 shown, 45 thin omitted)</li>
       <li>Extraction: 90% EXTRACTED · 10% INFERRED · 0% AMBIGUOUS · INFERRED: 143 edges (avg confidence: 0.9)</li>
       <li>Token cost: 0 input · 0 output</li>
       <li>1. `SafetyContract` - 51 edges</li>
@@ -164,12 +162,12 @@ flowchart LR
 <hr>
 <!-- ====== 2. Graph Build ====== -->
 <h2 id="build-graph">2. Graph Build</h2>
-<p>Graph Build groups implementation around confidence, infrastructure, domain, event, mostly in confidence/infrastructure/session_state.py, confidence/infrastructure/event_bus.py, confidence/domain/ports.py. This section covers 360 nodes and 541 internal edges; the diagram shows only representative relationships to stay readable.</p>
+<p>Graph Build groups implementation around confidence, infrastructure, domain, event, mostly in confidence/infrastructure/session_state.py, confidence/infrastructure/event_bus.py, confidence/domain/ports.py. This section covers 376 nodes and 573 internal edges; the diagram shows only representative relationships to stay readable.</p>
 
 <div class="mermaid">
 %%{init: {"theme": "dark", "themeVariables": {"fontSize": "15.0px", "fontFamily": "Segoe UI, system-ui, sans-serif", "primaryColor": "#1e293b", "primaryTextColor": "#e2e8f0", "primaryBorderColor": "#38bdf8", "secondaryColor": "#0f172a", "tertiaryColor": "#334155", "lineColor": "#64748b", "textColor": "#e2e8f0"}, "flowchart": {"htmlLabels": true, "curve": "basis", "nodeSpacing": 48, "rankSpacing": 64, "padding": 14, "diagramPadding": 10, "useMaxWidth": true}}}%%
 flowchart LR
-    %% Section: Graph Build (360 nodes, 541 edges)
+    %% Section: Graph Build (376 nodes, 573 edges)
     subgraph build_graph_confidence_infrastructure_resilience_cf63ec8d["confidence/infrastructure/resilience.py"]
         src_confidence_infrastructure_resilience_circuit_a0a2dc74("CircuitBreaker<br/><small>confidence/infrastructure/resilience.py</small>")
         src_confidence_infrastructure_resilience_circuit_31028d26("__init__()<br/><small>confidence/infrastructure/resilience.py</small>")
@@ -177,11 +175,11 @@ flowchart LR
         src_confidence_infrastructure_resilience_circuit_c412c279("record_success()<br/><small>confidence/infrastructure/resilience.py</small>")
         src_confidence_infrastructure_resilience_circuit_69c9c2c7("can_execute()<br/><small>confidence/infrastructure/resilience.py</small>")
     end
-    subgraph build_graph_confidence_infrastructure_event_bus_badb7af9["confidence/infrastructure/event_bus.py"]
-        src_confidence_infrastructure_event_bus_eventpub_ebb89751("EventPublisher<br/><small>confidence/infrastructure/event_bus.py</small>")
-        src_confidence_infrastructure_event_bus_eventpub_2bc38b2c("start()<br/><small>confidence/infrastructure/event_bus.py</small>")
-        src_confidence_infrastructure_event_bus_eventpub_a78ac541("stop()<br/><small>confidence/infrastructure/event_bus.py</small>")
-        src_confidence_infrastructure_event_bus_eventpub_1f313612("publish()<br/><small>confidence/infrastructure/event_bus.py</small>")
+    subgraph build_graph_confidence_domain_policy_py_624de14c["confidence/domain/policy.py"]
+        src_confidence_domain_policy_ae7b4395("policy.py")
+        src_confidence_domain_policy_policyselector_974deb47("PolicySelector<br/><small>confidence/domain/policy.py</small>")
+        src_confidence_domain_policy_policyselector_init_bbc09c58("__init__()<br/><small>confidence/domain/policy.py</small>")
+        src_confidence_domain_policy_policyselector_sele_8f810a3e("select_action()<br/><small>confidence/domain/policy.py</small>")
     end
     subgraph build_graph_confidence_infrastructure_persistenc_3886507f["confidence/infrastructure/persistence.py"]
         src_confidence_infrastructure_persistence_databa_db8ea834("DatabasePersistenceProvider<br/><small>confidence/infrastructure/persistence.py</small>")
@@ -193,36 +191,35 @@ flowchart LR
         src_confidence_application_engine_82b355c7("engine.py")
     end
     src_confidence_domain_init_1391904c("__init__.py")
-    src_confidence_domain_policy_ae7b4395("policy.py")
     src_confidence_domain_safety_f8e5422a("safety.py")
+    src_confidence_infrastructure_event_bus_eventpub_ebb89751("EventPublisher<br/><small>confidence/infrastructure/event_bus.py</small>")
     src_confidence_infrastructure_session_state_redi_970fb527("RedisSessionStore<br/><small>confidence/infrastructure/session_state.py</small>")
+    src_confidence_domain_policy_policyselector_974deb47 -->|method| src_confidence_domain_policy_policyselector_init_bbc09c58
+    src_confidence_domain_policy_policyselector_974deb47 -->|method| src_confidence_domain_policy_policyselector_sele_8f810a3e
     src_confidence_infrastructure_resilience_circuit_a0a2dc74 -->|method| src_confidence_infrastructure_resilience_circuit_31028d26
     src_confidence_infrastructure_resilience_circuit_a0a2dc74 -->|method| src_confidence_infrastructure_resilience_circuit_32b95a67
     src_confidence_infrastructure_resilience_circuit_a0a2dc74 -->|method| src_confidence_infrastructure_resilience_circuit_c412c279
     src_confidence_infrastructure_resilience_circuit_a0a2dc74 -->|method| src_confidence_infrastructure_resilience_circuit_69c9c2c7
     src_confidence_infrastructure_persistence_databa_db8ea834 -->|method| src_confidence_infrastructure_persistence_databa_a9b74e14
     src_confidence_infrastructure_persistence_databa_db8ea834 -->|method| src_confidence_infrastructure_persistence_databa_2b6f3d38
-    src_confidence_infrastructure_event_bus_eventpub_ebb89751 -->|method| src_confidence_infrastructure_event_bus_eventpub_2bc38b2c
-    src_confidence_infrastructure_event_bus_eventpub_ebb89751 -->|method| src_confidence_infrastructure_event_bus_eventpub_a78ac541
-    src_confidence_infrastructure_event_bus_eventpub_ebb89751 -->|method| src_confidence_infrastructure_event_bus_eventpub_1f313612
-    %% Omitted for readability: 342 nodes, 0 edges
+    %% Omitted for readability: 358 nodes, 0 edges
     class src_confidence_infrastructure_resilience_circuit_a0a2dc74 klass;
     class src_confidence_infrastructure_resilience_circuit_31028d26 function;
     class src_confidence_infrastructure_resilience_circuit_32b95a67 function;
     class src_confidence_infrastructure_resilience_circuit_c412c279 function;
     class src_confidence_infrastructure_resilience_circuit_69c9c2c7 function;
-    class src_confidence_infrastructure_event_bus_eventpub_ebb89751 klass;
-    class src_confidence_infrastructure_event_bus_eventpub_2bc38b2c function;
-    class src_confidence_infrastructure_event_bus_eventpub_a78ac541 function;
-    class src_confidence_infrastructure_event_bus_eventpub_1f313612 function;
+    class src_confidence_domain_policy_ae7b4395 module;
+    class src_confidence_domain_policy_policyselector_974deb47 klass;
+    class src_confidence_domain_policy_policyselector_init_bbc09c58 function;
+    class src_confidence_domain_policy_policyselector_sele_8f810a3e function;
     class src_confidence_infrastructure_persistence_databa_db8ea834 klass;
     class src_confidence_infrastructure_persistence_databa_a9b74e14 function;
     class src_confidence_infrastructure_persistence_databa_2b6f3d38 function;
     class src_confidence_application_engine_decisionengine_02602e41 klass;
     class src_confidence_application_engine_82b355c7 module;
     class src_confidence_domain_init_1391904c module;
-    class src_confidence_domain_policy_ae7b4395 module;
     class src_confidence_domain_safety_f8e5422a module;
+    class src_confidence_infrastructure_event_bus_eventpub_ebb89751 klass;
     class src_confidence_infrastructure_session_state_redi_970fb527 async;
     classDef entry fill:#422006,stroke:#fbbf24,color:#fde68a,stroke-width:1px;
     classDef api fill:#450a0a,stroke:#f87171,color:#fee2e2,stroke-width:1px;
@@ -495,16 +492,16 @@ flowchart LR
       <tr><td><code>confidence/infrastructure/session_state.py</code></td><td>25 nodes</td></tr>
 <tr><td><code>confidence/domain/ports.py</code></td><td>22 nodes</td></tr>
 <tr><td><code>confidence/infrastructure/event_bus.py</code></td><td>22 nodes</td></tr>
+<tr><td><code>confidence/domain/enums.py</code></td><td>20 nodes</td></tr>
 <tr><td><code>confidence/application/engine.py</code></td><td>18 nodes</td></tr>
 <tr><td><code>src/confidence/config.py</code></td><td>18 nodes</td></tr>
-<tr><td><code>confidence/domain/enums.py</code></td><td>18 nodes</td></tr>
 <tr><td><code>confidence/infrastructure/audit.py</code></td><td>18 nodes</td></tr>
 <tr><td><code>confidence/infrastructure/dlq.py</code></td><td>15 nodes</td></tr>
     </table>
   </div>
   <div class="card">
     <h4>Design Notes</h4>
-    <p>This section comes from graphify community clustering. Relationship summary: explains x125, references x86, contains x74, method x67. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
+    <p>This section comes from graphify community clustering. Relationship summary: explains x132, references x91, contains x79, method x67. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
   </div>
 </div>
 <hr>
@@ -1563,12 +1560,12 @@ flowchart LR
 
 <!-- ====== 7. Serving API ====== -->
 <h2 id="serve-api">7. Serving API</h2>
-<p>Serving API groups implementation around confidence, api, dependenciespy, get, mostly in confidence/api/dependencies.py, confidence/api/models.py, confidence/api/routes.py. This section covers 45 nodes and 55 internal edges; the diagram shows only representative relationships to stay readable.</p>
+<p>Serving API groups implementation around api, confidence, dependenciespy, get, mostly in confidence/api/dependencies.py, confidence/api/models.py, confidence/api/routes.py. This section covers 42 nodes and 51 internal edges; the diagram shows only representative relationships to stay readable.</p>
 
 <div class="mermaid">
 %%{init: {"theme": "dark", "themeVariables": {"fontSize": "15.0px", "fontFamily": "Segoe UI, system-ui, sans-serif", "primaryColor": "#1e293b", "primaryTextColor": "#e2e8f0", "primaryBorderColor": "#38bdf8", "secondaryColor": "#0f172a", "tertiaryColor": "#334155", "lineColor": "#64748b", "textColor": "#e2e8f0"}, "flowchart": {"htmlLabels": true, "curve": "basis", "nodeSpacing": 48, "rankSpacing": 64, "padding": 14, "diagramPadding": 10, "useMaxWidth": true}}}%%
 flowchart LR
-    %% Section: Serving API (45 nodes, 55 edges)
+    %% Section: Serving API (42 nodes, 51 edges)
     subgraph serve_api_External_generated_a71e9f44["External / generated"]
         actionregistry_f4eb3cdc("ActionRegistry")
         src_confidence_api_dependencies_py_decisionengin_ec0b1ea4("DecisionEngine")
@@ -1603,7 +1600,7 @@ flowchart LR
     src_confidence_api_dependencies_get_state_estima_1f7524c2 -->|calls| stateestimator_08f2173d
     src_confidence_api_routes_create_decision_b3abedea -->|calls| jsonresponse_ac9458b3
     src_confidence_api_routes_create_decision_b3abedea -->|calls| decisionresponse_ab191395
-    %% Omitted for readability: 27 nodes, 0 edges
+    %% Omitted for readability: 24 nodes, 0 edges
     class actionregistry_f4eb3cdc klass;
     class src_confidence_api_dependencies_py_decisionengin_ec0b1ea4 klass;
     class policyselector_0c947c12 klass;
@@ -1880,7 +1877,7 @@ flowchart LR
   <td><code>routes.py</code><br><small style="color:var(--muted)">confidence/api/routes.py</small></td>
   <td><span class="tag tag-endpoint">API</span></td>
   <td>External entry / no inbound edge</td>
-  <td><code>config.py</code><br><small style="color:var(--muted)">src/confidence/config.py</small><br><code>FastAPI</code><br><code>log.py</code><br><small style="color:var(--muted)">src/confidence/log.py</small></td>
+  <td><code>config.py</code><br><small style="color:var(--muted)">src/confidence/config.py</small><br><code>FastAPI</code><br><code>log.py</code><br><small style="color:var(--muted)">src/confidence/log.py</small><br>+1 more</td>
   <td>Module file in confidence/api/routes.py.</td>
 </tr>
 </table>
@@ -1893,25 +1890,24 @@ flowchart LR
       <tr><td><code>confidence/api/dependencies.py</code></td><td>11 nodes</td></tr>
 <tr><td><code>confidence/api/models.py</code></td><td>8 nodes</td></tr>
 <tr><td><code>confidence/api/routes.py</code></td><td>6 nodes</td></tr>
-<tr><td><code>confidence/domain/actions.py</code></td><td>2 nodes</td></tr>
-<tr><td><code>confidence/domain/enums.py</code></td><td>2 nodes</td></tr>
+<tr><td><code>confidence/observability/metrics.py</code></td><td>1 nodes</td></tr>
     </table>
   </div>
   <div class="card">
     <h4>Design Notes</h4>
-    <p>This section comes from graphify community clustering. Relationship summary: references x15, contains x14, calls x11, explains x10. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
+    <p>This section comes from graphify community clustering. Relationship summary: references x14, contains x14, calls x11, explains x8. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
   </div>
 </div>
 <hr>
 
 <!-- ====== 8. Tests & Fixtures ====== -->
 <h2 id="tests-fixtures">8. Tests &amp; Fixtures</h2>
-<p>Tests &amp; Fixtures groups implementation around test, tests, safety, confidence, mostly in tests/test_safety_contract.py, tests/test_engine.py, tests/test_domain.py. This section covers 310 nodes and 557 internal edges; the diagram shows only representative relationships to stay readable.</p>
+<p>Tests &amp; Fixtures groups implementation around test, tests, safety, confidence, mostly in tests/test_safety_contract.py, tests/test_engine.py, tests/test_domain.py. This section covers 306 nodes and 548 internal edges; the diagram shows only representative relationships to stay readable.</p>
 
 <div class="mermaid">
 %%{init: {"theme": "dark", "themeVariables": {"fontSize": "15.0px", "fontFamily": "Segoe UI, system-ui, sans-serif", "primaryColor": "#1e293b", "primaryTextColor": "#e2e8f0", "primaryBorderColor": "#38bdf8", "secondaryColor": "#0f172a", "tertiaryColor": "#334155", "lineColor": "#64748b", "textColor": "#e2e8f0"}, "flowchart": {"htmlLabels": true, "curve": "basis", "nodeSpacing": 48, "rankSpacing": 64, "padding": 14, "diagramPadding": 10, "useMaxWidth": true}}}%%
 flowchart LR
-    %% Section: Tests &amp; Fixtures (310 nodes, 557 edges)
+    %% Section: Tests &amp; Fixtures (306 nodes, 548 edges)
     subgraph tests_fixtures_confidence_domain_safety_py_76658b02["confidence/domain/safety.py"]
         src_confidence_domain_safety_safetycontract_951bcd52("SafetyContract<br/><small>confidence/domain/safety.py</small>")
         src_confidence_domain_safety_safetycontract_chec_db02a3e7("check_state_confidence()<br/><small>confidence/domain/safety.py</small>")
@@ -1952,7 +1948,7 @@ flowchart LR
     tests_test_safety_contract_testconversionorienta_0c0000c2 -->|uses| src_confidence_domain_safety_safetycontract_951bcd52
     tests_test_safety_contract_testlegitimatereconsi_b8474b57 -->|uses| src_confidence_domain_safety_safetycontract_951bcd52
     tests_test_engine_engine_d6a44998 -->|uses| src_confidence_domain_safety_safetycontract_951bcd52
-    %% Omitted for readability: 292 nodes, 0 edges
+    %% Omitted for readability: 288 nodes, 0 edges
     class src_confidence_domain_safety_safetycontract_951bcd52 klass;
     class src_confidence_domain_safety_safetycontract_chec_db02a3e7 function;
     class src_confidence_domain_safety_safetycontract_chec_06b6f121 function;
@@ -2251,7 +2247,7 @@ flowchart LR
   </div>
   <div class="card">
     <h4>Design Notes</h4>
-    <p>This section comes from graphify community clustering. Relationship summary: references x165, method x123, calls x94, explains x74. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
+    <p>This section comes from graphify community clustering. Relationship summary: references x165, method x122, calls x90, explains x72. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
   </div>
 </div>
 <hr>
@@ -2624,16 +2620,16 @@ flowchart LR
 </div>
 <hr>
 
-<!-- ====== 14. Database Module Init ====== -->
-<h2 id="database-module-init">14. Database Module Init</h2>
-<p>Database Module Init groups implementation around confidence, mostly in confidence/db/__init__.py. This section covers 1 nodes and 0 internal edges; the diagram shows only representative relationships to stay readable.</p>
+<!-- ====== 14. fix_step12.py ====== -->
+<h2 id="fix-step12-py">14. fix_step12.py</h2>
+<p>fix_step12.py groups implementation around fix, step12py, mostly in fix_step12.py. This section covers 1 nodes and 0 internal edges; the diagram shows only representative relationships to stay readable.</p>
 
 <div class="mermaid">
 %%{init: {"theme": "dark", "themeVariables": {"fontSize": "15.0px", "fontFamily": "Segoe UI, system-ui, sans-serif", "primaryColor": "#1e293b", "primaryTextColor": "#e2e8f0", "primaryBorderColor": "#38bdf8", "secondaryColor": "#0f172a", "tertiaryColor": "#334155", "lineColor": "#64748b", "textColor": "#e2e8f0"}, "flowchart": {"htmlLabels": true, "curve": "basis", "nodeSpacing": 48, "rankSpacing": 64, "padding": 14, "diagramPadding": 10, "useMaxWidth": true}}}%%
 flowchart LR
-    %% Section: Database Module Init (1 nodes, 0 edges)
-    src_confidence_db_init_4dfea315("__init__.py")
-    class src_confidence_db_init_4dfea315 module;
+    %% Section: fix_step12.py (1 nodes, 0 edges)
+    fix_step12_0b02f335("fix_step12.py")
+    class fix_step12_0b02f335 module;
     classDef entry fill:#422006,stroke:#fbbf24,color:#fde68a,stroke-width:1px;
     classDef api fill:#450a0a,stroke:#f87171,color:#fee2e2,stroke-width:1px;
     classDef async fill:#2e1065,stroke:#a78bfa,color:#ede9fe,stroke-width:1px;
@@ -2657,11 +2653,11 @@ flowchart LR
 </tr>
 <tr>
   <td>1</td>
-  <td><code>db/__init__.py</code><br><small style="color:var(--muted)">confidence/db/__init__.py</small></td>
+  <td><code>fix_step12.py</code><br><small style="color:var(--muted)">fix_step12.py</small></td>
   <td><span class="tag tag-class">Module</span></td>
   <td>External entry / no inbound edge</td>
   <td>No direct outbound edge</td>
-  <td>Module file in confidence/db/__init__.py.</td>
+  <td>Module file in fix_step12.py.</td>
 </tr>
 </table>
 
@@ -2670,7 +2666,7 @@ flowchart LR
     <h4>Key Files</h4>
     <table style="width:100%;font-size:0.85rem;">
       <tr><th>File</th><th>Coverage</th></tr>
-      <tr><td><code>confidence/db/__init__.py</code></td><td>1 nodes</td></tr>
+      <tr><td><code>fix_step12.py</code></td><td>1 nodes</td></tr>
     </table>
   </div>
   <div class="card">
@@ -2680,16 +2676,16 @@ flowchart LR
 </div>
 <hr>
 
-<!-- ====== 15. fix_step9.py ====== -->
-<h2 id="fix-step9-py">15. fix_step9.py</h2>
-<p>fix_step9.py groups implementation around fix, step9py, mostly in fix_step9.py. This section covers 1 nodes and 0 internal edges; the diagram shows only representative relationships to stay readable.</p>
+<!-- ====== 15. fix_step12_retry.py ====== -->
+<h2 id="fix-step12-retry-py">15. fix_step12_retry.py</h2>
+<p>fix_step12_retry.py groups implementation around fix, step12, retrypy, mostly in fix_step12_retry.py. This section covers 1 nodes and 0 internal edges; the diagram shows only representative relationships to stay readable.</p>
 
 <div class="mermaid">
 %%{init: {"theme": "dark", "themeVariables": {"fontSize": "15.0px", "fontFamily": "Segoe UI, system-ui, sans-serif", "primaryColor": "#1e293b", "primaryTextColor": "#e2e8f0", "primaryBorderColor": "#38bdf8", "secondaryColor": "#0f172a", "tertiaryColor": "#334155", "lineColor": "#64748b", "textColor": "#e2e8f0"}, "flowchart": {"htmlLabels": true, "curve": "basis", "nodeSpacing": 48, "rankSpacing": 64, "padding": 14, "diagramPadding": 10, "useMaxWidth": true}}}%%
 flowchart LR
-    %% Section: fix_step9.py (1 nodes, 0 edges)
-    fix_step9_8e950c30("fix_step9.py")
-    class fix_step9_8e950c30 module;
+    %% Section: fix_step12_retry.py (1 nodes, 0 edges)
+    fix_step12_retry_bf9cc763("fix_step12_retry.py")
+    class fix_step12_retry_bf9cc763 module;
     classDef entry fill:#422006,stroke:#fbbf24,color:#fde68a,stroke-width:1px;
     classDef api fill:#450a0a,stroke:#f87171,color:#fee2e2,stroke-width:1px;
     classDef async fill:#2e1065,stroke:#a78bfa,color:#ede9fe,stroke-width:1px;
@@ -2713,11 +2709,11 @@ flowchart LR
 </tr>
 <tr>
   <td>1</td>
-  <td><code>fix_step9.py</code><br><small style="color:var(--muted)">fix_step9.py</small></td>
+  <td><code>fix_step12_retry.py</code><br><small style="color:var(--muted)">fix_step12_retry.py</small></td>
   <td><span class="tag tag-class">Module</span></td>
   <td>External entry / no inbound edge</td>
   <td>No direct outbound edge</td>
-  <td>Module file in fix_step9.py.</td>
+  <td>Module file in fix_step12_retry.py.</td>
 </tr>
 </table>
 
@@ -2726,7 +2722,7 @@ flowchart LR
     <h4>Key Files</h4>
     <table style="width:100%;font-size:0.85rem;">
       <tr><th>File</th><th>Coverage</th></tr>
-      <tr><td><code>fix_step9.py</code></td><td>1 nodes</td></tr>
+      <tr><td><code>fix_step12_retry.py</code></td><td>1 nodes</td></tr>
     </table>
   </div>
   <div class="card">
@@ -2738,12 +2734,12 @@ flowchart LR
 
 <!-- ====== 16. Other ====== -->
 <h2 id="other">16. Other</h2>
-<p>Other groups implementation around fix, protocol, basemodel, step6py, mostly in fix_step6.py, confidence/workers/__init__.py, fix_step8.py. This section covers 36 nodes and 0 internal edges; the diagram shows only representative relationships to stay readable.</p>
+<p>Other groups implementation around fix, protocol, basemodel, taskpy, mostly in fix_task.py, confidence/db/__init__.py, fix_step9.py. This section covers 39 nodes and 0 internal edges; the diagram shows only representative relationships to stay readable.</p>
 
 <div class="mermaid">
 %%{init: {"theme": "dark", "themeVariables": {"fontSize": "15.0px", "fontFamily": "Segoe UI, system-ui, sans-serif", "primaryColor": "#1e293b", "primaryTextColor": "#e2e8f0", "primaryBorderColor": "#38bdf8", "secondaryColor": "#0f172a", "tertiaryColor": "#334155", "lineColor": "#64748b", "textColor": "#e2e8f0"}, "flowchart": {"htmlLabels": true, "curve": "basis", "nodeSpacing": 48, "rankSpacing": 64, "padding": 14, "diagramPadding": 10, "useMaxWidth": true}}}%%
 flowchart LR
-    %% Section: Other (36 nodes, 0 edges)
+    %% Section: Other (39 nodes, 0 edges)
     actionid_6eaaf53f("ActionId")
     src_confidence_api_dependencies_py_actionregistr_a3aff000("ActionRegistry")
     src_confidence_api_dependencies_py_asyncengine_1eade5d8("AsyncEngine")
@@ -2762,7 +2758,7 @@ flowchart LR
     src_confidence_infrastructure_providers_py_proto_a30d5add("Protocol")
     src_confidence_infrastructure_event_bus_py_proto_4f7b8e62("Protocol")
     src_confidence_api_dependencies_py_responsegener_f1676efc("ResponseGenerator")
-    %% Omitted for readability: 18 nodes, 0 edges
+    %% Omitted for readability: 21 nodes, 0 edges
     class actionid_6eaaf53f klass;
     class src_confidence_api_dependencies_py_actionregistr_a3aff000 klass;
     class src_confidence_api_dependencies_py_asyncengine_1eade5d8 async;
@@ -2804,6 +2800,30 @@ flowchart LR
 </tr>
 <tr>
   <td>1</td>
+  <td><code>fix_task.py</code><br><small style="color:var(--muted)">fix_task.py</small></td>
+  <td><span class="tag tag-class">Module</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>Module file in fix_task.py.</td>
+</tr>
+<tr>
+  <td>2</td>
+  <td><code>db/__init__.py</code><br><small style="color:var(--muted)">confidence/db/__init__.py</small></td>
+  <td><span class="tag tag-class">Module</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>Module file in confidence/db/__init__.py.</td>
+</tr>
+<tr>
+  <td>3</td>
+  <td><code>fix_step9.py</code><br><small style="color:var(--muted)">fix_step9.py</small></td>
+  <td><span class="tag tag-class">Module</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>Module file in fix_step9.py.</td>
+</tr>
+<tr>
+  <td>4</td>
   <td><code>Protocol</code><br><small style="color:var(--muted)"></small></td>
   <td><span class="tag tag-class">Class</span></td>
   <td>External entry / no inbound edge</td>
@@ -2811,7 +2831,7 @@ flowchart LR
   <td>Protocol node in project.</td>
 </tr>
 <tr>
-  <td>2</td>
+  <td>5</td>
   <td><code>ActionId</code><br><small style="color:var(--muted)"></small></td>
   <td><span class="tag tag-class">Class</span></td>
   <td>External entry / no inbound edge</td>
@@ -2819,7 +2839,7 @@ flowchart LR
   <td>ActionId node in project.</td>
 </tr>
 <tr>
-  <td>3</td>
+  <td>6</td>
   <td><code>fix_step6.py</code><br><small style="color:var(--muted)">fix_step6.py</small></td>
   <td><span class="tag tag-class">Module</span></td>
   <td>External entry / no inbound edge</td>
@@ -2827,7 +2847,7 @@ flowchart LR
   <td>Module file in fix_step6.py.</td>
 </tr>
 <tr>
-  <td>4</td>
+  <td>7</td>
   <td><code>ActionRegistry</code><br><small style="color:var(--muted)"></small></td>
   <td><span class="tag tag-class">Class</span></td>
   <td>External entry / no inbound edge</td>
@@ -2835,7 +2855,7 @@ flowchart LR
   <td>ActionRegistry node in project.</td>
 </tr>
 <tr>
-  <td>5</td>
+  <td>8</td>
   <td><code>AsyncEngine</code><br><small style="color:var(--muted)"></small></td>
   <td><span class="tag tag-async">Async</span></td>
   <td>External entry / no inbound edge</td>
@@ -2843,7 +2863,7 @@ flowchart LR
   <td>AsyncEngine node in project.</td>
 </tr>
 <tr>
-  <td>6</td>
+  <td>9</td>
   <td><code>MarketContext</code><br><small style="color:var(--muted)"></small></td>
   <td><span class="tag tag-class">Class</span></td>
   <td>External entry / no inbound edge</td>
@@ -2851,7 +2871,7 @@ flowchart LR
   <td>MarketContext node in project.</td>
 </tr>
 <tr>
-  <td>7</td>
+  <td>10</td>
   <td><code>ContextBuilder</code><br><small style="color:var(--muted)"></small></td>
   <td><span class="tag tag-class">Class</span></td>
   <td>External entry / no inbound edge</td>
@@ -2859,7 +2879,7 @@ flowchart LR
   <td>ContextBuilder node in project.</td>
 </tr>
 <tr>
-  <td>8</td>
+  <td>11</td>
   <td><code>BaseModel</code><br><small style="color:var(--muted)"></small></td>
   <td><span class="tag tag-class">Class</span></td>
   <td>External entry / no inbound edge</td>
@@ -2867,7 +2887,7 @@ flowchart LR
   <td>BaseModel node in project.</td>
 </tr>
 <tr>
-  <td>9</td>
+  <td>12</td>
   <td><code>ContextBuilder</code><br><small style="color:var(--muted)"></small></td>
   <td><span class="tag tag-class">Class</span></td>
   <td>External entry / no inbound edge</td>
@@ -2875,7 +2895,7 @@ flowchart LR
   <td>ContextBuilder node in project.</td>
 </tr>
 <tr>
-  <td>10</td>
+  <td>13</td>
   <td><code>Protocol</code><br><small style="color:var(--muted)"></small></td>
   <td><span class="tag tag-class">Class</span></td>
   <td>External entry / no inbound edge</td>
@@ -2883,7 +2903,7 @@ flowchart LR
   <td>Protocol node in project.</td>
 </tr>
 <tr>
-  <td>11</td>
+  <td>14</td>
   <td><code>UUID</code><br><small style="color:var(--muted)"></small></td>
   <td><span class="tag tag-class">Class</span></td>
   <td>External entry / no inbound edge</td>
@@ -2891,7 +2911,7 @@ flowchart LR
   <td>UUID node in project.</td>
 </tr>
 <tr>
-  <td>12</td>
+  <td>15</td>
   <td><code>PolicySelector</code><br><small style="color:var(--muted)"></small></td>
   <td><span class="tag tag-class">Class</span></td>
   <td>External entry / no inbound edge</td>
@@ -2899,7 +2919,7 @@ flowchart LR
   <td>PolicySelector node in project.</td>
 </tr>
 <tr>
-  <td>13</td>
+  <td>16</td>
   <td><code>BaseModel</code><br><small style="color:var(--muted)"></small></td>
   <td><span class="tag tag-class">Class</span></td>
   <td>External entry / no inbound edge</td>
@@ -2907,7 +2927,7 @@ flowchart LR
   <td>BaseModel node in project.</td>
 </tr>
 <tr>
-  <td>14</td>
+  <td>17</td>
   <td><code>datetime</code><br><small style="color:var(--muted)"></small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td>External entry / no inbound edge</td>
@@ -2915,7 +2935,7 @@ flowchart LR
   <td>datetime node in project.</td>
 </tr>
 <tr>
-  <td>15</td>
+  <td>18</td>
   <td><code>ResponseGenerator</code><br><small style="color:var(--muted)"></small></td>
   <td><span class="tag tag-class">Class</span></td>
   <td>External entry / no inbound edge</td>
@@ -2923,7 +2943,7 @@ flowchart LR
   <td>ResponseGenerator node in project.</td>
 </tr>
 <tr>
-  <td>16</td>
+  <td>19</td>
   <td><code>SafetyContext</code><br><small style="color:var(--muted)"></small></td>
   <td><span class="tag tag-class">Class</span></td>
   <td>External entry / no inbound edge</td>
@@ -2931,7 +2951,7 @@ flowchart LR
   <td>SafetyContext node in project.</td>
 </tr>
 <tr>
-  <td>17</td>
+  <td>20</td>
   <td><code>SafetyContract</code><br><small style="color:var(--muted)"></small></td>
   <td><span class="tag tag-class">Class</span></td>
   <td>External entry / no inbound edge</td>
@@ -2939,7 +2959,7 @@ flowchart LR
   <td>SafetyContract node in project.</td>
 </tr>
 <tr>
-  <td>18</td>
+  <td>21</td>
   <td><code>SlipContext</code><br><small style="color:var(--muted)"></small></td>
   <td><span class="tag tag-class">Class</span></td>
   <td>External entry / no inbound edge</td>
@@ -2947,7 +2967,7 @@ flowchart LR
   <td>SlipContext node in project.</td>
 </tr>
 <tr>
-  <td>19</td>
+  <td>22</td>
   <td><code>StateEstimator</code><br><small style="color:var(--muted)"></small></td>
   <td><span class="tag tag-class">Class</span></td>
   <td>External entry / no inbound edge</td>
@@ -2955,7 +2975,7 @@ flowchart LR
   <td>StateEstimator node in project.</td>
 </tr>
 <tr>
-  <td>20</td>
+  <td>23</td>
   <td><code>UUID</code><br><small style="color:var(--muted)"></small></td>
   <td><span class="tag tag-class">Class</span></td>
   <td>External entry / no inbound edge</td>
@@ -2963,7 +2983,7 @@ flowchart LR
   <td>UUID node in project.</td>
 </tr>
 <tr>
-  <td>21</td>
+  <td>24</td>
   <td><code>Protocol</code><br><small style="color:var(--muted)"></small></td>
   <td><span class="tag tag-class">Class</span></td>
   <td>External entry / no inbound edge</td>
@@ -2971,7 +2991,7 @@ flowchart LR
   <td>Protocol node in project.</td>
 </tr>
 <tr>
-  <td>22</td>
+  <td>25</td>
   <td><code>workers/__init__.py</code><br><small style="color:var(--muted)">confidence/workers/__init__.py</small></td>
   <td><span class="tag tag-class">Module</span></td>
   <td>External entry / no inbound edge</td>
@@ -2979,36 +2999,12 @@ flowchart LR
   <td>Module file in confidence/workers/__init__.py.</td>
 </tr>
 <tr>
-  <td>23</td>
+  <td>26</td>
   <td><code>fix_step8.py</code><br><small style="color:var(--muted)">fix_step8.py</small></td>
   <td><span class="tag tag-class">Module</span></td>
   <td>External entry / no inbound edge</td>
   <td>No direct outbound edge</td>
   <td>Module file in fix_step8.py.</td>
-</tr>
-<tr>
-  <td>24</td>
-  <td><code>DecisionContext</code><br><small style="color:var(--muted)"></small></td>
-  <td><span class="tag tag-class">Class</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>DecisionContext node in project.</td>
-</tr>
-<tr>
-  <td>25</td>
-  <td><code>SafetyContract</code><br><small style="color:var(--muted)"></small></td>
-  <td><span class="tag tag-class">Class</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>SafetyContract node in project.</td>
-</tr>
-<tr>
-  <td>26</td>
-  <td><code>fix_step10.py</code><br><small style="color:var(--muted)">fix_step10.py</small></td>
-  <td><span class="tag tag-class">Module</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>Module file in fix_step10.py.</td>
 </tr>
 <tr>
   <td>27</td>
@@ -3020,27 +3016,27 @@ flowchart LR
 </tr>
 <tr>
   <td>28</td>
-  <td><code>fix_step10_2.py</code><br><small style="color:var(--muted)">fix_step10_2.py</small></td>
-  <td><span class="tag tag-class">Module</span></td>
+  <td><code>SafetyContract</code><br><small style="color:var(--muted)"></small></td>
+  <td><span class="tag tag-class">Class</span></td>
   <td>External entry / no inbound edge</td>
   <td>No direct outbound edge</td>
-  <td>Module file in fix_step10_2.py.</td>
+  <td>SafetyContract node in project.</td>
 </tr>
 <tr>
   <td>29</td>
-  <td><code>SafetyBlockReason</code><br><small style="color:var(--muted)"></small></td>
-  <td><span class="tag tag-class">Class</span></td>
+  <td><code>fix_step10.py</code><br><small style="color:var(--muted)">fix_step10.py</small></td>
+  <td><span class="tag tag-class">Module</span></td>
   <td>External entry / no inbound edge</td>
   <td>No direct outbound edge</td>
-  <td>SafetyBlockReason node in project.</td>
+  <td>Module file in fix_step10.py.</td>
 </tr>
 <tr>
   <td>30</td>
-  <td><code>BaseModel</code><br><small style="color:var(--muted)"></small></td>
+  <td><code>DecisionContext</code><br><small style="color:var(--muted)"></small></td>
   <td><span class="tag tag-class">Class</span></td>
   <td>External entry / no inbound edge</td>
   <td>No direct outbound edge</td>
-  <td>BaseModel node in project.</td>
+  <td>DecisionContext node in project.</td>
 </tr>
 </table>
 
@@ -3055,7 +3051,8 @@ flowchart LR
 <tr><td><code>fix_step6.py</code></td><td>1 nodes</td></tr>
 <tr><td><code>fix_step7.py</code></td><td>1 nodes</td></tr>
 <tr><td><code>fix_step8.py</code></td><td>1 nodes</td></tr>
-<tr><td><code>confidence/workers/__init__.py</code></td><td>1 nodes</td></tr>
+<tr><td><code>fix_step9.py</code></td><td>1 nodes</td></tr>
+<tr><td><code>fix_task.py</code></td><td>1 nodes</td></tr>
     </table>
   </div>
   <div class="card">
@@ -3071,17 +3068,17 @@ flowchart LR
   <div class="card">
     <h4>Graph</h4>
     <table style="width:100%;font-size:0.85rem;">
-      <tr><td>Nodes</td><td>882</td></tr>
-      <tr><td>Edges</td><td>1421</td></tr>
+      <tr><td>Nodes</td><td>894</td></tr>
+      <tr><td>Edges</td><td>1428</td></tr>
       <tr><td>Hyperedges</td><td>0</td></tr>
-      <tr><td>Communities</td><td>101</td></tr>
+      <tr><td>Communities</td><td>107</td></tr>
       <tr><td>Documented Sections</td><td>15</td></tr>
     </table>
   </div>
   <div class="card">
     <h4>Edge Confidence</h4>
     <table style="width:100%;font-size:0.85rem;">
-      <tr><td>EXTRACTED</td><td>1278</td></tr>
+      <tr><td>EXTRACTED</td><td>1285</td></tr>
       <tr><td>INFERRED</td><td>143</td></tr>
       <tr><td>AMBIGUOUS</td><td>0</td></tr>
     </table>
@@ -3090,7 +3087,7 @@ flowchart LR
 
 <div style="text-align:center; padding:40px 0; color: var(--muted); font-size:0.9rem;">
   <p>Confidence — Architecture Documentation</p>
-  <p>Generated: 2026-09-04 05:31 UTC · graphify callflow-html</p>
+  <p>Generated: 2026-09-04 05:35 UTC · graphify callflow-html</p>
 </div>
 
 </div><!-- .container -->
