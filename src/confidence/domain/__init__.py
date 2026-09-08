@@ -11,7 +11,7 @@ from confidence.domain.enums import (
     SafetyStatus,
     UncertaintyState,
 )
-from confidence.domain.events import ConfidenceEvent
+from confidence.domain.event_contracts import ConfidenceEvent
 from confidence.domain.models import (
     AuditRecord,
     Decision,

@@ -24,7 +24,7 @@ test:
 
 test-unit:
 	$(PYTEST) tests/test_engine.py tests/test_safety_contract.py tests/test_domain.py \
-	          tests/test_actions.py tests/test_events.py tests/test_schema.py -v
+	          tests/test_actions.py tests/test_event_contracts.py tests/test_schema.py -v
 
 test-adversarial:
 	$(PYTEST) tests/test_adversarial.py tests/test_failure_injection.py \

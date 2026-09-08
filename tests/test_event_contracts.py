@@ -13,7 +13,7 @@ import pytest
 from pydantic import ValidationError
 
 from confidence.domain.enums import EventType
-from confidence.domain.events import ConfidenceEvent
+from confidence.domain.event_contracts import ConfidenceEvent
 
 if TYPE_CHECKING:
     from datetime import datetime

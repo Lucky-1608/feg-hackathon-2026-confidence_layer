@@ -37,6 +37,19 @@ class SafetyStatus(StrEnum):
     SAFE = "SAFE"
     BLOCKED = "BLOCKED"
     UNKNOWN = "UNKNOWN"
+    STALE = "STALE"
+    UNAVAILABLE = "UNAVAILABLE"
+    INVALID = "INVALID"
+
+    @property
+    def requires_fail_closed(self) -> bool:
+        """Return True if this status forces a fail-closed response."""
+        return self in {
+            SafetyStatus.UNKNOWN,
+            SafetyStatus.STALE,
+            SafetyStatus.UNAVAILABLE,
+            SafetyStatus.INVALID,
+        }
 
 
 class SafetyBlockReason(StrEnum):
