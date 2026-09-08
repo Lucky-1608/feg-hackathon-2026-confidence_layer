@@ -220,9 +220,7 @@ class TestOutcome:
 
 
 class TestAuditRecord:
-    def test_audit_contains_full_provenance(
-        self, sample_context: DecisionContext, now: datetime
-    ) -> None:
+    def test_audit_contains_full_provenance(self, sample_context: DecisionContext, now: datetime) -> None:
         audit = AuditRecord(
             audit_id=uuid4(),
             decision_id=uuid4(),

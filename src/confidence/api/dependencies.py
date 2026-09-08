@@ -14,7 +14,7 @@ from fastapi import Depends
 from sqlalchemy.ext.asyncio import AsyncEngine, create_async_engine
 
 from confidence.application.context_builder import ContextBuilder
-from confidence.application.engine import DecisionEngine, PersistenceProvider
+from confidence.application.engine import DecisionEngine
 from confidence.config import load_config
 from confidence.domain.actions import ActionRegistry
 from confidence.domain.models import (
@@ -26,11 +26,11 @@ from confidence.domain.models import (
     SlipContext,
 )
 from confidence.domain.policy import PolicySelector
+from confidence.domain.ports import MarketProvider, PersistenceProvider, SafetyProvider, SlipProvider
 from confidence.domain.response import ResponseGenerator
 from confidence.domain.safety import SafetyContract
 from confidence.domain.state import StateEstimator
 from confidence.infrastructure.persistence import DatabasePersistenceProvider
-from confidence.infrastructure.providers import MarketProvider, SafetyProvider, SlipProvider
 
 # Engine cache — allows lifespan to dispose on shutdown
 _engine_cache: dict[str, AsyncEngine] = {}

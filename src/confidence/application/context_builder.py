@@ -12,7 +12,7 @@ from uuid import UUID
 from pydantic import BaseModel
 
 from confidence.domain.models import DecisionContext, InteractionContext, Session
-from confidence.infrastructure.providers import MarketProvider, SafetyProvider, SlipProvider
+from confidence.domain.ports import MarketProvider, SafetyProvider, SlipProvider
 
 
 class DecisionRequest(BaseModel):

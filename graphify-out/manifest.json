@@ -1,9 +1,9 @@
 {
   "alembic/env.py": {
-    "mtime": 1788449643.9699628,
-    "seen": 1788496932.5141227,
-    "ast_hash": "0e96d554eafa0a184007eb1a125298f9",
-    "semantic_hash": "0e96d554eafa0a184007eb1a125298f9"
+    "mtime": 1788497509.482773,
+    "seen": 1788498000.6106815,
+    "ast_hash": "3ba9857ace75dd3c610e8e862b7ee6b8",
+    "semantic_hash": ""
   },
   "alembic/versions/001_initial_schema.py": {
     "mtime": 1788450268.983691,
@@ -12,10 +12,10 @@
     "semantic_hash": "617375b8a972f0aac49b54a2add00f95"
   },
   "pyproject.toml": {
-    "mtime": 1788455583.1700487,
-    "seen": 1788496932.514129,
-    "ast_hash": "2b28b4f98dff64f20650cb2b85dd5e6a",
-    "semantic_hash": "2b28b4f98dff64f20650cb2b85dd5e6a"
+    "mtime": 1788497970.21426,
+    "seen": 1788498000.610687,
+    "ast_hash": "418c30bb88f604afb5286bd56f711337",
+    "semantic_hash": ""
   },
   "src/confidence/__init__.py": {
     "mtime": 1788449319.8987026,
@@ -24,16 +24,16 @@
     "semantic_hash": "dcee6ea186000faf16b1130a4cc33565"
   },
   "src/confidence/api/app.py": {
-    "mtime": 1788456550.5436509,
-    "seen": 1788496932.5141308,
-    "ast_hash": "3bdc4ab8a96812c304e3fcd59fb0cc90",
-    "semantic_hash": "3bdc4ab8a96812c304e3fcd59fb0cc90"
+    "mtime": 1788497964.9702384,
+    "seen": 1788498000.6106899,
+    "ast_hash": "c870a2e5fc6803f9e7b0f6a9465c6dfe",
+    "semantic_hash": ""
   },
   "src/confidence/api/dependencies.py": {
-    "mtime": 1788456527.8162618,
-    "seen": 1788496932.5141318,
-    "ast_hash": "4c2c95a6cd0e5589a19cf85730b23f8e",
-    "semantic_hash": "4c2c95a6cd0e5589a19cf85730b23f8e"
+    "mtime": 1788497625.4470499,
+    "seen": 1788498000.6106906,
+    "ast_hash": "4ede5b0e1ce41111108b7a4243ebcb3f",
+    "semantic_hash": ""
   },
   "src/confidence/api/models.py": {
     "mtime": 1788454951.9257574,
@@ -54,10 +54,10 @@
     "semantic_hash": "3d472d1e533cdf1cc0a72cfa41b6960d"
   },
   "src/confidence/application/engine.py": {
-    "mtime": 1788456527.8162618,
-    "seen": 1788496932.5141346,
-    "ast_hash": "587d8e8f013ea3171a23f82ca9222460",
-    "semantic_hash": "587d8e8f013ea3171a23f82ca9222460"
+    "mtime": 1788497895.295959,
+    "seen": 1788498000.6106958,
+    "ast_hash": "65272cc582f361c7185d6112c812d04c",
+    "semantic_hash": ""
   },
   "src/confidence/config.py": {
     "mtime": 1788454951.903757,
@@ -138,10 +138,10 @@
     "semantic_hash": "48050c1704d5978ae29137ac7058fec7"
   },
   "src/confidence/infrastructure/persistence.py": {
-    "mtime": 1788456527.8152616,
-    "seen": 1788496932.5141447,
-    "ast_hash": "604d946519005afa0fa3277e3d2964a3",
-    "semantic_hash": "604d946519005afa0fa3277e3d2964a3"
+    "mtime": 1788497580.8449335,
+    "seen": 1788498000.610708,
+    "ast_hash": "0ab8b21b514ec733d78d408e95fa3c32",
+    "semantic_hash": ""
   },
   "src/confidence/infrastructure/providers.py": {
     "mtime": 1788454305.7654083,
@@ -208,5 +208,185 @@
     "seen": 1788496932.514152,
     "ast_hash": "eec7891582d6d9ae7dda7a818675b1b3",
     "semantic_hash": "eec7891582d6d9ae7dda7a818675b1b3"
+  },
+  ".claude/settings.json": {
+    "mtime": 1788497269.0353737,
+    "seen": 1788498000.6106768,
+    "ast_hash": "dbe039a15c5c2eb60e34dccc1af0cbb5",
+    "semantic_hash": ""
+  },
+  "src/confidence/application/__init__.py": {
+    "mtime": 1788497631.2830658,
+    "seen": 1788498000.6106942,
+    "ast_hash": "35b3c4e63b658dcceeb8d87e20220ab8",
+    "semantic_hash": ""
+  },
+  ".agents/rules/graphify.md": {
+    "mtime": 1788496854.7575464,
+    "seen": 1788498000.6107183,
+    "ast_hash": "f1e53ecc9194573d3c28fc116c743a2e",
+    "semantic_hash": ""
+  },
+  ".agents/skills/graphify/SKILL.md": {
+    "mtime": 1788497288.2128062,
+    "seen": 1788498000.610719,
+    "ast_hash": "8b0d4db6c8e5a142df7584a4b5d096a2",
+    "semantic_hash": ""
+  },
+  ".agents/skills/graphify/references/add-watch.md": {
+    "mtime": 1788496836.822846,
+    "seen": 1788498000.6107197,
+    "ast_hash": "d59d027fe449f06aa03905a01184e779",
+    "semantic_hash": ""
+  },
+  ".agents/skills/graphify/references/exports.md": {
+    "mtime": 1788496836.8229027,
+    "seen": 1788498000.6107204,
+    "ast_hash": "9da2a2152e60a22f07f05fed5158f287",
+    "semantic_hash": ""
+  },
+  ".agents/skills/graphify/references/extraction-spec.md": {
+    "mtime": 1788496836.822991,
+    "seen": 1788498000.6107213,
+    "ast_hash": "42fef56a01698118f7fd722acdadea34",
+    "semantic_hash": ""
+  },
+  ".agents/skills/graphify/references/github-and-merge.md": {
+    "mtime": 1788496836.8230407,
+    "seen": 1788498000.610722,
+    "ast_hash": "cde13df085e4c492aeb7ba298a996d0d",
+    "semantic_hash": ""
+  },
+  ".agents/skills/graphify/references/hooks.md": {
+    "mtime": 1788496836.8230863,
+    "seen": 1788498000.6107233,
+    "ast_hash": "aea24fe86e18fe8aeb304403032cfce7",
+    "semantic_hash": ""
+  },
+  ".agents/skills/graphify/references/query.md": {
+    "mtime": 1788496836.823185,
+    "seen": 1788498000.6107242,
+    "ast_hash": "3c46f8ad006874260614ed8657d02307",
+    "semantic_hash": ""
+  },
+  ".agents/skills/graphify/references/transcribe.md": {
+    "mtime": 1788496836.8232417,
+    "seen": 1788498000.6107247,
+    "ast_hash": "67b6a5fa6c0974e18f60db9f8932fbd8",
+    "semantic_hash": ""
+  },
+  ".agents/skills/graphify/references/update.md": {
+    "mtime": 1788496836.8233206,
+    "seen": 1788498000.6107254,
+    "ast_hash": "9378bd03d56baaf78bd738ab3848f142",
+    "semantic_hash": ""
+  },
+  ".agents/workflows/graphify.md": {
+    "mtime": 1788496854.7576356,
+    "seen": 1788498000.610726,
+    "ast_hash": "6d73634a678cf1e1c71930adf80bd1f0",
+    "semantic_hash": ""
+  },
+  ".claude/CLAUDE.md": {
+    "mtime": 1788497269.035093,
+    "seen": 1788498000.6107268,
+    "ast_hash": "9b31786b637be3c13978bec4c2330752",
+    "semantic_hash": ""
+  },
+  ".claude/skills/graphify/SKILL.md": {
+    "mtime": 1788497269.0349793,
+    "seen": 1788498000.6107278,
+    "ast_hash": "1656a8a8e4a05bbe69f32cd15de81e87",
+    "semantic_hash": ""
+  },
+  ".claude/skills/graphify/references/add-watch.md": {
+    "mtime": 1788496836.8239276,
+    "seen": 1788498000.6107285,
+    "ast_hash": "d59d027fe449f06aa03905a01184e779",
+    "semantic_hash": ""
+  },
+  ".claude/skills/graphify/references/exports.md": {
+    "mtime": 1788496836.8239799,
+    "seen": 1788498000.6107292,
+    "ast_hash": "9da2a2152e60a22f07f05fed5158f287",
+    "semantic_hash": ""
+  },
+  ".claude/skills/graphify/references/extraction-spec.md": {
+    "mtime": 1788496836.8240523,
+    "seen": 1788498000.6107297,
+    "ast_hash": "42fef56a01698118f7fd722acdadea34",
+    "semantic_hash": ""
+  },
+  ".claude/skills/graphify/references/github-and-merge.md": {
+    "mtime": 1788496836.8240988,
+    "seen": 1788498000.6107304,
+    "ast_hash": "cde13df085e4c492aeb7ba298a996d0d",
+    "semantic_hash": ""
+  },
+  ".claude/skills/graphify/references/hooks.md": {
+    "mtime": 1788496836.8241482,
+    "seen": 1788498000.6107314,
+    "ast_hash": "3f545db6ce646650bb9de588f5512a27",
+    "semantic_hash": ""
+  },
+  ".claude/skills/graphify/references/query.md": {
+    "mtime": 1788496836.8242414,
+    "seen": 1788498000.610732,
+    "ast_hash": "3c46f8ad006874260614ed8657d02307",
+    "semantic_hash": ""
+  },
+  ".claude/skills/graphify/references/transcribe.md": {
+    "mtime": 1788496836.8243043,
+    "seen": 1788498000.6107328,
+    "ast_hash": "67b6a5fa6c0974e18f60db9f8932fbd8",
+    "semantic_hash": ""
+  },
+  ".claude/skills/graphify/references/update.md": {
+    "mtime": 1788496836.8243878,
+    "seen": 1788498000.6107337,
+    "ast_hash": "9378bd03d56baaf78bd738ab3848f142",
+    "semantic_hash": ""
+  },
+  "CLAUDE.md": {
+    "mtime": 1788497269.035248,
+    "seen": 1788498000.6107347,
+    "ast_hash": "82efb97a359f5c7290bf2513d14686be",
+    "semantic_hash": ""
+  },
+  "README.md": {
+    "mtime": 1788456999.0000412,
+    "seen": 1788498000.6107352,
+    "ast_hash": "16aa8375277731964316436818921680",
+    "semantic_hash": ""
+  },
+  "docker-compose.yml": {
+    "mtime": 1788497481.67272,
+    "seen": 1788498000.610736,
+    "ast_hash": "09ba17c65fff76565320b8f7a38fdd83",
+    "semantic_hash": ""
+  },
+  "docs/ADR-001-ARCHITECTURE.md": {
+    "mtime": 1788444192.6054928,
+    "seen": 1788498000.6107366,
+    "ast_hash": "5889835eaa78f04632eb1132b6a2a718",
+    "semantic_hash": ""
+  },
+  "docs/IMPLEMENTATION_AUDIT.md": {
+    "mtime": 1788444056.2587352,
+    "seen": 1788498000.610737,
+    "ast_hash": "bc66dd886757f4e7f0a0adb3dc9e7bc9",
+    "semantic_hash": ""
+  },
+  "docs/IMPLEMENTATION_PLAN.md": {
+    "mtime": 1788444115.5350688,
+    "seen": 1788498000.610738,
+    "ast_hash": "a9f17d8ec03298d19ea7f126e7905f49",
+    "semantic_hash": ""
+  },
+  "src/confidence/ui/index.html": {
+    "mtime": 1788456429.5716364,
+    "seen": 1788498000.6107388,
+    "ast_hash": "1dab70a0c74baf39b49986f02aca7ccf",
+    "semantic_hash": ""
   }
 }

@@ -1,0 +1,19 @@
+{
+  "0": "Safety Authority & Invariants",
+  "1": "Action Registry & Definitions",
+  "2": "API Dependencies & Context Providers",
+  "3": "Decision Engine & API Models",
+  "4": "Application Engine & Domain Models",
+  "5": "Market Context & Harm Indicators",
+  "6": "FastAPI App & Database Session",
+  "7": "Database Schema & Alembic Tests",
+  "8": "Domain Events & Schema Validation",
+  "9": "Domain Model & Safety Tests",
+  "10": "Interactive UI & Client Telemetry",
+  "11": "Conversion Safety Rules",
+  "12": "Database Migration Revisions",
+  "13": "Package Init (Confidence)",
+  "14": "Confidence Layer Root",
+  "15": "Database Module Init",
+  "16": "Test Suite Init"
+}

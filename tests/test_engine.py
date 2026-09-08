@@ -50,7 +50,6 @@ class DummyPersistenceProvider(PersistenceProvider):
         pass
 
 
-
 @pytest.fixture
 def base_request() -> DecisionRequest:
     return DecisionRequest(
@@ -118,20 +117,14 @@ class TestPolicySelector:
     def test_selects_exact_match(self, sample_context: DecisionContext) -> None:
         selector = PolicySelector()
         registry = ActionRegistry()
-        estimate = StateEstimate(
-            state=UncertaintyState.ODDS_CHANGE, confidence=0.9, model_version="1"
-        )
+        estimate = StateEstimate(state=UncertaintyState.ODDS_CHANGE, confidence=0.9, model_version="1")
         eligible = registry.get_enabled_actions()
         action = selector.select_action(sample_context, estimate, eligible)
         assert action == ActionId.EXPLAIN_ODDS_CHANGE
 
-    def test_selects_no_intervention_when_only_option(
-        self, sample_context: DecisionContext
-    ) -> None:
+    def test_selects_no_intervention_when_only_option(self, sample_context: DecisionContext) -> None:
         selector = PolicySelector()
-        estimate = StateEstimate(
-            state=UncertaintyState.POTENTIAL_HARM, confidence=0.9, model_version="1"
-        )
+        estimate = StateEstimate(state=UncertaintyState.POTENTIAL_HARM, confidence=0.9, model_version="1")
         # Only NO_INTERVENTION passed in
         registry = ActionRegistry()
         action_def = registry.get(ActionId.NO_INTERVENTION)
@@ -149,9 +142,7 @@ class TestResponseGenerator:
 
         from confidence.domain.models import OddsSnapshot
 
-        sample_context.slip.selections[0].odds_history = [
-            OddsSnapshot(odds=Decimal("2.30"), timestamp=datetime.now(UTC), source="test")
-        ]
+        sample_context.slip.selections[0].odds_history = [OddsSnapshot(odds=Decimal("2.30"), timestamp=datetime.now(UTC), source="test")]
         sample_context.slip.selections[0].odds = Decimal("2.50")
 
         gen = ResponseGenerator(ActionRegistry())
@@ -184,9 +175,7 @@ class TestResponseGenerator:
 
 class TestEndToEndScenarios:
     @pytest.mark.asyncio
-    async def test_scenario_a_odds_uncertainty(
-        self, engine: DecisionEngine, base_request: DecisionRequest
-    ) -> None:
+    async def test_scenario_a_odds_uncertainty(self, engine: DecisionEngine, base_request: DecisionRequest) -> None:
         base_request.interaction.odds_changed = True
         base_request.interaction.dwell_time_seconds = 6.0
 
@@ -198,9 +187,7 @@ class TestEndToEndScenarios:
         assert "Odds changed" in result.response_text
 
     @pytest.mark.asyncio
-    async def test_scenario_b_market_uncertainty(
-        self, engine: DecisionEngine, base_request: DecisionRequest
-    ) -> None:
+    async def test_scenario_b_market_uncertainty(self, engine: DecisionEngine, base_request: DecisionRequest) -> None:
         base_request.interaction.dwell_time_seconds = 20.0
         base_request.interaction.stake_changes = 0
         base_request.interaction.selection_changes = 0
@@ -211,9 +198,7 @@ class TestEndToEndScenarios:
         assert result.decision.selected_action == ActionId.EXPLAIN_MARKET
 
     @pytest.mark.asyncio
-    async def test_scenario_c_legitimate_reconsideration(
-        self, engine: DecisionEngine, base_request: DecisionRequest
-    ) -> None:
+    async def test_scenario_c_legitimate_reconsideration(self, engine: DecisionEngine, base_request: DecisionRequest) -> None:
         base_request.interaction.recent_backtracks = 2
         base_request.interaction.dwell_time_seconds = 5.0
 
@@ -221,15 +206,10 @@ class TestEndToEndScenarios:
 
         assert result.decision.state == UncertaintyState.LEGITIMATE_RECONSIDERATION
         assert result.decision.selected_action == ActionId.NO_INTERVENTION
-        assert (
-            result.decision.no_intervention_reason
-            == NoInterventionReason.LEGITIMATE_RECONSIDERATION
-        )
+        assert result.decision.no_intervention_reason == NoInterventionReason.LEGITIMATE_RECONSIDERATION
 
     @pytest.mark.asyncio
-    async def test_scenario_d_potential_harm(
-        self, engine: DecisionEngine, base_request: DecisionRequest
-    ) -> None:
+    async def test_scenario_d_potential_harm(self, engine: DecisionEngine, base_request: DecisionRequest) -> None:
         # We need a custom safety provider for this test to inject harm
         class HarmfulSafetyProvider(DummySafetyProvider):
             async def get_safety_context(self, s, a):
@@ -248,9 +228,7 @@ class TestEndToEndScenarios:
         assert result.decision.no_intervention_reason == NoInterventionReason.SAFETY_BLOCKED
 
     @pytest.mark.asyncio
-    async def test_scenario_e_self_exclusion(
-        self, engine: DecisionEngine, base_request: DecisionRequest
-    ) -> None:
+    async def test_scenario_e_self_exclusion(self, engine: DecisionEngine, base_request: DecisionRequest) -> None:
         class ExcludedProvider(DummySafetyProvider):
             async def get_safety_context(self, s, a):
                 return SafetyContext(is_self_excluded=True, data_freshness=datetime.now(UTC))
@@ -263,9 +241,7 @@ class TestEndToEndScenarios:
         assert result.decision.safety_status == SafetyStatus.BLOCKED
 
     @pytest.mark.asyncio
-    async def test_scenario_f_missing_authoritative_odds(
-        self, engine: DecisionEngine, base_request: DecisionRequest
-    ) -> None:
+    async def test_scenario_f_missing_authoritative_odds(self, engine: DecisionEngine, base_request: DecisionRequest) -> None:
         # Client claims odds changed
         base_request.interaction.odds_changed = True
         base_request.interaction.dwell_time_seconds = 6.0
@@ -282,15 +258,10 @@ class TestEndToEndScenarios:
         # State will be ODDS_CHANGE, but action must be NO_INTERVENTION due to missing data
         assert result.decision.state == UncertaintyState.ODDS_CHANGE
         assert result.decision.selected_action == ActionId.NO_INTERVENTION
-        assert (
-            result.decision.no_intervention_reason
-            == NoInterventionReason.MISSING_AUTHORITATIVE_DATA
-        )
+        assert result.decision.no_intervention_reason == NoInterventionReason.MISSING_AUTHORITATIVE_DATA
 
     @pytest.mark.asyncio
-    async def test_scenario_g_low_confidence(
-        self, engine: DecisionEngine, base_request: DecisionRequest
-    ) -> None:
+    async def test_scenario_g_low_confidence(self, engine: DecisionEngine, base_request: DecisionRequest) -> None:
         # We'll inject a low confidence state estimator
         class LowConfidenceEstimator(StateEstimator):
             def estimate_state(self, context):
@@ -305,14 +276,10 @@ class TestEndToEndScenarios:
         result = await engine.decide(base_request)
 
         assert result.decision.selected_action == ActionId.NO_INTERVENTION
-        assert (
-            result.decision.no_intervention_reason == NoInterventionReason.INSUFFICIENT_CONFIDENCE
-        )
+        assert result.decision.no_intervention_reason == NoInterventionReason.INSUFFICIENT_CONFIDENCE
 
     @pytest.mark.asyncio
-    async def test_scenario_h_safety_dependency_failure(
-        self, engine: DecisionEngine, base_request: DecisionRequest
-    ) -> None:
+    async def test_scenario_h_safety_dependency_failure(self, engine: DecisionEngine, base_request: DecisionRequest) -> None:
         class FailingSafetyProvider(DummySafetyProvider):
             async def get_safety_context(self, s, a):
                 raise Exception("Safety service down")
@@ -333,9 +300,7 @@ class TestEndToEndScenarios:
 
 class TestAdversarialAndFailures:
     @pytest.mark.asyncio
-    async def test_timeout_enforcement(
-        self, engine: DecisionEngine, base_request: DecisionRequest
-    ) -> None:
+    async def test_timeout_enforcement(self, engine: DecisionEngine, base_request: DecisionRequest) -> None:
         engine.timeout_ms = 10  # 10 milliseconds
 
         class SlowSafetyProvider(DummySafetyProvider):
@@ -351,9 +316,7 @@ class TestAdversarialAndFailures:
         assert result.decision.no_intervention_reason == NoInterventionReason.TIMEOUT
 
     @pytest.mark.asyncio
-    async def test_adversarial_policy_bypass_caught_by_final_check(
-        self, engine: DecisionEngine, base_request: DecisionRequest
-    ) -> None:
+    async def test_adversarial_policy_bypass_caught_by_final_check(self, engine: DecisionEngine, base_request: DecisionRequest) -> None:
         # A malicious policy that tries to select a blocked action
         class MaliciousPolicy(PolicySelector):
             def select_action(self, context, state, eligible):
@@ -369,10 +332,7 @@ class TestAdversarialAndFailures:
 
         # The final safety check should catch it
         assert result.decision.selected_action == ActionId.NO_INTERVENTION
-        assert (
-            result.decision.no_intervention_reason
-            == NoInterventionReason.LEGITIMATE_RECONSIDERATION
-        )
+        assert result.decision.no_intervention_reason == NoInterventionReason.LEGITIMATE_RECONSIDERATION
 
     def test_registry_without_no_intervention_fails_fast(self) -> None:
         with pytest.raises(ValueError):
@@ -409,9 +369,7 @@ class TestPropertyInvariants:
             assert result.decision.safety_status == SafetyStatus.BLOCKED
 
     @pytest.mark.asyncio
-    async def test_selected_actions_are_registered(
-        self, engine: DecisionEngine, base_request: DecisionRequest
-    ) -> None:
+    async def test_selected_actions_are_registered(self, engine: DecisionEngine, base_request: DecisionRequest) -> None:
         """∀ selected actions: selected_action ∈ ActionRegistry"""
         base_request.interaction.odds_changed = True
         base_request.interaction.dwell_time_seconds = 10
@@ -420,9 +378,7 @@ class TestPropertyInvariants:
         assert engine.action_registry.is_registered(result.decision.selected_action)
 
     @pytest.mark.asyncio
-    async def test_required_data_must_be_present(
-        self, engine: DecisionEngine, base_request: DecisionRequest
-    ) -> None:
+    async def test_required_data_must_be_present(self, engine: DecisionEngine, base_request: DecisionRequest) -> None:
         """∀ selected informational actions: required_data ⊆ available_authoritative_data"""
 
         # Force a state that wants EXPLAIN_ODDS_CHANGE
@@ -442,10 +398,7 @@ class TestPropertyInvariants:
 
         # EXPLAIN_ODDS_CHANGE requires stake. Should fallback to NO_INTERVENTION.
         assert result.decision.selected_action == ActionId.NO_INTERVENTION
-        assert (
-            result.decision.no_intervention_reason
-            == NoInterventionReason.MISSING_AUTHORITATIVE_DATA
-        )
+        assert result.decision.no_intervention_reason == NoInterventionReason.MISSING_AUTHORITATIVE_DATA
 
     def test_prohibited_copy(self) -> None:
         """Responses must never introduce urgency, pressure, etc."""
@@ -468,6 +421,4 @@ class TestPropertyInvariants:
             if action_def.copy_template:
                 lower_copy = action_def.copy_template.lower()
                 for word in prohibited_words:
-                    assert word not in lower_copy, (
-                        f"Prohibited word '{word}' found in action {action_def.action_id}"
-                    )
+                    assert word not in lower_copy, f"Prohibited word '{word}' found in action {action_def.action_id}"

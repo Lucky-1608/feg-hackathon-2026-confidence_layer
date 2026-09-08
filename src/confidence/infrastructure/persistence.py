@@ -14,9 +14,9 @@ from sqlalchemy import insert
 from sqlalchemy.dialects.postgresql import insert as pg_insert
 from sqlalchemy.ext.asyncio import AsyncEngine, AsyncSession, async_sessionmaker
 
-from confidence.application.engine import PersistenceProvider
 from confidence.db.schema import audit_log, decisions, sessions
 from confidence.domain.models import Decision, DecisionContext
+from confidence.domain.ports import PersistenceProvider
 from confidence.log import get_logger
 
 logger = get_logger("confidence.persistence")
@@ -58,13 +58,15 @@ class DatabasePersistenceProvider(PersistenceProvider):
                 except Exception:
                     # Fallback for non-PostgreSQL (e.g., SQLite in tests)
                     await session.execute(
-                        insert(sessions).values(
+                        insert(sessions)
+                        .values(
                             session_id=decision.session_id,
                             anonymous_actor_id=context.session.anonymous_actor_id,
                             started_at=context.session.started_at,
                             client_version=context.session.client_version,
                             created_at=now,
-                        ).prefix_with("OR IGNORE")
+                        )
+                        .prefix_with("OR IGNORE")
                     )
 
                 # 2. Insert decision record — all columns match schema.py

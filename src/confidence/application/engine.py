@@ -22,7 +22,6 @@ from __future__ import annotations
 import asyncio
 import contextlib
 from datetime import UTC, datetime
-from typing import Protocol
 from uuid import uuid4
 
 from confidence.application.context_builder import ContextBuilder, DecisionRequest
@@ -30,6 +29,7 @@ from confidence.domain.actions import ActionRegistry
 from confidence.domain.enums import ActionId, NoInterventionReason, SafetyStatus, UncertaintyState
 from confidence.domain.models import Decision, DecisionContext
 from confidence.domain.policy import PolicySelector
+from confidence.domain.ports import PersistenceProvider
 from confidence.domain.response import ResponseGenerator
 from confidence.domain.safety import SafetyContract
 from confidence.domain.state import StateEstimator
@@ -44,12 +44,6 @@ class DecisionResult:
     def __init__(self, decision: Decision, response_text: str | None = None) -> None:
         self.decision = decision
         self.response_text = response_text
-
-
-class PersistenceProvider(Protocol):
-    """Interface for async audit logging."""
-
-    async def persist_decision(self, decision: Decision, context: DecisionContext) -> None: ...
 
 
 class DecisionEngine:

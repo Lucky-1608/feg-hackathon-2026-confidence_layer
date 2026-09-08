@@ -125,9 +125,7 @@ class TestS3HarmState:
                 data_freshness=now,
             )
             result = safety_contract.evaluate_safety(ctx, now)
-            assert result.status == SafetyStatus.BLOCKED, (
-                f"Harm indicator {indicator} should block"
-            )
+            assert result.status == SafetyStatus.BLOCKED, f"Harm indicator {indicator} should block"
 
     def test_final_check_blocks_conversion_in_harm_state(
         self,
@@ -183,9 +181,7 @@ class TestS4UnknownSafetyState:
         self,
         safety_contract: SafetyContract,
     ) -> None:
-        reason = safety_contract.safety_block_to_no_intervention_reason(
-            [SafetyBlockReason.UNKNOWN_SAFETY_STATE]
-        )
+        reason = safety_contract.safety_block_to_no_intervention_reason([SafetyBlockReason.UNKNOWN_SAFETY_STATE])
         assert reason == NoInterventionReason.INSUFFICIENT_CONFIDENCE
 
 
@@ -206,9 +202,7 @@ class TestS5SafetyDependencyUnavailable:
         self,
         safety_contract: SafetyContract,
     ) -> None:
-        reason = safety_contract.safety_block_to_no_intervention_reason(
-            [SafetyBlockReason.SAFETY_DEPENDENCY_UNAVAILABLE]
-        )
+        reason = safety_contract.safety_block_to_no_intervention_reason([SafetyBlockReason.SAFETY_DEPENDENCY_UNAVAILABLE])
         assert reason == NoInterventionReason.SYSTEM_FAILURE
 
 
@@ -351,9 +345,7 @@ class TestMultipleBlockReasons:
         self,
         safety_contract: SafetyContract,
     ) -> None:
-        reason = safety_contract.safety_block_to_no_intervention_reason(
-            [SafetyBlockReason.SELF_EXCLUSION, SafetyBlockReason.HARM_STATE]
-        )
+        reason = safety_contract.safety_block_to_no_intervention_reason([SafetyBlockReason.SELF_EXCLUSION, SafetyBlockReason.HARM_STATE])
         assert reason == NoInterventionReason.SAFETY_BLOCKED
 
 

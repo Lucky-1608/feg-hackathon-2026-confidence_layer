@@ -69,16 +69,12 @@ class TestActionRegistryLookup:
 
 
 class TestActionEligibility:
-    def test_no_intervention_eligible_for_all_states(
-        self, action_registry: ActionRegistry
-    ) -> None:
+    def test_no_intervention_eligible_for_all_states(self, action_registry: ActionRegistry) -> None:
         """NO_INTERVENTION must be eligible for every possible state."""
         for state in UncertaintyState:
             eligible = action_registry.get_eligible_for_state(state, set())
             eligible_ids = [a.action_id for a in eligible]
-            assert ActionId.NO_INTERVENTION in eligible_ids, (
-                f"NO_INTERVENTION should be eligible for state {state}"
-            )
+            assert ActionId.NO_INTERVENTION in eligible_ids, f"NO_INTERVENTION should be eligible for state {state}"
 
     def test_explain_odds_eligible_when_odds_change(self, action_registry: ActionRegistry) -> None:
         eligible = action_registry.get_eligible_for_state(
@@ -96,9 +92,7 @@ class TestActionEligibility:
         eligible_ids = [a.action_id for a in eligible]
         assert ActionId.EXPLAIN_ODDS_CHANGE not in eligible_ids
 
-    def test_no_conversion_actions_for_potential_harm(
-        self, action_registry: ActionRegistry
-    ) -> None:
+    def test_no_conversion_actions_for_potential_harm(self, action_registry: ActionRegistry) -> None:
         """When state is POTENTIAL_HARM, only NO_INTERVENTION should be eligible."""
         eligible = action_registry.get_eligible_for_state(
             UncertaintyState.POTENTIAL_HARM,
@@ -117,9 +111,7 @@ class TestActionEligibility:
         # Only NO_INTERVENTION should be eligible
         assert eligible_ids == [ActionId.NO_INTERVENTION]
 
-    def test_no_conversion_actions_for_legitimate_reconsideration(
-        self, action_registry: ActionRegistry
-    ) -> None:
+    def test_no_conversion_actions_for_legitimate_reconsideration(self, action_registry: ActionRegistry) -> None:
         """When state is LEGITIMATE_RECONSIDERATION, only NO_INTERVENTION should be eligible."""
         eligible = action_registry.get_eligible_for_state(
             UncertaintyState.LEGITIMATE_RECONSIDERATION,
@@ -137,9 +129,7 @@ class TestActionEligibility:
         eligible_ids = [a.action_id for a in eligible]
         assert eligible_ids == [ActionId.NO_INTERVENTION]
 
-    def test_explain_market_eligible_for_market_meaning(
-        self, action_registry: ActionRegistry
-    ) -> None:
+    def test_explain_market_eligible_for_market_meaning(self, action_registry: ActionRegistry) -> None:
         eligible = action_registry.get_eligible_for_state(
             UncertaintyState.MARKET_MEANING,
             {"market_name", "event_name", "market_definition"},
@@ -147,9 +137,7 @@ class TestActionEligibility:
         eligible_ids = [a.action_id for a in eligible]
         assert ActionId.EXPLAIN_MARKET in eligible_ids
 
-    def test_offer_defer_eligible_for_general_friction(
-        self, action_registry: ActionRegistry
-    ) -> None:
+    def test_offer_defer_eligible_for_general_friction(self, action_registry: ActionRegistry) -> None:
         eligible = action_registry.get_eligible_for_state(
             UncertaintyState.GENERAL_UI_FRICTION,
             set(),
