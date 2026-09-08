@@ -70,7 +70,7 @@ infra-up:
 	docker compose up -d postgres redis redpanda
 	@echo "Waiting for services to be healthy..."
 	@sleep 5
-	docker compose run --rm migrate
+	docker compose run --build --rm migrate
 
 infra-down:
 	docker compose down
