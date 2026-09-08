@@ -108,7 +108,14 @@ class SafetyContract:
             # No freshness timestamp → we cannot verify data currency → fail closed (S4)
             block_reasons.append(SafetyBlockReason.UNKNOWN_SAFETY_STATE)
 
-        status = SafetyStatus.BLOCKED if block_reasons else SafetyStatus.SAFE
+        status = SafetyStatus.SAFE
+        if block_reasons:
+            if SafetyBlockReason.UNKNOWN_SAFETY_STATE in block_reasons:
+                status = SafetyStatus.UNKNOWN
+            elif SafetyBlockReason.SAFETY_DEPENDENCY_UNAVAILABLE in block_reasons:
+                status = SafetyStatus.STALE
+            else:
+                status = SafetyStatus.BLOCKED
 
         return SafetyResult(
             status=status,
@@ -167,8 +174,9 @@ class SafetyContract:
         Returns a NoInterventionReason if the action must be blocked,
         or None if it passes.
         """
-        # If safety blocked, must be NO_INTERVENTION
-        if safety_result.status != SafetyStatus.SAFE and selected_action != ActionId.NO_INTERVENTION:
+        # If safety blocked or requires fail closed, must be NO_INTERVENTION
+        is_safe = safety_result.status == SafetyStatus.SAFE
+        if not is_safe and selected_action != ActionId.NO_INTERVENTION:
             return NoInterventionReason.SAFETY_BLOCKED
 
         # S3: Harmful state → no conversion-oriented intervention

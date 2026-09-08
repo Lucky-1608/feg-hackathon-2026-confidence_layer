@@ -174,7 +174,7 @@ class TestS4UnknownSafetyState:
         now: datetime,
     ) -> None:
         result = safety_contract.evaluate_safety(no_freshness_safety_context, now)
-        assert result.status == SafetyStatus.BLOCKED
+        assert result.status == SafetyStatus.UNKNOWN
         assert SafetyBlockReason.UNKNOWN_SAFETY_STATE in result.block_reasons
 
     def test_unknown_state_maps_to_insufficient_confidence(
@@ -195,7 +195,7 @@ class TestS5SafetyDependencyUnavailable:
         now: datetime,
     ) -> None:
         result = safety_contract.evaluate_safety(stale_safety_context, now)
-        assert result.status == SafetyStatus.BLOCKED
+        assert result.status == SafetyStatus.STALE
         assert SafetyBlockReason.SAFETY_DEPENDENCY_UNAVAILABLE in result.block_reasons
 
     def test_dependency_unavailable_maps_to_system_failure(
