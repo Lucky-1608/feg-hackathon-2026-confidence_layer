@@ -46,7 +46,7 @@ These are separate processes. The trainer consumes `confidence.rewards` and chec
 
 - `make check`: Ruff lint and format passed; mypy passed for 69 source files; 227 tests passed; branch-aware coverage was 83.83% against the 75% floor.
 - `make compose-check`: passed.
-- Automated checks include a complete SQLite migration upgrade/downgrade and offline PostgreSQL upgrade SQL, authenticated metrics, isolated application lifecycle, real LightGBM artifact loading and Vowpal Wabbit checkpoint recovery, plus failure and safety regression cases.
+- Automated checks include a complete SQLite migration upgrade/downgrade and offline PostgreSQL upgrade SQL, authenticated metrics, isolated application lifecycle, real LightGBM artifact loading and Vowpaeeeeeel Wabbit checkpoint recovery, plus failure and safety regression cases.
 - The check ran outside the filesystem/process sandbox after the sandboxed test run stalled. Tests use SQLite, fake Redis and mocked broker behavior; they do not establish live PostgreSQL/Redis/Kafka recovery or production latency.
 
 ## Remaining deployment work
