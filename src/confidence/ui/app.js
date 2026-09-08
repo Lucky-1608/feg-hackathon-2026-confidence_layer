@@ -210,3 +210,42 @@ async function evaluateDecision() {
         document.getElementById('btn-spinner').classList.add('hidden');
     }
 }
+
+
+// ==========================================
+// 1-CLICK DEMO SCENARIOS
+// ==========================================
+
+async function playScenario(type) {
+    resetTelemetry();
+    
+    // Reset all toggles
+    document.getElementById('toggle-self').checked = false;
+    document.getElementById('toggle-limits').checked = false;
+    document.getElementById('toggle-chasing').checked = false;
+    document.getElementById('toggle-escalating').checked = false;
+    document.getElementById('toggle-stale').checked = false;
+    updateSafetyState();
+
+    if (type === 'normal') {
+        setTimeout(() => toggleSelection('1'), 500); // User clicks odds
+        setTimeout(() => evaluateDecision(), 1500); // User confirms instantly
+    } 
+    else if (type === 'hesitation') {
+        setTimeout(() => toggleSelection('1'), 500); // User clicks odds
+        setTimeout(() => {
+            // User hesitates for a long time staring at the market
+            telemetry.dwell_time_seconds = 22.0; 
+            updateTelemetryDisplay();
+        }, 1500);
+        setTimeout(() => evaluateDecision(), 2500); // User finally confirms, triggers MARKET_MEANING
+    }
+    else if (type === 'loss_chasing') {
+        // Backend flags user as loss chasing
+        document.getElementById('toggle-chasing').checked = true;
+        updateSafetyState();
+        
+        setTimeout(() => toggleSelection('1'), 500); 
+        setTimeout(() => evaluateDecision(), 1000); // Safety block kicks in immediately
+    }
+}
