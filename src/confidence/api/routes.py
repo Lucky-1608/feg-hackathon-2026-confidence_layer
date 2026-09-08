@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import time
 
 from fastapi import APIRouter, Depends, Header, HTTPException, Request, status
 from fastapi.responses import JSONResponse
@@ -17,6 +18,7 @@ from confidence.domain.event_contracts import ConfidenceEvent
 from confidence.infrastructure.event_bus import EventPublisher
 from confidence.infrastructure.session_state import RedisIdempotencyStore
 from confidence.log import get_logger
+from confidence.observability.metrics import DECISION_LATENCY, DECISION_REQUESTS, EVENT_INGESTION
 
 logger = get_logger("confidence.api.routes")
 router = APIRouter()
@@ -48,14 +50,19 @@ async def create_decision(
 ) -> DecisionResponse | JSONResponse:
     """Handle a decision request."""
     # 1. Idempotency Check
+    start_time = time.time()
     if idempotency_key:
         cached_response = await idemp_store.get_response(idempotency_key)
         if cached_response:
             logger.info("idempotent_hit", key=idempotency_key)
+            DECISION_REQUESTS.labels(status="success_cached").inc()
+            DECISION_LATENCY.observe(time.time() - start_time)
             return JSONResponse(status_code=200, content=cached_response)
 
         acquired = await idemp_store.acquire(idempotency_key)
         if not acquired:
+            DECISION_REQUESTS.labels(status="error_conflict").inc()
+            DECISION_LATENCY.observe(time.time() - start_time)
             raise HTTPException(status_code=409, detail="Request already in progress")
 
     try:
@@ -91,13 +98,19 @@ async def create_decision(
             resp_dict = json.loads(response.model_dump_json())
             await idemp_store.save_response(idempotency_key, resp_dict)
 
+        DECISION_REQUESTS.labels(status="success").inc()
+        DECISION_LATENCY.observe(time.time() - start_time)
         return response
     except ValidationError as e:
+        DECISION_REQUESTS.labels(status="error_validation").inc()
+        DECISION_LATENCY.observe(time.time() - start_time)
         raise HTTPException(
             status_code=status.HTTP_422_UNPROCESSABLE_ENTITY, detail={"error": "validation_error", "messages": e.errors()}
         ) from e
     except Exception as e:
         logger.error("api_error", error=str(e))
+        DECISION_REQUESTS.labels(status="error_internal").inc()
+        DECISION_LATENCY.observe(time.time() - start_time)
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail={"error": "internal_error", "message": "Internal Server Error"},
@@ -117,6 +130,7 @@ async def ingest_event(
 ) -> dict[str, str]:
     try:
         await publisher.publish(event)
+        EVENT_INGESTION.labels(event_type=event.event_type.value).inc()
         return {"status": "accepted"}
     except Exception as e:
         logger.error(
