@@ -2,13 +2,15 @@
 
 from __future__ import annotations
 
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends, HTTPException, Request, status
 from pydantic import ValidationError
 
 from confidence.api.dependencies import get_decision_engine
 from confidence.api.models import CreateDecisionRequest, DecisionResponse
 from confidence.application.context_builder import DecisionRequest
 from confidence.application.engine import DecisionEngine
+from confidence.domain.event_contracts import ConfidenceEvent
+from confidence.log import get_logger
 
 router = APIRouter()
 
@@ -60,4 +62,36 @@ async def create_decision(
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail="Internal Server Error",
+        ) from e
+
+
+logger = get_logger("confidence.api.routes")
+
+
+@router.post(
+    "/v1/events",
+    status_code=status.HTTP_202_ACCEPTED,
+    summary="Ingest Client Events",
+    description="Ingest a domain event from the client and publish it to the event bus.",
+)
+async def ingest_event(
+    event: ConfidenceEvent,
+    request: Request,
+) -> dict[str, str]:
+    try:
+        from confidence.api.dependencies import get_event_publisher
+
+        publisher = get_event_publisher()
+        await publisher.publish(event)
+        return {"status": "accepted"}
+    except Exception as e:
+        logger.error(
+            "event_ingestion_error",
+            error=str(e),
+            event_id=str(event.event_id),
+            path=request.url.path,
+        )
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="Failed to ingest event",
         ) from e

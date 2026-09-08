@@ -55,6 +55,16 @@ class ServerConfig:
 
 
 @dataclass(frozen=True)
+class RedisConfig:
+    url: str = "redis://localhost:6379/0"
+
+
+@dataclass(frozen=True)
+class KafkaConfig:
+    bootstrap_servers: str = "localhost:19092"
+
+
+@dataclass(frozen=True)
 class AppConfig:
     """Top-level application configuration."""
 
@@ -64,6 +74,8 @@ class AppConfig:
     safety: SafetyConfig = field(default_factory=SafetyConfig)
     decision: DecisionConfig = field(default_factory=DecisionConfig)
     server: ServerConfig = field(default_factory=ServerConfig)
+    redis: RedisConfig = field(default_factory=RedisConfig)
+    kafka: KafkaConfig = field(default_factory=KafkaConfig)
 
 
 def load_config() -> AppConfig:
@@ -100,4 +112,6 @@ def load_config() -> AppConfig:
             host=os.getenv("HOST", "0.0.0.0"),
             port=int(os.getenv("PORT", "8000")),
         ),
+        redis=RedisConfig(url=os.getenv("REDIS_URL", "redis://localhost:6379/0")),
+        kafka=KafkaConfig(bootstrap_servers=os.getenv("KAFKA_BOOTSTRAP_SERVERS", "localhost:19092")),
     )

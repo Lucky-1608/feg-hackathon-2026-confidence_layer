@@ -31,10 +31,18 @@ async def lifespan(app: FastAPI) -> AsyncIterator[None]:
     # Store config in app state for access by dependencies
     app.state.config = config
 
+    # Initialize event publisher
+    from confidence.api.dependencies import get_event_publisher
+
+    publisher = get_event_publisher()
+    await publisher.start()
+
     yield  # Application is running
 
     # Graceful shutdown
     log.info("shutdown_begin")
+
+    await publisher.stop()
 
     # Dispose database engine if cached
     from confidence.api.dependencies import _engine_cache

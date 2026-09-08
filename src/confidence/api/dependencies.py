@@ -30,6 +30,7 @@ from confidence.domain.ports import MarketProvider, PersistenceProvider, SafetyP
 from confidence.domain.response import ResponseGenerator
 from confidence.domain.safety import SafetyContract
 from confidence.domain.state import StateEstimator
+from confidence.infrastructure.event_bus import EventPublisher, KafkaEventPublisher
 from confidence.infrastructure.persistence import DatabasePersistenceProvider
 
 # Engine cache — allows lifespan to dispose on shutdown
@@ -172,3 +173,18 @@ def get_decision_engine(
         persistence=get_persistence_provider(),
         timeout_ms=config.decision.timeout_ms,
     )
+
+
+_publisher_cache: dict[str, EventPublisher] = {}
+
+
+def get_event_publisher() -> EventPublisher:
+    """Get the event publisher instance."""
+    if "publisher" not in _publisher_cache:
+        config = load_config()
+        # In a real app we'd await start() during app lifespan,
+        # but since this is called synchronously via Depends...
+        # Wait, get_event_publisher is called inside the route body synchronously,
+        # but start() is async. We should initialize it in lifespan.
+        _publisher_cache["publisher"] = KafkaEventPublisher(bootstrap_servers=config.kafka.bootstrap_servers)
+    return _publisher_cache["publisher"]

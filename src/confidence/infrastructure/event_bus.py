@@ -21,6 +21,14 @@ logger = get_logger("confidence.event_bus")
 class EventPublisher(Protocol):
     """Interface for publishing events."""
 
+    async def start(self) -> None:
+        """Start the publisher."""
+        ...
+
+    async def stop(self) -> None:
+        """Stop the publisher."""
+        ...
+
     async def publish(self, event: ConfidenceEvent) -> None:
         """Publish a domain event to the message broker."""
         ...
@@ -82,6 +90,12 @@ class InMemoryEventPublisher(EventPublisher):
 
     def __init__(self) -> None:
         self.published_events: list[ConfidenceEvent] = []
+
+    async def start(self) -> None:
+        pass
+
+    async def stop(self) -> None:
+        pass
 
     async def publish(self, event: ConfidenceEvent) -> None:
         self.published_events.append(event)

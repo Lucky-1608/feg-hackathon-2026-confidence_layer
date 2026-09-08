@@ -12,9 +12,9 @@
     "semantic_hash": "617375b8a972f0aac49b54a2add00f95"
   },
   "pyproject.toml": {
-    "mtime": 1788497970.21426,
-    "seen": 1788498000.610687,
-    "ast_hash": "418c30bb88f604afb5286bd56f711337",
+    "mtime": 1788498530.6678948,
+    "seen": 1788498542.4110513,
+    "ast_hash": "442aa775f18348963ed8dc20b37ca015",
     "semantic_hash": ""
   },
   "src/confidence/__init__.py": {
@@ -411,6 +411,24 @@
     "mtime": 1788498310.241798,
     "seen": 1788498328.824845,
     "ast_hash": "c219737afc32a8dc3b25346395dd326f",
+    "semantic_hash": ""
+  },
+  "src/confidence/infrastructure/event_ordering.py": {
+    "mtime": 1788498408.4532795,
+    "seen": 1788498542.4110744,
+    "ast_hash": "63694d1ba119e2e8cf049300720dafe4",
+    "semantic_hash": ""
+  },
+  "src/confidence/infrastructure/session_state.py": {
+    "mtime": 1788498506.5717723,
+    "seen": 1788498542.4110763,
+    "ast_hash": "8a92f851d0a78a65abcb5fc4ce36b2a5",
+    "semantic_hash": ""
+  },
+  "tests/test_session_state.py": {
+    "mtime": 1788498387.530176,
+    "seen": 1788498542.4110875,
+    "ast_hash": "2434cd4cab5aebd826e25731670071d3",
     "semantic_hash": ""
   }
 }
