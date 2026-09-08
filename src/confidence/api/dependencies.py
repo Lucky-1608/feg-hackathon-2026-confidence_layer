@@ -1,9 +1,13 @@
-"""Dependency injection for the API."""
+"""Dependency injection for the API.
+
+Wires together domain authorities, provider adapters, and infrastructure.
+Demo providers are used by default; production adapters plug in via configuration.
+"""
 
 from __future__ import annotations
 
-from datetime import UTC
-from functools import lru_cache
+from datetime import UTC, datetime
+from decimal import Decimal
 from uuid import UUID
 
 from fastapi import Depends
@@ -14,6 +18,7 @@ from confidence.application.engine import DecisionEngine, PersistenceProvider
 from confidence.config import load_config
 from confidence.domain.actions import ActionRegistry
 from confidence.domain.models import (
+    HarmIndicators,
     MarketContext,
     OddsSnapshot,
     SafetyContext,
@@ -27,29 +32,36 @@ from confidence.domain.state import StateEstimator
 from confidence.infrastructure.persistence import DatabasePersistenceProvider
 from confidence.infrastructure.providers import MarketProvider, SafetyProvider, SlipProvider
 
+# Engine cache — allows lifespan to dispose on shutdown
+_engine_cache: dict[str, AsyncEngine] = {}
+
 
 class DummySafetyProvider(SafetyProvider):
-    async def get_safety_context(self, session_id: UUID, actor_id: str) -> SafetyContext:
-        from datetime import datetime
+    """Synthetic safety provider for demo scenarios.
 
-        if actor_id == "actor-safety-down":
-            raise Exception("Simulated Safety Service Failure")
+    Branches on actor_id — NEVER use in production.
+    """
 
-        from confidence.domain.models import HarmIndicators
+    async def get_safety_context(self, session_id: UUID, anonymous_actor_id: str) -> SafetyContext:
+        if anonymous_actor_id == "actor-safety-down":
+            raise RuntimeError("Simulated Safety Service Failure")
 
-        harm = HarmIndicators(rapid_loss_chasing=(actor_id == "actor-harm"))
-        is_excluded = actor_id == "actor-self-excluded"
+        harm = HarmIndicators(rapid_loss_chasing=(anonymous_actor_id == "actor-harm"))
+        is_excluded = anonymous_actor_id == "actor-self-excluded"
 
-        return SafetyContext(is_self_excluded=is_excluded, harm_indicators=harm, data_freshness=datetime.now(UTC))
+        return SafetyContext(
+            is_self_excluded=is_excluded,
+            harm_indicators=harm,
+            data_freshness=datetime.now(UTC),
+        )
 
 
 class DummySlipProvider(SlipProvider):
+    """Synthetic slip provider for demo scenarios."""
+
     async def get_slip_context(self, slip_id: str) -> SlipContext:
         if slip_id == "slip-down":
-            raise Exception("Simulated Slip Service Failure")
-
-        from datetime import datetime
-        from decimal import Decimal
+            raise RuntimeError("Simulated Slip Service Failure")
 
         odds_hist = []
         if slip_id != "slip-missing-odds":
@@ -81,9 +93,9 @@ class DummySlipProvider(SlipProvider):
 
 
 class DummyMarketProvider(MarketProvider):
-    async def get_market_context(self, market_id: str) -> MarketContext:
-        from datetime import datetime
+    """Synthetic market provider for demo scenarios."""
 
+    async def get_market_context(self, market_id: str) -> MarketContext:
         return MarketContext(
             market_id=market_id,
             market_name="Match Winner",
@@ -93,15 +105,18 @@ class DummyMarketProvider(MarketProvider):
         )
 
 
-@lru_cache
 def get_engine() -> AsyncEngine:
-    config = load_config()
-    return create_async_engine(
-        config.database.url,
-        pool_size=config.database.pool_size,
-        max_overflow=config.database.max_overflow,
-        echo=False,
-    )
+    """Get or create the async database engine."""
+    if "engine" not in _engine_cache:
+        config = load_config()
+        _engine_cache["engine"] = create_async_engine(
+            config.database.url,
+            pool_size=config.database.pool_size,
+            max_overflow=config.database.max_overflow,
+            pool_pre_ping=True,
+            echo=False,
+        )
+    return _engine_cache["engine"]
 
 
 def get_persistence_provider() -> PersistenceProvider:
@@ -146,7 +161,6 @@ def get_decision_engine(
     policy_selector: PolicySelector = Depends(get_policy_selector),  # noqa: B008
     response_generator: ResponseGenerator = Depends(get_response_generator),  # noqa: B008
 ) -> DecisionEngine:
-
     config = load_config()
     return DecisionEngine(
         context_builder=context_builder,

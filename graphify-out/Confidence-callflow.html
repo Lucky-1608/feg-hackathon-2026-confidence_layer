@@ -1,0 +1,1060 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Confidence — Complete Call Flow &amp; Architecture Documentation</title>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+<style>
+:root {
+  --bg: #0f172a; --surface: #1e293b; --border: #334155;
+  --text: #e2e8f0; --muted: #94a3b8; --accent: #38bdf8;
+  --warn: #fbbf24; --err: #f87171; --ok: #34d399;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; }
+.container { max-width: 1200px; margin: 0 auto; padding: 40px 24px; }
+h1 { font-size: 2.4rem; margin-bottom: 8px; background: linear-gradient(135deg, var(--accent), #a78bfa); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+h2 { font-size: 1.7rem; margin: 48px 0 16px; padding-bottom: 8px; border-bottom: 2px solid var(--accent); }
+h3 { font-size: 1.25rem; margin: 32px 0 12px; color: var(--accent); }
+h4 { font-size: 1.05rem; margin: 20px 0 8px; color: var(--warn); }
+p { margin: 8px 0; color: var(--muted); }
+.subtitle { color: var(--muted); font-size: 1.1rem; margin-bottom: 32px; }
+.mermaid { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 24px; margin: 20px 0; overflow-x: auto; position: relative; }
+.mermaid.is-enhanced { padding: 0; overflow: hidden; min-height: 260px; }
+.mermaid-viewport { padding: 54px 24px 24px; overflow: hidden; cursor: grab; touch-action: none; min-height: 260px; }
+.mermaid-viewport.is-dragging { cursor: grabbing; }
+.mermaid-viewport svg { max-width: none !important; height: auto; transform-origin: 0 0; transition: transform 120ms ease; }
+.mermaid-toolbar { position: absolute; top: 10px; right: 10px; z-index: 3; display: flex; align-items: center; gap: 6px; padding: 6px; background: rgba(15,23,42,0.92); border: 1px solid var(--border); border-radius: 8px; box-shadow: 0 8px 24px rgba(0,0,0,0.28); }
+.mermaid-toolbar button, .mermaid-toolbar .zoom-level { height: 28px; min-width: 32px; border: 1px solid var(--border); border-radius: 6px; background: #1e293b; color: var(--text); font: 600 0.78rem system-ui, sans-serif; display: inline-flex; align-items: center; justify-content: center; }
+.mermaid-toolbar button { cursor: pointer; }
+.mermaid-toolbar button:hover { border-color: var(--accent); color: var(--accent); }
+.mermaid-toolbar .zoom-level { min-width: 52px; color: var(--muted); background: transparent; }
+.call-table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 0.92rem; }
+.call-table th { background: #1a2744; color: var(--accent); text-align: left; padding: 10px 14px; border: 1px solid var(--border); }
+.call-table td { padding: 8px 14px; border: 1px solid var(--border); vertical-align: top; }
+.call-table tr:nth-child(even) { background: rgba(255,255,255,0.02); }
+.tag { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 0.8rem; font-weight: 600; }
+.tag-async { background: #7c3aed33; color: #a78bfa; }
+.tag-class { background: #05966933; color: var(--ok); }
+.tag-func { background: #2563eb33; color: var(--accent); }
+.tag-cmd { background: #d9770633; color: var(--warn); }
+.tag-endpoint { background: #dc262633; color: var(--err); }
+.tag-hook { background: #db277733; color: #f472b6; }
+.card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 20px; margin: 16px 0; }
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 16px; margin: 16px 0; }
+.arrow-chain { font-family: 'Fira Code', monospace; font-size: 0.85rem; color: var(--accent); padding: 10px; background: rgba(56,189,248,0.06); border-radius: 6px; }
+code { font-family: 'Fira Code', 'Cascadia Code', monospace; background: rgba(255,255,255,0.06); padding: 1px 6px; border-radius: 3px; font-size: 0.88em; }
+ul, ol { margin: 8px 0 8px 24px; color: var(--muted); }
+li { margin: 4px 0; }
+a { color: var(--accent); }
+hr { border: none; border-top: 1px solid var(--border); margin: 40px 0; }
+.nav { position: sticky; top: 0; background: var(--bg); z-index: 10; padding: 12px 0; border-bottom: 1px solid var(--border); display: flex; gap: 20px; flex-wrap: wrap; font-size: 0.9rem; }
+.nav a { text-decoration: none; }
+.nav a:hover { text-decoration: underline; }
+@media (max-width: 768px) { .container { padding: 16px; } h1 { font-size: 1.8rem; } }
+
+</style>
+</head>
+<body>
+<div class="container">
+
+<h1>Confidence — Complete Call Flow &amp; Architecture Documentation</h1>
+<p class="subtitle">Generated from graphify knowledge graph: 489 nodes, 1190 edges, 17 communities. Commit: 028f8a7</p>
+
+<div class="nav">
+    <a href="#overview">Architecture Overview</a>
+    <a href="#build-graph">Graph Build</a>
+    <a href="#tests-fixtures">Tests &amp; Fixtures</a>
+    <a href="#database-module-init">Database Module Init</a>
+</div>
+
+<!-- ====== Architecture Overview ====== -->
+<h2 id="overview">1. Architecture Overview</h2>
+
+<div class="mermaid">
+
+%%{init: {"theme": "dark", "themeVariables": {"fontSize": "15.0px", "fontFamily": "Segoe UI, system-ui, sans-serif", "primaryColor": "#1e293b", "primaryTextColor": "#e2e8f0", "primaryBorderColor": "#38bdf8", "secondaryColor": "#0f172a", "tertiaryColor": "#334155", "lineColor": "#64748b", "textColor": "#e2e8f0"}, "flowchart": {"htmlLabels": true, "curve": "basis", "nodeSpacing": 48, "rankSpacing": 64, "padding": 14, "diagramPadding": 10, "useMaxWidth": true}}}%%
+flowchart LR
+    BUILD_GRAPH_321CBB04("Graph Build<br/><small>171 nodes</small>")
+    class BUILD_GRAPH_321CBB04 module;
+    TESTS_FIXTURES_B84B1DCC("Tests &amp; Fixtures<br/><small>317 nodes</small>")
+    class TESTS_FIXTURES_B84B1DCC module;
+    DATABASE_MODULE_INIT_1FA10838("Database Module Init<br/><small>1 nodes</small>")
+    class DATABASE_MODULE_INIT_1FA10838 module;
+    BUILD_GRAPH_321CBB04 -->|imports x136| TESTS_FIXTURES_B84B1DCC
+    TESTS_FIXTURES_B84B1DCC -->|uses x72| BUILD_GRAPH_321CBB04
+    classDef entry fill:#422006,stroke:#fbbf24,color:#fde68a,stroke-width:1px;
+    classDef api fill:#450a0a,stroke:#f87171,color:#fee2e2,stroke-width:1px;
+    classDef async fill:#2e1065,stroke:#a78bfa,color:#ede9fe,stroke-width:1px;
+    classDef klass fill:#064e3b,stroke:#34d399,color:#d1fae5,stroke-width:1px;
+    classDef ui fill:#831843,stroke:#f472b6,color:#fce7f3,stroke-width:1px;
+    classDef module fill:#172554,stroke:#60a5fa,color:#dbeafe,stroke-width:1px;
+    classDef test fill:#3f3f46,stroke:#a1a1aa,color:#f4f4f5,stroke-width:1px;
+    classDef concept fill:#292524,stroke:#a8a29e,color:#fafaf9,stroke-dasharray:4 3;
+    classDef function fill:#0f172a,stroke:#38bdf8,color:#e0f2fe,stroke-width:1px;
+</div>
+
+<div class="grid">
+  <div class="card">
+    <h4>Architecture Layers</h4>
+    <table style="width:100%;font-size:0.85rem;">
+      <tr><th>Layer</th><th>Nodes</th><th>Communities</th></tr>
+      <tr><td>Graph Build</td><td>171</td><td><code>2, 4, 6, 10, 12, 13, 14</code></td></tr><tr><td>Tests &amp; Fixtures</td><td>317</td><td><code>0, 1, 3, 5, 7, 8, 9, 11, 16</code></td></tr><tr><td>Database Module Init</td><td>1</td><td><code>15</code></td></tr>
+    </table>
+  </div>
+  <div class="card">
+    <h4>Core Flow</h4>
+    <div class="arrow-chain">Database Module Init -&gt; Graph Build -&gt; Tests &amp; Fixtures</div>
+  </div>
+</div>
+<div class="grid">
+  <div class="card">
+    <h4>Graph Report Highlights</h4>
+    <ul>
+      <li>489 nodes · 1190 edges · 17 communities (12 shown, 2 thin omitted)</li>
+      <li>Extraction: 86% EXTRACTED · 14% INFERRED · 0% AMBIGUOUS · INFERRED: 170 edges (avg confidence: 0.95)</li>
+      <li>Token cost: 0 input · 0 output</li>
+      <li>1. `SafetyContract` - 56 edges</li>
+      <li>2. `ActionRegistry` - 56 edges</li>
+      <li>3. `ActionId` - 43 edges</li>
+    </ul>
+  </div>
+</div>
+<hr>
+<!-- ====== 2. Graph Build ====== -->
+<h2 id="build-graph">2. Graph Build</h2>
+<p>Graph Build groups implementation around confidence, domain, test, context, mostly in src/confidence/config.py, confidence/api/dependencies.py, confidence/infrastructure/providers.py. This section covers 171 nodes and 319 internal edges; the diagram shows only representative relationships to stay readable.</p>
+
+<div class="mermaid">
+%%{init: {"theme": "dark", "themeVariables": {"fontSize": "15.0px", "fontFamily": "Segoe UI, system-ui, sans-serif", "primaryColor": "#1e293b", "primaryTextColor": "#e2e8f0", "primaryBorderColor": "#38bdf8", "secondaryColor": "#0f172a", "tertiaryColor": "#334155", "lineColor": "#64748b", "textColor": "#e2e8f0"}, "flowchart": {"htmlLabels": true, "curve": "basis", "nodeSpacing": 48, "rankSpacing": 64, "padding": 14, "diagramPadding": 10, "useMaxWidth": true}}}%%
+flowchart LR
+    %% Section: Graph Build (171 nodes, 319 edges)
+    subgraph build_graph_confidence_api_dependencies_py_c6d0d89b["confidence/api/dependencies.py"]
+        src_confidence_api_dependencies_7db2d192("dependencies.py")
+        src_confidence_api_dependencies_dummymarketprovi_7a4d1d8a("DummyMarketProvider<br/><small>confidence/api/dependencies.py</small>")
+        src_confidence_api_dependencies_dummymarketprovi_9d8d8656("get_market_context()<br/><small>confidence/api/dependencies.py</small>")
+        src_confidence_api_dependencies_dummyslipprovide_16bc3509("DummySlipProvider<br/><small>confidence/api/dependencies.py</small>")
+        src_confidence_api_dependencies_dummyslipprovide_e6be3263("get_slip_context()<br/><small>confidence/api/dependencies.py</small>")
+    end
+    subgraph build_graph_confidence_application_context_build_51217f8b["confidence/application/context_builder.py"]
+        src_confidence_application_context_builder_bf54f66e("context_builder.py")
+        src_confidence_application_context_builder_conte_7573a761("ContextBuilder<br/><small>confidence/application/context_builder.py</small>")
+        src_confidence_application_context_builder_conte_05c4a9c5("__init__()<br/><small>confidence/application/context_builder.py</small>")
+        src_confidence_application_context_builder_conte_0f25f785("build()<br/><small>confidence/application/context_builder.py</small>")
+    end
+    subgraph build_graph_confidence_application_engine_py_c4389656["confidence/application/engine.py"]
+        src_confidence_application_engine_82b355c7("engine.py")
+        src_confidence_application_engine_persistencepro_d6bb6f9b("PersistenceProvider<br/><small>confidence/application/engine.py</small>")
+        src_confidence_application_engine_persistencepro_b39e049c("persist_decision()<br/><small>confidence/application/engine.py</small>")
+    end
+    subgraph build_graph_confidence_domain_policy_py_624de14c["confidence/domain/policy.py"]
+        src_confidence_domain_policy_policyselector_974deb47("PolicySelector<br/><small>confidence/domain/policy.py</small>")
+        src_confidence_domain_policy_policyselector_init_bbc09c58("__init__()<br/><small>confidence/domain/policy.py</small>")
+    end
+    src_confidence_api_app_8c623024("app.py")
+    src_confidence_domain_init_1391904c("__init__.py")
+    src_confidence_infrastructure_persistence_databa_db8ea834("DatabasePersistenceProvider<br/><small>confidence/infrastructure/persistence.py</small>")
+    tests_test_engine_24c960b8("test_engine.py")
+    src_confidence_api_dependencies_dummymarketprovi_7a4d1d8a -->|method| src_confidence_api_dependencies_dummymarketprovi_9d8d8656
+    src_confidence_api_dependencies_dummyslipprovide_16bc3509 -->|method| src_confidence_api_dependencies_dummyslipprovide_e6be3263
+    src_confidence_application_context_builder_conte_7573a761 -->|method| src_confidence_application_context_builder_conte_05c4a9c5
+    src_confidence_application_context_builder_conte_7573a761 -->|method| src_confidence_application_context_builder_conte_0f25f785
+    src_confidence_application_engine_persistencepro_d6bb6f9b -->|method| src_confidence_application_engine_persistencepro_b39e049c
+    src_confidence_domain_policy_policyselector_974deb47 -->|method| src_confidence_domain_policy_policyselector_init_bbc09c58
+    src_confidence_api_dependencies_7db2d192 -->|imports| src_confidence_application_context_builder_conte_7573a761
+    src_confidence_api_dependencies_7db2d192 -->|imports| src_confidence_application_engine_persistencepro_d6bb6f9b
+    src_confidence_api_dependencies_7db2d192 -->|imports| src_confidence_domain_policy_policyselector_974deb47
+    src_confidence_api_dependencies_7db2d192 -->|imports| src_confidence_infrastructure_persistence_databa_db8ea834
+    src_confidence_application_engine_82b355c7 -->|imports| src_confidence_application_context_builder_conte_7573a761
+    src_confidence_application_engine_82b355c7 -->|imports| src_confidence_domain_policy_policyselector_974deb47
+    %% Omitted for readability: 153 nodes, 0 edges
+    class src_confidence_api_dependencies_7db2d192 module;
+    class src_confidence_api_dependencies_dummymarketprovi_7a4d1d8a klass;
+    class src_confidence_api_dependencies_dummymarketprovi_9d8d8656 function;
+    class src_confidence_api_dependencies_dummyslipprovide_16bc3509 klass;
+    class src_confidence_api_dependencies_dummyslipprovide_e6be3263 function;
+    class src_confidence_application_context_builder_bf54f66e module;
+    class src_confidence_application_context_builder_conte_7573a761 klass;
+    class src_confidence_application_context_builder_conte_05c4a9c5 function;
+    class src_confidence_application_context_builder_conte_0f25f785 function;
+    class src_confidence_application_engine_82b355c7 module;
+    class src_confidence_application_engine_persistencepro_d6bb6f9b klass;
+    class src_confidence_application_engine_persistencepro_b39e049c function;
+    class src_confidence_domain_policy_policyselector_974deb47 klass;
+    class src_confidence_domain_policy_policyselector_init_bbc09c58 function;
+    class src_confidence_api_app_8c623024 module;
+    class src_confidence_domain_init_1391904c module;
+    class src_confidence_infrastructure_persistence_databa_db8ea834 klass;
+    class tests_test_engine_24c960b8 test;
+    classDef entry fill:#422006,stroke:#fbbf24,color:#fde68a,stroke-width:1px;
+    classDef api fill:#450a0a,stroke:#f87171,color:#fee2e2,stroke-width:1px;
+    classDef async fill:#2e1065,stroke:#a78bfa,color:#ede9fe,stroke-width:1px;
+    classDef klass fill:#064e3b,stroke:#34d399,color:#d1fae5,stroke-width:1px;
+    classDef ui fill:#831843,stroke:#f472b6,color:#fce7f3,stroke-width:1px;
+    classDef module fill:#172554,stroke:#60a5fa,color:#dbeafe,stroke-width:1px;
+    classDef test fill:#3f3f46,stroke:#a1a1aa,color:#f4f4f5,stroke-width:1px;
+    classDef concept fill:#292524,stroke:#a8a29e,color:#fafaf9,stroke-dasharray:4 3;
+    classDef function fill:#0f172a,stroke:#38bdf8,color:#e0f2fe,stroke-width:1px;
+</div>
+
+<h3>Call Details</h3>
+<table class="call-table">
+<tr>
+  <th style="width:5%">#</th>
+  <th style="width:28%">Node</th>
+  <th style="width:10%">Type</th>
+  <th style="width:17%">Caller</th>
+  <th style="width:20%">Callees</th>
+  <th style="width:20%">Description</th>
+</tr>
+<tr>
+  <td>1</td>
+  <td><code>DummyMarketProvider</code><br><small style="color:var(--muted)">confidence/api/dependencies.py</small></td>
+  <td><span class="tag tag-class">Class</span></td>
+  <td><code>engine()</code><br><small style="color:var(--muted)">tests/test_engine.py</small><br><code>get_context_builder()</code><br><small style="color:var(--muted)">confidence/api/dependencies.py</small></td>
+  <td><code>get_market_context()</code><br><small style="color:var(--muted)">confidence/api/dependencies.py</small></td>
+  <td>DummyMarketProvider node in confidence/api/dependencies.py.</td>
+</tr>
+<tr>
+  <td>2</td>
+  <td><code>DummySlipProvider</code><br><small style="color:var(--muted)">confidence/api/dependencies.py</small></td>
+  <td><span class="tag tag-class">Class</span></td>
+  <td><code>engine()</code><br><small style="color:var(--muted)">tests/test_engine.py</small><br><code>get_context_builder()</code><br><small style="color:var(--muted)">confidence/api/dependencies.py</small><br><code>TestEndToEndScenarios</code><br><small style="color:var(--muted)">tests/test_engine.py</small><br>+1 more</td>
+  <td><code>get_slip_context()</code><br><small style="color:var(--muted)">confidence/api/dependencies.py</small></td>
+  <td>DummySlipProvider node in confidence/api/dependencies.py.</td>
+</tr>
+<tr>
+  <td>3</td>
+  <td><code>ContextBuilder</code><br><small style="color:var(--muted)">confidence/application/context_builder.py</small></td>
+  <td><span class="tag tag-class">Class</span></td>
+  <td><code>DecisionEngine</code><br><small style="color:var(--muted)">confidence/application/engine.py</small><br><code>dependencies.py</code><br><small style="color:var(--muted)">confidence/api/dependencies.py</small><br><code>engine()</code><br><small style="color:var(--muted)">tests/test_engine.py</small><br>+3 more</td>
+  <td><code>__init__()</code><br><small style="color:var(--muted)">confidence/application/context_builder.py</small><br><code>build()</code><br><small style="color:var(--muted)">confidence/application/context_builder.py</small><br><code>MarketProvider</code><br><small style="color:var(--muted)">confidence/infrastructure/providers.py</small><br>+2 more</td>
+  <td>ContextBuilder node in confidence/application/context_builder.py.</td>
+</tr>
+<tr>
+  <td>4</td>
+  <td><code>PersistenceProvider</code><br><small style="color:var(--muted)">confidence/application/engine.py</small></td>
+  <td><span class="tag tag-class">Class</span></td>
+  <td><code>dependencies.py</code><br><small style="color:var(--muted)">confidence/api/dependencies.py</small><br><code>get_persistence_provider()</code><br><small style="color:var(--muted)">confidence/api/dependencies.py</small><br><code>persistence.py</code><br><small style="color:var(--muted)">confidence/infrastructure/persistence.py</small></td>
+  <td><code>persist_decision()</code><br><small style="color:var(--muted)">confidence/application/engine.py</small></td>
+  <td>PersistenceProvider node in confidence/application/engine.py.</td>
+</tr>
+<tr>
+  <td>5</td>
+  <td><code>SlipContext</code><br><small style="color:var(--muted)">confidence/domain/models.py</small></td>
+  <td><span class="tag tag-class">Class</span></td>
+  <td><code>__init__.py</code><br><small style="color:var(--muted)">confidence/domain/__init__.py</small><br><code>build()</code><br><small style="color:var(--muted)">confidence/application/context_builder.py</small><br><code>context_builder.py</code><br><small style="color:var(--muted)">confidence/application/context_builder.py</small><br>+4 more</td>
+  <td>No direct outbound edge</td>
+  <td>SlipContext node in confidence/domain/models.py.</td>
+</tr>
+<tr>
+  <td>6</td>
+  <td><code>PolicySelector</code><br><small style="color:var(--muted)">confidence/domain/policy.py</small></td>
+  <td><span class="tag tag-class">Class</span></td>
+  <td><code>DecisionEngine</code><br><small style="color:var(--muted)">confidence/application/engine.py</small><br><code>dependencies.py</code><br><small style="color:var(--muted)">confidence/api/dependencies.py</small><br><code>engine()</code><br><small style="color:var(--muted)">tests/test_engine.py</small><br>+7 more</td>
+  <td><code>__init__()</code><br><small style="color:var(--muted)">confidence/domain/policy.py</small><br><code>ActionCategory</code><br><small style="color:var(--muted)">confidence/domain/enums.py</small><br><code>ActionDefinition</code><br><small style="color:var(--muted)">confidence/domain/actions.py</small><br>+3 more</td>
+  <td>PolicySelector node in confidence/domain/policy.py.</td>
+</tr>
+<tr>
+  <td>7</td>
+  <td><code>DatabasePersistenceProvider</code><br><small style="color:var(--muted)">confidence/infrastructure/persistence.py</small></td>
+  <td><span class="tag tag-class">Class</span></td>
+  <td><code>dependencies.py</code><br><small style="color:var(--muted)">confidence/api/dependencies.py</small><br><code>get_persistence_provider()</code><br><small style="color:var(--muted)">confidence/api/dependencies.py</small></td>
+  <td><code>__init__()</code><br><small style="color:var(--muted)">confidence/infrastructure/persistence.py</small><br><code>persist_decision()</code><br><small style="color:var(--muted)">confidence/infrastructure/persistence.py</small></td>
+  <td>DatabasePersistenceProvider node in confidence/infrastructure/persistence.py.</td>
+</tr>
+<tr>
+  <td>8</td>
+  <td><code>MarketProvider</code><br><small style="color:var(--muted)">confidence/infrastructure/providers.py</small></td>
+  <td><span class="tag tag-class">Class</span></td>
+  <td><code>context_builder.py</code><br><small style="color:var(--muted)">confidence/application/context_builder.py</small><br><code>ContextBuilder</code><br><small style="color:var(--muted)">confidence/application/context_builder.py</small><br><code>dependencies.py</code><br><small style="color:var(--muted)">confidence/api/dependencies.py</small></td>
+  <td><code>get_market_context()</code><br><small style="color:var(--muted)">confidence/infrastructure/providers.py</small></td>
+  <td>MarketProvider node in confidence/infrastructure/providers.py.</td>
+</tr>
+<tr>
+  <td>9</td>
+  <td><code>SafetyProvider</code><br><small style="color:var(--muted)">confidence/infrastructure/providers.py</small></td>
+  <td><span class="tag tag-class">Class</span></td>
+  <td><code>context_builder.py</code><br><small style="color:var(--muted)">confidence/application/context_builder.py</small><br><code>ContextBuilder</code><br><small style="color:var(--muted)">confidence/application/context_builder.py</small><br><code>dependencies.py</code><br><small style="color:var(--muted)">confidence/api/dependencies.py</small></td>
+  <td><code>get_safety_context()</code><br><small style="color:var(--muted)">confidence/infrastructure/providers.py</small></td>
+  <td>SafetyProvider node in confidence/infrastructure/providers.py.</td>
+</tr>
+<tr>
+  <td>10</td>
+  <td><code>SlipProvider</code><br><small style="color:var(--muted)">confidence/infrastructure/providers.py</small></td>
+  <td><span class="tag tag-class">Class</span></td>
+  <td><code>context_builder.py</code><br><small style="color:var(--muted)">confidence/application/context_builder.py</small><br><code>ContextBuilder</code><br><small style="color:var(--muted)">confidence/application/context_builder.py</small><br><code>dependencies.py</code><br><small style="color:var(--muted)">confidence/api/dependencies.py</small></td>
+  <td><code>get_slip_context()</code><br><small style="color:var(--muted)">confidence/infrastructure/providers.py</small></td>
+  <td>SlipProvider node in confidence/infrastructure/providers.py.</td>
+</tr>
+<tr>
+  <td>11</td>
+  <td><code>DummyPersistenceProvider</code><br><small style="color:var(--muted)">tests/test_engine.py</small></td>
+  <td><span class="tag tag-func">Test</span></td>
+  <td><code>engine()</code><br><small style="color:var(--muted)">tests/test_engine.py</small></td>
+  <td><code>persist_decision()</code><br><small style="color:var(--muted)">tests/test_engine.py</small></td>
+  <td>DummyPersistenceProvider node in tests/test_engine.py.</td>
+</tr>
+<tr>
+  <td>12</td>
+  <td><code>TestPolicySelector</code><br><small style="color:var(--muted)">tests/test_engine.py</small></td>
+  <td><span class="tag tag-func">Test</span></td>
+  <td>External entry / no inbound edge</td>
+  <td><code>ActionId</code><br><small style="color:var(--muted)">confidence/domain/enums.py</small><br><code>ActionRegistry</code><br><small style="color:var(--muted)">confidence/domain/actions.py</small><br><code>PolicySelector</code><br><small style="color:var(--muted)">confidence/domain/policy.py</small><br>+3 more</td>
+  <td>Verifies imports, entry points, or version behavior.</td>
+</tr>
+<tr>
+  <td>13</td>
+  <td><code>.get_market_context()</code><br><small style="color:var(--muted)">confidence/api/dependencies.py</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>DummyMarketProvider</code><br><small style="color:var(--muted)">confidence/api/dependencies.py</small></td>
+  <td><code>MarketContext</code><br><small style="color:var(--muted)">confidence/domain/models.py</small></td>
+  <td>.get_market_context() node in confidence/api/dependencies.py.</td>
+</tr>
+<tr>
+  <td>14</td>
+  <td><code>.get_safety_context()</code><br><small style="color:var(--muted)">confidence/api/dependencies.py</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>DummySafetyProvider</code><br><small style="color:var(--muted)">confidence/api/dependencies.py</small></td>
+  <td><code>HarmIndicators</code><br><small style="color:var(--muted)">confidence/domain/models.py</small><br><code>SafetyContext</code><br><small style="color:var(--muted)">confidence/domain/models.py</small></td>
+  <td>.get_safety_context() node in confidence/api/dependencies.py.</td>
+</tr>
+<tr>
+  <td>15</td>
+  <td><code>.get_slip_context()</code><br><small style="color:var(--muted)">confidence/api/dependencies.py</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>DummySlipProvider</code><br><small style="color:var(--muted)">confidence/api/dependencies.py</small></td>
+  <td><code>OddsSnapshot</code><br><small style="color:var(--muted)">confidence/domain/models.py</small><br><code>Selection</code><br><small style="color:var(--muted)">confidence/domain/models.py</small><br><code>SlipContext</code><br><small style="color:var(--muted)">confidence/domain/models.py</small></td>
+  <td>.get_slip_context() node in confidence/api/dependencies.py.</td>
+</tr>
+<tr>
+  <td>16</td>
+  <td><code>get_action_registry()</code><br><small style="color:var(--muted)">confidence/api/dependencies.py</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td><code>ActionRegistry</code><br><small style="color:var(--muted)">confidence/domain/actions.py</small></td>
+  <td>get_action_registry() node in confidence/api/dependencies.py.</td>
+</tr>
+<tr>
+  <td>17</td>
+  <td><code>get_context_builder()</code><br><small style="color:var(--muted)">confidence/api/dependencies.py</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td><code>ContextBuilder</code><br><small style="color:var(--muted)">confidence/application/context_builder.py</small><br><code>DummyMarketProvider</code><br><small style="color:var(--muted)">confidence/api/dependencies.py</small><br><code>DummySafetyProvider</code><br><small style="color:var(--muted)">confidence/api/dependencies.py</small><br>+1 more</td>
+  <td>get_context_builder() node in confidence/api/dependencies.py.</td>
+</tr>
+<tr>
+  <td>18</td>
+  <td><code>get_decision_engine()</code><br><small style="color:var(--muted)">confidence/api/dependencies.py</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>routes.py</code><br><small style="color:var(--muted)">confidence/api/routes.py</small></td>
+  <td><code>ActionRegistry</code><br><small style="color:var(--muted)">confidence/domain/actions.py</small><br><code>ContextBuilder</code><br><small style="color:var(--muted)">confidence/application/context_builder.py</small><br><code>DecisionEngine</code><br><small style="color:var(--muted)">confidence/application/engine.py</small><br>+6 more</td>
+  <td>get_decision_engine() node in confidence/api/dependencies.py.</td>
+</tr>
+<tr>
+  <td>19</td>
+  <td><code>get_engine()</code><br><small style="color:var(--muted)">confidence/api/dependencies.py</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>get_persistence_provider()</code><br><small style="color:var(--muted)">confidence/api/dependencies.py</small></td>
+  <td><code>load_config()</code><br><small style="color:var(--muted)">src/confidence/config.py</small></td>
+  <td>get_engine() node in confidence/api/dependencies.py.</td>
+</tr>
+<tr>
+  <td>20</td>
+  <td><code>get_persistence_provider()</code><br><small style="color:var(--muted)">confidence/api/dependencies.py</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>get_decision_engine()</code><br><small style="color:var(--muted)">confidence/api/dependencies.py</small></td>
+  <td><code>DatabasePersistenceProvider</code><br><small style="color:var(--muted)">confidence/infrastructure/persistence.py</small><br><code>get_engine()</code><br><small style="color:var(--muted)">confidence/api/dependencies.py</small><br><code>PersistenceProvider</code><br><small style="color:var(--muted)">confidence/application/engine.py</small></td>
+  <td>get_persistence_provider() node in confidence/api/dependencies.py.</td>
+</tr>
+<tr>
+  <td>21</td>
+  <td><code>get_policy_selector()</code><br><small style="color:var(--muted)">confidence/api/dependencies.py</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td><code>PolicySelector</code><br><small style="color:var(--muted)">confidence/domain/policy.py</small></td>
+  <td>get_policy_selector() node in confidence/api/dependencies.py.</td>
+</tr>
+<tr>
+  <td>22</td>
+  <td><code>get_safety_contract()</code><br><small style="color:var(--muted)">confidence/api/dependencies.py</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td><code>SafetyContract</code><br><small style="color:var(--muted)">confidence/domain/safety.py</small></td>
+  <td>get_safety_contract() node in confidence/api/dependencies.py.</td>
+</tr>
+<tr>
+  <td>23</td>
+  <td><code>get_state_estimator()</code><br><small style="color:var(--muted)">confidence/api/dependencies.py</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td><code>StateEstimator</code><br><small style="color:var(--muted)">confidence/domain/state.py</small></td>
+  <td>get_state_estimator() node in confidence/api/dependencies.py.</td>
+</tr>
+<tr>
+  <td>24</td>
+  <td><code>.build()</code><br><small style="color:var(--muted)">confidence/application/context_builder.py</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>ContextBuilder</code><br><small style="color:var(--muted)">confidence/application/context_builder.py</small></td>
+  <td><code>DecisionContext</code><br><small style="color:var(--muted)">confidence/domain/models.py</small><br><code>SafetyContext</code><br><small style="color:var(--muted)">confidence/domain/models.py</small><br><code>Session</code><br><small style="color:var(--muted)">confidence/domain/models.py</small><br>+1 more</td>
+  <td>.build() node in confidence/application/context_builder.py.</td>
+</tr>
+<tr>
+  <td>25</td>
+  <td><code>.__init__()</code><br><small style="color:var(--muted)">confidence/application/context_builder.py</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>ContextBuilder</code><br><small style="color:var(--muted)">confidence/application/context_builder.py</small></td>
+  <td>No direct outbound edge</td>
+  <td>.__init__() node in confidence/application/context_builder.py.</td>
+</tr>
+<tr>
+  <td>26</td>
+  <td><code>.__init__()</code><br><small style="color:var(--muted)">confidence/application/engine.py</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>DecisionEngine</code><br><small style="color:var(--muted)">confidence/application/engine.py</small></td>
+  <td>No direct outbound edge</td>
+  <td>.__init__() node in confidence/application/engine.py.</td>
+</tr>
+<tr>
+  <td>27</td>
+  <td><code>.__init__()</code><br><small style="color:var(--muted)">confidence/domain/policy.py</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>PolicySelector</code><br><small style="color:var(--muted)">confidence/domain/policy.py</small></td>
+  <td>No direct outbound edge</td>
+  <td>.__init__() node in confidence/domain/policy.py.</td>
+</tr>
+<tr>
+  <td>28</td>
+  <td><code>.get_market_context()</code><br><small style="color:var(--muted)">confidence/infrastructure/providers.py</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>MarketProvider</code><br><small style="color:var(--muted)">confidence/infrastructure/providers.py</small></td>
+  <td>No direct outbound edge</td>
+  <td>.get_market_context() node in confidence/infrastructure/providers.py.</td>
+</tr>
+<tr>
+  <td>29</td>
+  <td><code>.get_safety_context()</code><br><small style="color:var(--muted)">confidence/infrastructure/providers.py</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>SafetyProvider</code><br><small style="color:var(--muted)">confidence/infrastructure/providers.py</small></td>
+  <td>No direct outbound edge</td>
+  <td>.get_safety_context() node in confidence/infrastructure/providers.py.</td>
+</tr>
+<tr>
+  <td>30</td>
+  <td><code>.get_slip_context()</code><br><small style="color:var(--muted)">confidence/infrastructure/providers.py</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>SlipProvider</code><br><small style="color:var(--muted)">confidence/infrastructure/providers.py</small></td>
+  <td>No direct outbound edge</td>
+  <td>.get_slip_context() node in confidence/infrastructure/providers.py.</td>
+</tr>
+</table>
+
+<div class="grid">
+  <div class="card">
+    <h4>Key Files</h4>
+    <table style="width:100%;font-size:0.85rem;">
+      <tr><th>File</th><th>Coverage</th></tr>
+      <tr><td><code>src/confidence/config.py</code></td><td>16 nodes</td></tr>
+<tr><td><code>confidence/api/dependencies.py</code></td><td>15 nodes</td></tr>
+<tr><td><code>confidence/infrastructure/providers.py</code></td><td>14 nodes</td></tr>
+<tr><td><code>tests/test_engine.py</code></td><td>13 nodes</td></tr>
+<tr><td><code>confidence/domain/models.py</code></td><td>12 nodes</td></tr>
+<tr><td><code>confidence/db/connection.py</code></td><td>10 nodes</td></tr>
+<tr><td><code>confidence/ui/app.js</code></td><td>10 nodes</td></tr>
+<tr><td><code>confidence/domain/enums.py</code></td><td>8 nodes</td></tr>
+    </table>
+  </div>
+  <div class="card">
+    <h4>Design Notes</h4>
+    <p>This section comes from graphify community clustering. Relationship summary: explains x56, contains x55, imports x47, imports x40. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
+  </div>
+</div>
+<hr>
+
+<!-- ====== 3. Tests & Fixtures ====== -->
+<h2 id="tests-fixtures">3. Tests &amp; Fixtures</h2>
+<p>Tests &amp; Fixtures groups implementation around test, tests, confidence, safety, mostly in tests/test_safety_contract.py, tests/test_domain.py, tests/conftest.py. This section covers 317 nodes and 663 internal edges; the diagram shows only representative relationships to stay readable.</p>
+
+<div class="mermaid">
+%%{init: {"theme": "dark", "themeVariables": {"fontSize": "15.0px", "fontFamily": "Segoe UI, system-ui, sans-serif", "primaryColor": "#1e293b", "primaryTextColor": "#e2e8f0", "primaryBorderColor": "#38bdf8", "secondaryColor": "#0f172a", "tertiaryColor": "#334155", "lineColor": "#64748b", "textColor": "#e2e8f0"}, "flowchart": {"htmlLabels": true, "curve": "basis", "nodeSpacing": 48, "rankSpacing": 64, "padding": 14, "diagramPadding": 10, "useMaxWidth": true}}}%%
+flowchart LR
+    %% Section: Tests &amp; Fixtures (317 nodes, 663 edges)
+    subgraph tests_fixtures_confidence_domain_safety_py_76658b02["confidence/domain/safety.py"]
+        src_confidence_domain_safety_safetycontract_951bcd52("SafetyContract<br/><small>confidence/domain/safety.py</small>")
+        src_confidence_domain_safety_safetycontract_chec_db02a3e7("check_state_confidence()<br/><small>confidence/domain/safety.py</small>")
+        src_confidence_domain_safety_safetycontract_chec_06b6f121("check_legitimate_reconsideration()<br/><small>confidence/domain/safety.py</small>")
+        src_confidence_domain_safety_safetycontract_fina_101d753b("final_safety_check()<br/><small>confidence/domain/safety.py</small>")
+        src_confidence_domain_safety_safetycontract_safe_ae8c037f("safety_block_to_no_intervention_reason()<br/><small>confidence/domain/safety.py</small>")
+        src_confidence_domain_safety_safetycontract_is_c_0cf82c8e("is_conversion_oriented()<br/><small>confidence/domain/safety.py</small>")
+        src_confidence_domain_safety_safetycontract_init_0ed05c51("__init__()<br/><small>confidence/domain/safety.py</small>")
+        src_confidence_domain_safety_safetycontract_conf_a0872117("confidence_threshold()<br/><small>confidence/domain/safety.py</small>")
+        src_confidence_domain_safety_safetycontract_eval_a765e0b4("evaluate_safety()<br/><small>confidence/domain/safety.py</small>")
+    end
+    subgraph tests_fixtures_tests_test_engine_py_1e231f5f["tests/test_engine.py"]
+        tests_test_engine_testendtoendscenarios_9f54f149("TestEndToEndScenarios<br/><small>tests/test_engine.py</small>")
+        tests_test_engine_testpropertyinvariants_afdccd2b("TestPropertyInvariants<br/><small>tests/test_engine.py</small>")
+        tests_test_engine_testadversarialandfailures_3ce407b5("TestAdversarialAndFailures<br/><small>tests/test_engine.py</small>")
+    end
+    subgraph tests_fixtures_tests_test_domain_py_f376e754["tests/test_domain.py"]
+        tests_test_domain_testauditrecord_64c70e4c("TestAuditRecord<br/><small>tests/test_domain.py</small>")
+        tests_test_domain_testauditrecord_test_audit_con_2fc7b830("test_audit_contains_full_provenance()<br/><small>tests/test_domain.py</small>")
+    end
+    tests_test_actions_testactioneligibility_377d759a("TestActionEligibility<br/><small>tests/test_actions.py</small>")
+    tests_test_events_testconfidenceevent_73e30e52("TestConfidenceEvent<br/><small>tests/test_events.py</small>")
+    tests_test_safety_contract_testlegitimatereconsi_b8474b57("TestLegitimateReconsideration<br/><small>tests/test_safety_contract.py</small>")
+    tests_test_schema_testschemacreation_07617d3a("TestSchemaCreation<br/><small>tests/test_schema.py</small>")
+    src_confidence_domain_safety_safetycontract_951bcd52 -->|method| src_confidence_domain_safety_safetycontract_chec_db02a3e7
+    src_confidence_domain_safety_safetycontract_951bcd52 -->|method| src_confidence_domain_safety_safetycontract_chec_06b6f121
+    src_confidence_domain_safety_safetycontract_951bcd52 -->|method| src_confidence_domain_safety_safetycontract_fina_101d753b
+    src_confidence_domain_safety_safetycontract_951bcd52 -->|method| src_confidence_domain_safety_safetycontract_safe_ae8c037f
+    src_confidence_domain_safety_safetycontract_951bcd52 -->|method| src_confidence_domain_safety_safetycontract_is_c_0cf82c8e
+    src_confidence_domain_safety_safetycontract_951bcd52 -->|method| src_confidence_domain_safety_safetycontract_init_0ed05c51
+    src_confidence_domain_safety_safetycontract_951bcd52 -->|method| src_confidence_domain_safety_safetycontract_conf_a0872117
+    src_confidence_domain_safety_safetycontract_951bcd52 -->|method| src_confidence_domain_safety_safetycontract_eval_a765e0b4
+    tests_test_domain_testauditrecord_64c70e4c -->|method| tests_test_domain_testauditrecord_test_audit_con_2fc7b830
+    tests_test_safety_contract_testlegitimatereconsi_b8474b57 -->|uses| src_confidence_domain_safety_safetycontract_951bcd52
+    %% Omitted for readability: 299 nodes, 0 edges
+    class src_confidence_domain_safety_safetycontract_951bcd52 klass;
+    class src_confidence_domain_safety_safetycontract_chec_db02a3e7 function;
+    class src_confidence_domain_safety_safetycontract_chec_06b6f121 function;
+    class src_confidence_domain_safety_safetycontract_fina_101d753b function;
+    class src_confidence_domain_safety_safetycontract_safe_ae8c037f function;
+    class src_confidence_domain_safety_safetycontract_is_c_0cf82c8e function;
+    class src_confidence_domain_safety_safetycontract_init_0ed05c51 function;
+    class src_confidence_domain_safety_safetycontract_conf_a0872117 function;
+    class src_confidence_domain_safety_safetycontract_eval_a765e0b4 function;
+    class tests_test_engine_testendtoendscenarios_9f54f149 test;
+    class tests_test_engine_testpropertyinvariants_afdccd2b test;
+    class tests_test_engine_testadversarialandfailures_3ce407b5 test;
+    class tests_test_domain_testauditrecord_64c70e4c test;
+    class tests_test_domain_testauditrecord_test_audit_con_2fc7b830 test;
+    class tests_test_actions_testactioneligibility_377d759a test;
+    class tests_test_events_testconfidenceevent_73e30e52 test;
+    class tests_test_safety_contract_testlegitimatereconsi_b8474b57 test;
+    class tests_test_schema_testschemacreation_07617d3a test;
+    classDef entry fill:#422006,stroke:#fbbf24,color:#fde68a,stroke-width:1px;
+    classDef api fill:#450a0a,stroke:#f87171,color:#fee2e2,stroke-width:1px;
+    classDef async fill:#2e1065,stroke:#a78bfa,color:#ede9fe,stroke-width:1px;
+    classDef klass fill:#064e3b,stroke:#34d399,color:#d1fae5,stroke-width:1px;
+    classDef ui fill:#831843,stroke:#f472b6,color:#fce7f3,stroke-width:1px;
+    classDef module fill:#172554,stroke:#60a5fa,color:#dbeafe,stroke-width:1px;
+    classDef test fill:#3f3f46,stroke:#a1a1aa,color:#f4f4f5,stroke-width:1px;
+    classDef concept fill:#292524,stroke:#a8a29e,color:#fafaf9,stroke-dasharray:4 3;
+    classDef function fill:#0f172a,stroke:#38bdf8,color:#e0f2fe,stroke-width:1px;
+</div>
+
+<h3>Call Details</h3>
+<table class="call-table">
+<tr>
+  <th style="width:5%">#</th>
+  <th style="width:28%">Node</th>
+  <th style="width:10%">Type</th>
+  <th style="width:17%">Caller</th>
+  <th style="width:20%">Callees</th>
+  <th style="width:20%">Description</th>
+</tr>
+<tr>
+  <td>1</td>
+  <td><code>NoInterventionReason</code><br><small style="color:var(--muted)">confidence/domain/enums.py</small></td>
+  <td><span class="tag tag-class">Class</span></td>
+  <td><code>__init__.py</code><br><small style="color:var(--muted)">confidence/domain/__init__.py</small><br><code>AuditRecord</code><br><small style="color:var(--muted)">confidence/domain/models.py</small><br><code>Decision</code><br><small style="color:var(--muted)">confidence/domain/models.py</small><br>+16 more</td>
+  <td>No direct outbound edge</td>
+  <td>NoInterventionReason node in confidence/domain/enums.py.</td>
+</tr>
+<tr>
+  <td>2</td>
+  <td><code>SafetyBlockReason</code><br><small style="color:var(--muted)">confidence/domain/enums.py</small></td>
+  <td><span class="tag tag-class">Class</span></td>
+  <td><code>__init__.py</code><br><small style="color:var(--muted)">confidence/domain/__init__.py</small><br><code>Decision</code><br><small style="color:var(--muted)">confidence/domain/models.py</small><br><code>models.py</code><br><small style="color:var(--muted)">confidence/domain/models.py</small><br>+10 more</td>
+  <td>No direct outbound edge</td>
+  <td>SafetyBlockReason node in confidence/domain/enums.py.</td>
+</tr>
+<tr>
+  <td>3</td>
+  <td><code>SafetyStatus</code><br><small style="color:var(--muted)">confidence/domain/enums.py</small></td>
+  <td><span class="tag tag-class">Class</span></td>
+  <td><code>__init__.py</code><br><small style="color:var(--muted)">confidence/domain/__init__.py</small><br><code>Decision</code><br><small style="color:var(--muted)">confidence/domain/models.py</small><br><code>DecisionEngine</code><br><small style="color:var(--muted)">confidence/application/engine.py</small><br>+19 more</td>
+  <td>No direct outbound edge</td>
+  <td>SafetyStatus node in confidence/domain/enums.py.</td>
+</tr>
+<tr>
+  <td>4</td>
+  <td><code>SafetyContext</code><br><small style="color:var(--muted)">confidence/domain/models.py</small></td>
+  <td><span class="tag tag-class">Class</span></td>
+  <td><code>__init__.py</code><br><small style="color:var(--muted)">confidence/domain/__init__.py</small><br><code>build()</code><br><small style="color:var(--muted)">confidence/application/context_builder.py</small><br><code>context_builder.py</code><br><small style="color:var(--muted)">confidence/application/context_builder.py</small><br>+14 more</td>
+  <td>No direct outbound edge</td>
+  <td>SafetyContext node in confidence/domain/models.py.</td>
+</tr>
+<tr>
+  <td>5</td>
+  <td><code>SafetyResult</code><br><small style="color:var(--muted)">confidence/domain/models.py</small></td>
+  <td><span class="tag tag-class">Class</span></td>
+  <td><code>__init__.py</code><br><small style="color:var(--muted)">confidence/domain/__init__.py</small><br><code>evaluate_safety()</code><br><small style="color:var(--muted)">confidence/domain/safety.py</small><br><code>safety.py</code><br><small style="color:var(--muted)">confidence/domain/safety.py</small><br>+5 more</td>
+  <td><code>SafetyBlockReason</code><br><small style="color:var(--muted)">confidence/domain/enums.py</small><br><code>SafetyStatus</code><br><small style="color:var(--muted)">confidence/domain/enums.py</small></td>
+  <td>SafetyResult node in confidence/domain/models.py.</td>
+</tr>
+<tr>
+  <td>6</td>
+  <td><code>StateEstimate</code><br><small style="color:var(--muted)">confidence/domain/models.py</small></td>
+  <td><span class="tag tag-class">Class</span></td>
+  <td><code>__init__.py</code><br><small style="color:var(--muted)">confidence/domain/__init__.py</small><br><code>estimate_state()</code><br><small style="color:var(--muted)">confidence/domain/state.py</small><br><code>policy.py</code><br><small style="color:var(--muted)">confidence/domain/policy.py</small><br>+18 more</td>
+  <td><code>UncertaintyState</code><br><small style="color:var(--muted)">confidence/domain/enums.py</small></td>
+  <td>StateEstimate node in confidence/domain/models.py.</td>
+</tr>
+<tr>
+  <td>7</td>
+  <td><code>SafetyContract</code><br><small style="color:var(--muted)">confidence/domain/safety.py</small></td>
+  <td><span class="tag tag-class">Class</span></td>
+  <td><code>__init__.py</code><br><small style="color:var(--muted)">confidence/domain/__init__.py</small><br><code>DecisionEngine</code><br><small style="color:var(--muted)">confidence/application/engine.py</small><br><code>dependencies.py</code><br><small style="color:var(--muted)">confidence/api/dependencies.py</small><br>+17 more</td>
+  <td><code>__init__()</code><br><small style="color:var(--muted)">confidence/domain/safety.py</small><br><code>ActionId</code><br><small style="color:var(--muted)">confidence/domain/enums.py</small><br><code>check_legitimate_reconsideration()</code><br><small style="color:var(--muted)">confidence/domain/safety.py</small><br>+10 more</td>
+  <td>SafetyContract node in confidence/domain/safety.py.</td>
+</tr>
+<tr>
+  <td>8</td>
+  <td><code>TestAuditRecord</code><br><small style="color:var(--muted)">tests/test_domain.py</small></td>
+  <td><span class="tag tag-func">Test</span></td>
+  <td>External entry / no inbound edge</td>
+  <td><code>ActionId</code><br><small style="color:var(--muted)">confidence/domain/enums.py</small><br><code>SafetyStatus</code><br><small style="color:var(--muted)">confidence/domain/enums.py</small><br><code>test_audit_contains_full_provenance()</code><br><small style="color:var(--muted)">tests/test_domain.py</small><br>+1 more</td>
+  <td>Verifies imports, entry points, or version behavior.</td>
+</tr>
+<tr>
+  <td>9</td>
+  <td><code>TestLegitimateReconsideration</code><br><small style="color:var(--muted)">tests/test_safety_contract.py</small></td>
+  <td><span class="tag tag-func">Test</span></td>
+  <td>External entry / no inbound edge</td>
+  <td><code>NoInterventionReason</code><br><small style="color:var(--muted)">confidence/domain/enums.py</small><br><code>SafetyContract</code><br><small style="color:var(--muted)">confidence/domain/safety.py</small><br><code>test_legitimate_reconsideration_detected()</code><br><small style="color:var(--muted)">tests/test_safety_contract.py</small><br>+2 more</td>
+  <td>Turns a local path or remote repository into analysis context.</td>
+</tr>
+<tr>
+  <td>10</td>
+  <td><code>TestMultipleBlockReasons</code><br><small style="color:var(--muted)">tests/test_safety_contract.py</small></td>
+  <td><span class="tag tag-func">Test</span></td>
+  <td>External entry / no inbound edge</td>
+  <td><code>NoInterventionReason</code><br><small style="color:var(--muted)">confidence/domain/enums.py</small><br><code>SafetyBlockReason</code><br><small style="color:var(--muted)">confidence/domain/enums.py</small><br><code>SafetyContract</code><br><small style="color:var(--muted)">confidence/domain/safety.py</small><br>+3 more</td>
+  <td>Verifies imports, entry points, or version behavior.</td>
+</tr>
+<tr>
+  <td>11</td>
+  <td><code>TestS1SelfExclusion</code><br><small style="color:var(--muted)">tests/test_safety_contract.py</small></td>
+  <td><span class="tag tag-func">Test</span></td>
+  <td>External entry / no inbound edge</td>
+  <td><code>ActionId</code><br><small style="color:var(--muted)">confidence/domain/enums.py</small><br><code>NoInterventionReason</code><br><small style="color:var(--muted)">confidence/domain/enums.py</small><br><code>SafetyBlockReason</code><br><small style="color:var(--muted)">confidence/domain/enums.py</small><br>+5 more</td>
+  <td>Verifies imports, entry points, or version behavior.</td>
+</tr>
+<tr>
+  <td>12</td>
+  <td><code>TestS2ProtectiveRestriction</code><br><small style="color:var(--muted)">tests/test_safety_contract.py</small></td>
+  <td><span class="tag tag-func">Test</span></td>
+  <td>External entry / no inbound edge</td>
+  <td><code>SafetyBlockReason</code><br><small style="color:var(--muted)">confidence/domain/enums.py</small><br><code>SafetyContract</code><br><small style="color:var(--muted)">confidence/domain/safety.py</small><br><code>SafetyStatus</code><br><small style="color:var(--muted)">confidence/domain/enums.py</small><br>+1 more</td>
+  <td>Verifies imports, entry points, or version behavior.</td>
+</tr>
+<tr>
+  <td>13</td>
+  <td><code>TestS3HarmState</code><br><small style="color:var(--muted)">tests/test_safety_contract.py</small></td>
+  <td><span class="tag tag-func">Test</span></td>
+  <td>External entry / no inbound edge</td>
+  <td><code>ActionId</code><br><small style="color:var(--muted)">confidence/domain/enums.py</small><br><code>NoInterventionReason</code><br><small style="color:var(--muted)">confidence/domain/enums.py</small><br><code>SafetyBlockReason</code><br><small style="color:var(--muted)">confidence/domain/enums.py</small><br>+7 more</td>
+  <td>Verifies imports, entry points, or version behavior.</td>
+</tr>
+<tr>
+  <td>14</td>
+  <td><code>TestS4UnknownSafetyState</code><br><small style="color:var(--muted)">tests/test_safety_contract.py</small></td>
+  <td><span class="tag tag-func">Test</span></td>
+  <td>External entry / no inbound edge</td>
+  <td><code>NoInterventionReason</code><br><small style="color:var(--muted)">confidence/domain/enums.py</small><br><code>SafetyBlockReason</code><br><small style="color:var(--muted)">confidence/domain/enums.py</small><br><code>SafetyContract</code><br><small style="color:var(--muted)">confidence/domain/safety.py</small><br>+3 more</td>
+  <td>Verifies imports, entry points, or version behavior.</td>
+</tr>
+<tr>
+  <td>15</td>
+  <td><code>TestS5SafetyDependencyUnavailable</code><br><small style="color:var(--muted)">tests/test_safety_contract.py</small></td>
+  <td><span class="tag tag-func">Test</span></td>
+  <td>External entry / no inbound edge</td>
+  <td><code>NoInterventionReason</code><br><small style="color:var(--muted)">confidence/domain/enums.py</small><br><code>SafetyBlockReason</code><br><small style="color:var(--muted)">confidence/domain/enums.py</small><br><code>SafetyContract</code><br><small style="color:var(--muted)">confidence/domain/safety.py</small><br>+3 more</td>
+  <td>Builds dependency relationships and graph data.</td>
+</tr>
+<tr>
+  <td>16</td>
+  <td><code>TestS8ConfidenceThreshold</code><br><small style="color:var(--muted)">tests/test_safety_contract.py</small></td>
+  <td><span class="tag tag-func">Test</span></td>
+  <td>External entry / no inbound edge</td>
+  <td><code>NoInterventionReason</code><br><small style="color:var(--muted)">confidence/domain/enums.py</small><br><code>SafetyContract</code><br><small style="color:var(--muted)">confidence/domain/safety.py</small><br><code>test_exactly_at_threshold_passes()</code><br><small style="color:var(--muted)">tests/test_safety_contract.py</small><br>+5 more</td>
+  <td>Verifies imports, entry points, or version behavior.</td>
+</tr>
+<tr>
+  <td>17</td>
+  <td><code>TestSafeContext</code><br><small style="color:var(--muted)">tests/test_safety_contract.py</small></td>
+  <td><span class="tag tag-func">Test</span></td>
+  <td>External entry / no inbound edge</td>
+  <td><code>ActionId</code><br><small style="color:var(--muted)">confidence/domain/enums.py</small><br><code>SafetyContract</code><br><small style="color:var(--muted)">confidence/domain/safety.py</small><br><code>SafetyStatus</code><br><small style="color:var(--muted)">confidence/domain/enums.py</small><br>+3 more</td>
+  <td>Verifies imports, entry points, or version behavior.</td>
+</tr>
+<tr>
+  <td>18</td>
+  <td><code>.check_legitimate_reconsideration()</code><br><small style="color:var(--muted)">confidence/domain/safety.py</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>SafetyContract</code><br><small style="color:var(--muted)">confidence/domain/safety.py</small></td>
+  <td>No direct outbound edge</td>
+  <td>Turns a local path or remote repository into analysis context.</td>
+</tr>
+<tr>
+  <td>19</td>
+  <td><code>.check_state_confidence()</code><br><small style="color:var(--muted)">confidence/domain/safety.py</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>SafetyContract</code><br><small style="color:var(--muted)">confidence/domain/safety.py</small></td>
+  <td>No direct outbound edge</td>
+  <td>.check_state_confidence() node in confidence/domain/safety.py.</td>
+</tr>
+<tr>
+  <td>20</td>
+  <td><code>.confidence_threshold()</code><br><small style="color:var(--muted)">confidence/domain/safety.py</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>SafetyContract</code><br><small style="color:var(--muted)">confidence/domain/safety.py</small></td>
+  <td>No direct outbound edge</td>
+  <td>.confidence_threshold() node in confidence/domain/safety.py.</td>
+</tr>
+<tr>
+  <td>21</td>
+  <td><code>.evaluate_safety()</code><br><small style="color:var(--muted)">confidence/domain/safety.py</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>SafetyContract</code><br><small style="color:var(--muted)">confidence/domain/safety.py</small></td>
+  <td><code>SafetyResult</code><br><small style="color:var(--muted)">confidence/domain/models.py</small></td>
+  <td>.evaluate_safety() node in confidence/domain/safety.py.</td>
+</tr>
+<tr>
+  <td>22</td>
+  <td><code>.final_safety_check()</code><br><small style="color:var(--muted)">confidence/domain/safety.py</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>SafetyContract</code><br><small style="color:var(--muted)">confidence/domain/safety.py</small></td>
+  <td>No direct outbound edge</td>
+  <td>.final_safety_check() node in confidence/domain/safety.py.</td>
+</tr>
+<tr>
+  <td>23</td>
+  <td><code>.__init__()</code><br><small style="color:var(--muted)">confidence/domain/safety.py</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>SafetyContract</code><br><small style="color:var(--muted)">confidence/domain/safety.py</small></td>
+  <td>No direct outbound edge</td>
+  <td>.__init__() node in confidence/domain/safety.py.</td>
+</tr>
+<tr>
+  <td>24</td>
+  <td><code>.safety_block_to_no_intervention_reason()</code><br><small style="color:var(--muted)">confidence/domain/safety.py</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>SafetyContract</code><br><small style="color:var(--muted)">confidence/domain/safety.py</small></td>
+  <td>No direct outbound edge</td>
+  <td>.safety_block_to_no_intervention_reason() node in confidence/domain/safety.py.</td>
+</tr>
+<tr>
+  <td>25</td>
+  <td><code>.test_audit_contains_full_provenance()</code><br><small style="color:var(--muted)">tests/test_domain.py</small></td>
+  <td><span class="tag tag-func">Test</span></td>
+  <td><code>TestAuditRecord</code><br><small style="color:var(--muted)">tests/test_domain.py</small></td>
+  <td><code>AuditRecord</code><br><small style="color:var(--muted)">confidence/domain/models.py</small><br><code>SafetyResult</code><br><small style="color:var(--muted)">confidence/domain/models.py</small><br><code>StateEstimate</code><br><small style="color:var(--muted)">confidence/domain/models.py</small></td>
+  <td>Verifies imports, entry points, or version behavior.</td>
+</tr>
+<tr>
+  <td>26</td>
+  <td><code>.test_legitimate_reconsideration_detected()</code><br><small style="color:var(--muted)">tests/test_safety_contract.py</small></td>
+  <td><span class="tag tag-func">Test</span></td>
+  <td><code>TestLegitimateReconsideration</code><br><small style="color:var(--muted)">tests/test_safety_contract.py</small></td>
+  <td><code>StateEstimate</code><br><small style="color:var(--muted)">confidence/domain/models.py</small></td>
+  <td>Turns a local path or remote repository into analysis context.</td>
+</tr>
+<tr>
+  <td>27</td>
+  <td><code>.test_non_reconsideration_passes()</code><br><small style="color:var(--muted)">tests/test_safety_contract.py</small></td>
+  <td><span class="tag tag-func">Test</span></td>
+  <td><code>TestLegitimateReconsideration</code><br><small style="color:var(--muted)">tests/test_safety_contract.py</small></td>
+  <td><code>StateEstimate</code><br><small style="color:var(--muted)">confidence/domain/models.py</small></td>
+  <td>Verifies imports, entry points, or version behavior.</td>
+</tr>
+<tr>
+  <td>28</td>
+  <td><code>.test_multiple_reasons_map_to_safety_blocked()</code><br><small style="color:var(--muted)">tests/test_safety_contract.py</small></td>
+  <td><span class="tag tag-func">Test</span></td>
+  <td><code>TestMultipleBlockReasons</code><br><small style="color:var(--muted)">tests/test_safety_contract.py</small></td>
+  <td>No direct outbound edge</td>
+  <td>Verifies imports, entry points, or version behavior.</td>
+</tr>
+<tr>
+  <td>29</td>
+  <td><code>.test_self_excluded_with_harm()</code><br><small style="color:var(--muted)">tests/test_safety_contract.py</small></td>
+  <td><span class="tag tag-func">Test</span></td>
+  <td><code>TestMultipleBlockReasons</code><br><small style="color:var(--muted)">tests/test_safety_contract.py</small></td>
+  <td><code>HarmIndicators</code><br><small style="color:var(--muted)">confidence/domain/models.py</small><br><code>SafetyContext</code><br><small style="color:var(--muted)">confidence/domain/models.py</small></td>
+  <td>Verifies imports, entry points, or version behavior.</td>
+</tr>
+<tr>
+  <td>30</td>
+  <td><code>.test_self_excluded_cannot_receive_intervention()</code><br><small style="color:var(--muted)">tests/test_safety_contract.py</small></td>
+  <td><span class="tag tag-func">Test</span></td>
+  <td><code>TestS1SelfExclusion</code><br><small style="color:var(--muted)">tests/test_safety_contract.py</small></td>
+  <td><code>StateEstimate</code><br><small style="color:var(--muted)">confidence/domain/models.py</small></td>
+  <td>Verifies imports, entry points, or version behavior.</td>
+</tr>
+</table>
+
+<div class="grid">
+  <div class="card">
+    <h4>Key Files</h4>
+    <table style="width:100%;font-size:0.85rem;">
+      <tr><th>File</th><th>Coverage</th></tr>
+      <tr><td><code>tests/test_safety_contract.py</code></td><td>48 nodes</td></tr>
+<tr><td><code>tests/conftest.py</code></td><td>30 nodes</td></tr>
+<tr><td><code>tests/test_domain.py</code></td><td>30 nodes</td></tr>
+<tr><td><code>tests/test_engine.py</code></td><td>27 nodes</td></tr>
+<tr><td><code>tests/test_actions.py</code></td><td>25 nodes</td></tr>
+<tr><td><code>confidence/domain/models.py</code></td><td>20 nodes</td></tr>
+<tr><td><code>confidence/domain/safety.py</code></td><td>18 nodes</td></tr>
+<tr><td><code>tests/test_schema.py</code></td><td>17 nodes</td></tr>
+    </table>
+  </div>
+  <div class="card">
+    <h4>Design Notes</h4>
+    <p>This section comes from graphify community clustering. Relationship summary: references x170, method x123, uses x100, calls x94. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
+  </div>
+</div>
+<hr>
+
+<!-- ====== 4. Database Module Init ====== -->
+<h2 id="database-module-init">4. Database Module Init</h2>
+<p>Database Module Init groups implementation around confidence, mostly in confidence/db/__init__.py. This section covers 1 nodes and 0 internal edges; the diagram shows only representative relationships to stay readable.</p>
+
+<div class="mermaid">
+%%{init: {"theme": "dark", "themeVariables": {"fontSize": "15.0px", "fontFamily": "Segoe UI, system-ui, sans-serif", "primaryColor": "#1e293b", "primaryTextColor": "#e2e8f0", "primaryBorderColor": "#38bdf8", "secondaryColor": "#0f172a", "tertiaryColor": "#334155", "lineColor": "#64748b", "textColor": "#e2e8f0"}, "flowchart": {"htmlLabels": true, "curve": "basis", "nodeSpacing": 48, "rankSpacing": 64, "padding": 14, "diagramPadding": 10, "useMaxWidth": true}}}%%
+flowchart LR
+    %% Section: Database Module Init (1 nodes, 0 edges)
+    src_confidence_db_init_4dfea315("__init__.py")
+    class src_confidence_db_init_4dfea315 module;
+    classDef entry fill:#422006,stroke:#fbbf24,color:#fde68a,stroke-width:1px;
+    classDef api fill:#450a0a,stroke:#f87171,color:#fee2e2,stroke-width:1px;
+    classDef async fill:#2e1065,stroke:#a78bfa,color:#ede9fe,stroke-width:1px;
+    classDef klass fill:#064e3b,stroke:#34d399,color:#d1fae5,stroke-width:1px;
+    classDef ui fill:#831843,stroke:#f472b6,color:#fce7f3,stroke-width:1px;
+    classDef module fill:#172554,stroke:#60a5fa,color:#dbeafe,stroke-width:1px;
+    classDef test fill:#3f3f46,stroke:#a1a1aa,color:#f4f4f5,stroke-width:1px;
+    classDef concept fill:#292524,stroke:#a8a29e,color:#fafaf9,stroke-dasharray:4 3;
+    classDef function fill:#0f172a,stroke:#38bdf8,color:#e0f2fe,stroke-width:1px;
+</div>
+
+<h3>Call Details</h3>
+<table class="call-table">
+<tr>
+  <th style="width:5%">#</th>
+  <th style="width:28%">Node</th>
+  <th style="width:10%">Type</th>
+  <th style="width:17%">Caller</th>
+  <th style="width:20%">Callees</th>
+  <th style="width:20%">Description</th>
+</tr>
+<tr>
+  <td>1</td>
+  <td><code>db/__init__.py</code><br><small style="color:var(--muted)">confidence/db/__init__.py</small></td>
+  <td><span class="tag tag-class">Module</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>Module file in confidence/db/__init__.py.</td>
+</tr>
+</table>
+
+<div class="grid">
+  <div class="card">
+    <h4>Key Files</h4>
+    <table style="width:100%;font-size:0.85rem;">
+      <tr><th>File</th><th>Coverage</th></tr>
+      <tr><td><code>confidence/db/__init__.py</code></td><td>1 nodes</td></tr>
+    </table>
+  </div>
+  <div class="card">
+    <h4>Design Notes</h4>
+    <p>This section comes from graphify community clustering. Relationship summary: No high-confidence call edges detected. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
+  </div>
+</div>
+<hr>
+
+<h2 id="stats">Project Statistics</h2>
+
+<div class="grid">
+  <div class="card">
+    <h4>Graph</h4>
+    <table style="width:100%;font-size:0.85rem;">
+      <tr><td>Nodes</td><td>489</td></tr>
+      <tr><td>Edges</td><td>1190</td></tr>
+      <tr><td>Hyperedges</td><td>0</td></tr>
+      <tr><td>Communities</td><td>17</td></tr>
+      <tr><td>Documented Sections</td><td>3</td></tr>
+    </table>
+  </div>
+  <div class="card">
+    <h4>Edge Confidence</h4>
+    <table style="width:100%;font-size:0.85rem;">
+      <tr><td>EXTRACTED</td><td>1020</td></tr>
+      <tr><td>INFERRED</td><td>170</td></tr>
+      <tr><td>AMBIGUOUS</td><td>0</td></tr>
+    </table>
+  </div>
+</div>
+
+<div style="text-align:center; padding:40px 0; color: var(--muted); font-size:0.9rem;">
+  <p>Confidence — Architecture Documentation</p>
+  <p>Generated: 2026-09-04 04:47 UTC · graphify callflow-html</p>
+</div>
+
+</div><!-- .container -->
+
+<script>
+(function () {
+  const mermaidConfig = {
+    startOnLoad: false,
+    theme: 'dark',
+    securityLevel: 'loose',
+    flowchart: { htmlLabels: true, useMaxWidth: true },
+    themeVariables: {
+      primaryColor: '#1e293b',
+      primaryTextColor: '#e2e8f0',
+      primaryBorderColor: '#38bdf8',
+      secondaryColor: '#0f172a',
+      tertiaryColor: '#334155',
+      lineColor: '#64748b',
+      textColor: '#e2e8f0',
+    }
+  };
+
+  mermaid.initialize(mermaidConfig);
+
+  function clamp(value, min, max) {
+    return Math.min(max, Math.max(min, value));
+  }
+
+  function enhanceMermaidDiagrams() {
+    document.querySelectorAll('.mermaid').forEach((container) => {
+      if (container.dataset.zoomReady === 'true') return;
+      const svg = container.querySelector('svg');
+      if (!svg) return;
+
+      container.dataset.zoomReady = 'true';
+      container.classList.add('is-enhanced');
+
+      const viewport = document.createElement('div');
+      viewport.className = 'mermaid-viewport';
+      svg.parentNode.insertBefore(viewport, svg);
+      viewport.appendChild(svg);
+
+      const toolbar = document.createElement('div');
+      toolbar.className = 'mermaid-toolbar';
+      toolbar.innerHTML = [
+        '<button type="button" data-action="zoom-out" title="Zoom out">-</button>',
+        '<span class="zoom-level" data-role="level">100%</span>',
+        '<button type="button" data-action="zoom-in" title="Zoom in">+</button>',
+        '<button type="button" data-action="fit" title="Fit width">Fit</button>',
+        '<button type="button" data-action="reset" title="Reset view">Reset</button>'
+      ].join('');
+      container.insertBefore(toolbar, viewport);
+
+      const state = { scale: 1, x: 0, y: 0, dragging: false, startX: 0, startY: 0, originX: 0, originY: 0 };
+      const level = toolbar.querySelector('[data-role="level"]');
+
+      function applyTransform() {
+        svg.style.transform = `translate(${state.x}px, ${state.y}px) scale(${state.scale})`;
+        level.textContent = `${Math.round(state.scale * 100)}%`;
+      }
+
+      function zoomBy(delta) {
+        state.scale = clamp(state.scale + delta, 0.25, 3);
+        applyTransform();
+      }
+
+      function reset() {
+        state.scale = 1;
+        state.x = 0;
+        state.y = 0;
+        applyTransform();
+      }
+
+      function fitWidth() {
+        const rawWidth = svg.viewBox && svg.viewBox.baseVal && svg.viewBox.baseVal.width
+          ? svg.viewBox.baseVal.width
+          : svg.getBoundingClientRect().width / state.scale;
+        if (!rawWidth) {
+          reset();
+          return;
+        }
+        state.scale = clamp((viewport.clientWidth - 48) / rawWidth, 0.25, 1.4);
+        state.x = 0;
+        state.y = 0;
+        applyTransform();
+      }
+
+      toolbar.addEventListener('click', (event) => {
+        const button = event.target.closest('button[data-action]');
+        if (!button) return;
+        const action = button.dataset.action;
+        if (action === 'zoom-in') zoomBy(0.15);
+        if (action === 'zoom-out') zoomBy(-0.15);
+        if (action === 'fit') fitWidth();
+        if (action === 'reset') reset();
+      });
+
+      viewport.addEventListener('wheel', (event) => {
+        if (!event.ctrlKey && !event.metaKey) return;
+        event.preventDefault();
+        zoomBy(event.deltaY < 0 ? 0.1 : -0.1);
+      }, { passive: false });
+
+      viewport.addEventListener('pointerdown', (event) => {
+        if (event.button !== 0) return;
+        state.dragging = true;
+        state.startX = event.clientX;
+        state.startY = event.clientY;
+        state.originX = state.x;
+        state.originY = state.y;
+        viewport.classList.add('is-dragging');
+        viewport.setPointerCapture(event.pointerId);
+      });
+
+      viewport.addEventListener('pointermove', (event) => {
+        if (!state.dragging) return;
+        state.x = state.originX + event.clientX - state.startX;
+        state.y = state.originY + event.clientY - state.startY;
+        applyTransform();
+      });
+
+      function endDrag(event) {
+        if (!state.dragging) return;
+        state.dragging = false;
+        viewport.classList.remove('is-dragging');
+        if (viewport.hasPointerCapture(event.pointerId)) {
+          viewport.releasePointerCapture(event.pointerId);
+        }
+      }
+
+      viewport.addEventListener('pointerup', endDrag);
+      viewport.addEventListener('pointercancel', endDrag);
+      applyTransform();
+    });
+  }
+
+  function renderMermaid() {
+    const result = mermaid.run
+      ? mermaid.run({ querySelector: '.mermaid' })
+      : Promise.resolve();
+    Promise.resolve(result)
+      .then(enhanceMermaidDiagrams)
+      .catch((error) => {
+        console.error('Mermaid render failed:', error);
+        enhanceMermaidDiagrams();
+      });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', renderMermaid);
+  } else {
+    renderMermaid();
+  }
+})();
+</script>
+
+</body>
+</html>

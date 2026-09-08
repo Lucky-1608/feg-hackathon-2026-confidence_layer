@@ -4,20 +4,27 @@ build-backend = "hatchling.build"
 
 [project]
 name = "confidence-layer"
-version = "0.1.0"
-description = "Confidence Layer - Runtime decision safety and confidence engine"
+version = "0.4.0"
+description = "Confidence Layer - Production real-time safety-constrained decision platform"
 requires-python = ">=3.12"
 dependencies = [
     "pydantic>=2.5",
+    "pydantic-settings>=2.1",
     "fastapi>=0.109",
     "uvicorn[standard]>=0.27",
     "sqlalchemy>=2.0",
     "asyncpg>=0.29",
+    "psycopg[binary]>=3.1",
     "alembic>=1.13",
     "structlog>=24.1",
     "opentelemetry-api>=1.22",
     "opentelemetry-sdk>=1.22",
+    "opentelemetry-exporter-otlp>=1.22",
+    "opentelemetry-instrumentation-fastapi>=0.43b0",
+    "prometheus-client>=0.20",
     "python-dotenv>=1.0",
+    "redis>=5.0",
+    "aiokafka>=0.10",
 ]
 
 [project.optional-dependencies]
@@ -28,10 +35,13 @@ dev = [
     "mypy>=1.8",
     "ruff>=0.2",
     "aiosqlite>=0.20",
+    "hypothesis>=6.98",
+    "locust>=2.20",
+    "fakeredis>=2.21",
 ]
 
 [tool.hatch.build.targets.wheel]
-packages = ["src/confidence"]
+packages = ["src/confidence", "demo"]
 
 [tool.ruff]
 target-version = "py312"
@@ -44,9 +54,21 @@ select = ["E", "F", "I", "N", "W", "UP", "B", "A", "SIM"]
 python_version = "3.12"
 strict = true
 warn_return_any = true
-warn_unused_configs = true
+warn_unused_configs = false
 disallow_untyped_defs = true
 plugins = ["pydantic.mypy"]
+
+[[tool.mypy.overrides]]
+module = [
+    "aiokafka.*",
+    "confluent_kafka.*",
+    "redis.*",
+    "fakeredis.*",
+    "prometheus_client.*",
+    "opentelemetry.*",
+    "locust.*",
+]
+ignore_missing_imports = true
 
 [tool.pydantic-mypy]
 init_forbid_extra = true
