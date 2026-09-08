@@ -4,7 +4,7 @@ from confidence.api.app import app
 
 async def test():
     async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as ac:
-        response = await ac.post("/v1/decisions", json={
+        response = await ac.post("/v1/decisions", headers={"Authorization": "Bearer demo-token"}, json={
             "session_id": "00000000-0000-0000-0000-000000000000",
             "anonymous_actor_id": "actor-001",
             "client_version": "1.0",
