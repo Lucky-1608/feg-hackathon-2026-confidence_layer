@@ -15,6 +15,7 @@ from confidence.application.context_builder import DecisionRequest
 from confidence.application.engine import DecisionEngine
 from confidence.config import load_config
 from confidence.domain.event_contracts import ConfidenceEvent
+from confidence.infrastructure.auth import verify_token
 from confidence.infrastructure.event_bus import EventPublisher
 from confidence.infrastructure.session_state import RedisIdempotencyStore
 from confidence.log import get_logger
@@ -47,6 +48,7 @@ async def create_decision(
     idempotency_key: str | None = Header(None, alias="Idempotency-Key"),
     engine: DecisionEngine = Depends(get_decision_engine),  # noqa: B008
     idemp_store: RedisIdempotencyStore = Depends(get_idempotency_store),  # noqa: B008
+    user_id: str = Depends(verify_token),
 ) -> DecisionResponse | JSONResponse:
     """Handle a decision request."""
     # 1. Idempotency Check
@@ -127,6 +129,7 @@ async def ingest_event(
     event: ConfidenceEvent,
     req: Request,
     publisher: EventPublisher = Depends(get_event_publisher),  # noqa: B008
+    user_id: str = Depends(verify_token),
 ) -> dict[str, str]:
     try:
         await publisher.publish(event)
